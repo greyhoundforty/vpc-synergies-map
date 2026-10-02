@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IBM Cloud VPC Synergies Map</title>
+  <link rel="preconnect" href="https://1.www.s81c.com" crossorigin />
+  <link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/plex/plex-full.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <span class="header-product">IBM Cloud VPC</span>
+      <span class="header-subtitle">Synergies Map</span>
+    </div>
+    <div class="header-center">
+      <div class="view-tabs" id="viewTabs">
+        <button class="view-tab is-active" data-view="grid">Grid</button>
+        <button class="view-tab" data-view="matrix">OS Matrix</button>
+        <button class="view-tab" data-view="profiles">Virtual Profiles</button>
+        <button class="view-tab" data-view="availability">Bare Metal Profiles</button>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M15 14.3L11.5 10.8C12.4 9.6 13 8.1 13 6.5 13 2.9 10.1 0 6.5 0S0 2.9 0 6.5 2.9 13 6.5 13c1.6 0 3.1-.6 4.3-1.5l3.5 3.5.7-.7zM6.5 12C3.5 12 1 9.5 1 6.5S3.5 1 6.5 1 12 3.5 12 6.5 9.5 12 6.5 12z"/>
+        </svg>
+        <input class="search-input" id="searchInput" type="search" placeholder="Search services…" autocomplete="off" />
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+        <svg class="theme-icon" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+          <path d="M16,2A14,14,0,1,0,30,16,14.016,14.016,0,0,0,16,2Zm0,26A12,12,0,0,1,16,4V28Z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main" id="appMain">
+    <!-- Grid / Matrix content injected by app.js -->
+    <div class="loading-state" id="loadingState">
+      <p>Loading IBM Cloud VPC services…</p>
+    </div>
+  </main>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+        <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"/>
+      </svg>
+    </button>
+    <div class="sidebar-content" id="sidebarContent">
+      <div class="sidebar-empty">
+        <h3>IBM Cloud VPC Synergies Map</h3>
+        <p>Click any service card to explore integrations, discovery questions, differentiators, and documentation links.</p>
+      </div>
+    </div>
+  </aside>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

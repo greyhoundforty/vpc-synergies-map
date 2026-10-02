@@ -1,0 +1,36 @@
+[env]
+_.file = ".env"   # load .env into all mise task environments
+
+[tools]
+node    = "22"
+python  = "3.12"
+
+# ── Tasks ────────────────────────────────────────────────────────────────────
+
+[tasks.validate]
+description = "Validate all VPC JSON data files"
+run         = "node scripts/validate-feed.mjs data/vpc"
+
+[tasks.kill]
+description = "Kill any process listening on :4173 (always exits 0)"
+run         = "lsof -ti :4173 | xargs kill -9 2>/dev/null; exit 0"
+
+[tasks.dev]
+description = "Validate data, then serve the app at http://localhost:4173"
+run         = [
+  "node scripts/validate-feed.mjs data/vpc",
+  "python3 scripts/serve.py",
+]
+
+[tasks.restart]
+description = "Kill any server on :4173, validate data, and restart — clears all caches"
+depends     = ["kill", "validate"]
+run         = "python3 scripts/serve.py"
+
+[tasks.open]
+description = "Open the app in the default browser (run alongside 'mise run dev')"
+run         = "open http://localhost:4173"
+
+[tasks.fetch-profiles]
+description = "Fetch VPC profiles, BMS capacity, and public images from IBM Cloud API → data/vpc/"
+run         = ".venv/bin/python3 scripts/fetch-profiles.py"

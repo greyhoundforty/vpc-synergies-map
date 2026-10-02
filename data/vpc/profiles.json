@@ -1,0 +1,8574 @@
+{
+  "fetched_at": "2026-10-02T12:38:39.103951+00:00",
+  "regions": [
+    "au-syd",
+    "br-sao",
+    "ca-mon",
+    "ca-tor",
+    "eu-de",
+    "eu-es",
+    "eu-gb",
+    "in-che",
+    "in-mum",
+    "jp-osa",
+    "jp-tok",
+    "us-east",
+    "us-south"
+  ],
+  "vsi_profiles": [
+    {
+      "name": "bx4-2x8",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 8,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bxf-2x8",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 8,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx2-2x8",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 8,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4d-2x8",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 8,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx2d-2x8",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 8,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-2x10",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 10,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx3d-2x10",
+      "family": "balanced",
+      "vcpu": 2,
+      "memory_gb": 10,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx4d-4x16",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 16,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx2-4x16",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 16,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx2d-4x16",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 16,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4-4x16",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 16,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bxf-4x16",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 16,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-4x20",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 20,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx3d-4x20",
+      "family": "balanced",
+      "vcpu": 4,
+      "memory_gb": 20,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx2-8x32",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-8x40",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 40,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx2d-8x32",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4-8x32",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx3d-8x40",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 40,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bxf-8x32",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx4d-8x32",
+      "family": "balanced",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx4-16x64",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bxf-16x64",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx4d-16x64",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx3dc-16x80",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 80,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx3d-16x80",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 80,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx2-16x64",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx2d-16x64",
+      "family": "balanced",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx3d-24x120",
+      "family": "balanced",
+      "vcpu": 24,
+      "memory_gb": 120,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bxf-24x96",
+      "family": "balanced",
+      "vcpu": 24,
+      "memory_gb": 96,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-24x120",
+      "family": "balanced",
+      "vcpu": 24,
+      "memory_gb": 120,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "bx4d-24x96",
+      "family": "balanced",
+      "vcpu": 24,
+      "memory_gb": 96,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx4-24x96",
+      "family": "balanced",
+      "vcpu": 24,
+      "memory_gb": 96,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bxf-32x128",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 128,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx4-32x128",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 128,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx2d-32x128",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 128,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx3d-32x160",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 160,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx2-32x128",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 128,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4d-32x128",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 128,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx3dc-32x160",
+      "family": "balanced",
+      "vcpu": 32,
+      "memory_gb": 160,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx4d-48x192",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 192,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx3d-48x240",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 240,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-48x240",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 240,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx2-48x192",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 192,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4-48x192",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 192,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bxf-48x192",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 192,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx2d-48x192",
+      "family": "balanced",
+      "vcpu": 48,
+      "memory_gb": 192,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bxf-64x256",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 256,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx4d-64x256",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 256,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx4-64x256",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 256,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx2d-64x256",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 256,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx2-64x256",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 256,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx3d-64x320",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 320,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-64x320",
+      "family": "balanced",
+      "vcpu": 64,
+      "memory_gb": 320,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx2-96x384",
+      "family": "balanced",
+      "vcpu": 96,
+      "memory_gb": 384,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx3d-96x480",
+      "family": "balanced",
+      "vcpu": 96,
+      "memory_gb": 480,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx3dc-96x480",
+      "family": "balanced",
+      "vcpu": 96,
+      "memory_gb": 480,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx4-96x384",
+      "family": "balanced",
+      "vcpu": 96,
+      "memory_gb": 384,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx2d-96x384",
+      "family": "balanced",
+      "vcpu": 96,
+      "memory_gb": 384,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4d-96x384",
+      "family": "balanced",
+      "vcpu": 96,
+      "memory_gb": 384,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx2d-128x512",
+      "family": "balanced",
+      "vcpu": 128,
+      "memory_gb": 512,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx3d-128x640",
+      "family": "balanced",
+      "vcpu": 128,
+      "memory_gb": 640,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx2-128x512",
+      "family": "balanced",
+      "vcpu": 128,
+      "memory_gb": 512,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "bx4-128x512",
+      "family": "balanced",
+      "vcpu": 128,
+      "memory_gb": 512,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx4d-128x512",
+      "family": "balanced",
+      "vcpu": 128,
+      "memory_gb": 512,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx4d-176x704",
+      "family": "balanced",
+      "vcpu": 176,
+      "memory_gb": 704,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "bx3d-176x880",
+      "family": "balanced",
+      "vcpu": 176,
+      "memory_gb": 880,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "bx4-176x704",
+      "family": "balanced",
+      "vcpu": 176,
+      "memory_gb": 704,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cxf-2x4",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 4,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-2x5",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 5,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx2-2x4",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 4,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4-2x4",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 4,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3d-2x5",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 5,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx2d-2x4",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 4,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4d-2x4",
+      "family": "compute",
+      "vcpu": 2,
+      "memory_gb": 4,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx2d-4x8",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 8,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4d-4x8",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 8,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cxf-4x8",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 8,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-4x10",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 10,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx2-4x8",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 8,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4-4x8",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 8,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3d-4x10",
+      "family": "compute",
+      "vcpu": 4,
+      "memory_gb": 10,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx4d-8x16",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3dc-8x20",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 20,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx2d-8x16",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4-8x16",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx2-8x16",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3d-8x20",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 20,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cxf-8x16",
+      "family": "compute",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cxf-16x32",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx4d-16x32",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx2d-16x32",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3d-16x40",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 40,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx2-16x32",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-16x40",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 40,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx4-16x32",
+      "family": "compute",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cxf-24x48",
+      "family": "compute",
+      "vcpu": 24,
+      "memory_gb": 48,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx4d-24x48",
+      "family": "compute",
+      "vcpu": 24,
+      "memory_gb": 48,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3d-24x60",
+      "family": "compute",
+      "vcpu": 24,
+      "memory_gb": 60,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx4-24x48",
+      "family": "compute",
+      "vcpu": 24,
+      "memory_gb": 48,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3dc-24x60",
+      "family": "compute",
+      "vcpu": 24,
+      "memory_gb": 60,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "cx2-32x64",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 64,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4-32x64",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 64,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cxf-32x64",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 64,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3d-32x80",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 80,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2d-32x64",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 64,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4d-32x64",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 64,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3dc-32x80",
+      "family": "compute",
+      "vcpu": 32,
+      "memory_gb": 80,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3d-48x120",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 120,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2-48x96",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 96,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4d-48x96",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 96,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx2d-48x96",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 96,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-48x120",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 120,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx4-48x96",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 96,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cxf-48x96",
+      "family": "compute",
+      "vcpu": 48,
+      "memory_gb": 96,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2d-64x128",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 128,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx3d-64x160",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 160,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2-64x128",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 128,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4d-64x128",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 128,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx4-64x128",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 128,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cxf-64x128",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 128,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-64x160",
+      "family": "compute",
+      "vcpu": 64,
+      "memory_gb": 160,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-96x240",
+      "family": "compute",
+      "vcpu": 96,
+      "memory_gb": 240,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2-96x192",
+      "family": "compute",
+      "vcpu": 96,
+      "memory_gb": 192,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4-96x192",
+      "family": "compute",
+      "vcpu": 96,
+      "memory_gb": 192,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx4d-96x192",
+      "family": "compute",
+      "vcpu": 96,
+      "memory_gb": 192,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3d-96x240",
+      "family": "compute",
+      "vcpu": 96,
+      "memory_gb": 240,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2d-96x192",
+      "family": "compute",
+      "vcpu": 96,
+      "memory_gb": 192,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx3dc-128x320",
+      "family": "compute",
+      "vcpu": 128,
+      "memory_gb": 320,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx2d-128x256",
+      "family": "compute",
+      "vcpu": 128,
+      "memory_gb": 256,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4d-128x256",
+      "family": "compute",
+      "vcpu": 128,
+      "memory_gb": 256,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx2-128x256",
+      "family": "compute",
+      "vcpu": 128,
+      "memory_gb": 256,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "cx4-128x256",
+      "family": "compute",
+      "vcpu": 128,
+      "memory_gb": 256,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3d-128x320",
+      "family": "compute",
+      "vcpu": 128,
+      "memory_gb": 320,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx4-176x352",
+      "family": "compute",
+      "vcpu": 176,
+      "memory_gb": 352,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "cx3d-176x440",
+      "family": "compute",
+      "vcpu": 176,
+      "memory_gb": 440,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "cx4d-176x352",
+      "family": "compute",
+      "vcpu": 176,
+      "memory_gb": 352,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "gx3d-160x1792x8gaudi3",
+      "family": "gpu-gaudi3",
+      "vcpu": 160,
+      "memory_gb": 1792,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": 8,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx3d-160x1792x8h100",
+      "family": "gpu-h100",
+      "vcpu": 160,
+      "memory_gb": 1792,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": 8,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx3-16x80x1l4",
+      "family": "gpu-l4",
+      "vcpu": 16,
+      "memory_gb": 80,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": 1,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "gx3-32x160x2l4",
+      "family": "gpu-l4",
+      "vcpu": 32,
+      "memory_gb": 160,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": 2,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "gx3-64x320x4l4",
+      "family": "gpu-l4",
+      "vcpu": 64,
+      "memory_gb": 320,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": 4,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "gx3-24x120x1l40s",
+      "family": "gpu-l40s",
+      "vcpu": 24,
+      "memory_gb": 120,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": 1,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx3-48x240x2l40s",
+      "family": "gpu-l40s",
+      "vcpu": 48,
+      "memory_gb": 240,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": 2,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx2-8x64x1v100",
+      "family": "gpu-v100",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": 1,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx2-16x128x1v100",
+      "family": "gpu-v100",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": 1,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx2-16x128x2v100",
+      "family": "gpu-v100",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": 2,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "gx2-32x256x2v100",
+      "family": "gpu-v100",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": 2,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "hx4da-8x128",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 128,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-8x64",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-8x32",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-8x128",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 128,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-8x16",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-8x32",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 32,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-8x64",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-8x16",
+      "family": "high-frequency",
+      "vcpu": 8,
+      "memory_gb": 16,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-16x128",
+      "family": "high-frequency",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-16x64",
+      "family": "high-frequency",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-16x32",
+      "family": "high-frequency",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-16x64",
+      "family": "high-frequency",
+      "vcpu": 16,
+      "memory_gb": 64,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-16x128",
+      "family": "high-frequency",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4a-16x32",
+      "family": "high-frequency",
+      "vcpu": 16,
+      "memory_gb": 32,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-64x1408",
+      "family": "high-frequency",
+      "vcpu": 64,
+      "memory_gb": 1408,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-64x680",
+      "family": "high-frequency",
+      "vcpu": 64,
+      "memory_gb": 680,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-128x680",
+      "family": "high-frequency",
+      "vcpu": 128,
+      "memory_gb": 680,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-128x1408",
+      "family": "high-frequency",
+      "vcpu": 128,
+      "memory_gb": 1408,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-192x1408",
+      "family": "high-frequency",
+      "vcpu": 192,
+      "memory_gb": 1408,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-192x680",
+      "family": "high-frequency",
+      "vcpu": 192,
+      "memory_gb": 680,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-248x1408",
+      "family": "high-frequency",
+      "vcpu": 248,
+      "memory_gb": 1408,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "hx4da-248x680",
+      "family": "high-frequency",
+      "vcpu": 248,
+      "memory_gb": 680,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "au-syd",
+        "us-south"
+      ]
+    },
+    {
+      "name": "ux2d-2x56",
+      "family": "high-memory",
+      "vcpu": 2,
+      "memory_gb": 56,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-4x112",
+      "family": "high-memory",
+      "vcpu": 4,
+      "memory_gb": 112,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-8x224",
+      "family": "high-memory",
+      "vcpu": 8,
+      "memory_gb": 224,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-16x448",
+      "family": "high-memory",
+      "vcpu": 16,
+      "memory_gb": 448,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-36x1008",
+      "family": "high-memory",
+      "vcpu": 36,
+      "memory_gb": 1008,
+      "bandwidth_gbps": 72.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-48x1344",
+      "family": "high-memory",
+      "vcpu": 48,
+      "memory_gb": 1344,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-72x2016",
+      "family": "high-memory",
+      "vcpu": 72,
+      "memory_gb": 2016,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-96x2800",
+      "family": "high-memory",
+      "vcpu": 96,
+      "memory_gb": 2800,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ux2d-200x5600",
+      "family": "high-memory",
+      "vcpu": 200,
+      "memory_gb": 5600,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx2d-2x16",
+      "family": "memory",
+      "vcpu": 2,
+      "memory_gb": 16,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx3d-2x20",
+      "family": "memory",
+      "vcpu": 2,
+      "memory_gb": 20,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mx4-2x16",
+      "family": "memory",
+      "vcpu": 2,
+      "memory_gb": 16,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2-2x16",
+      "family": "memory",
+      "vcpu": 2,
+      "memory_gb": 16,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-2x16",
+      "family": "memory",
+      "vcpu": 2,
+      "memory_gb": 16,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mxf-2x16",
+      "family": "memory",
+      "vcpu": 2,
+      "memory_gb": 16,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mx4-4x32",
+      "family": "memory",
+      "vcpu": 4,
+      "memory_gb": 32,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2-4x32",
+      "family": "memory",
+      "vcpu": 4,
+      "memory_gb": 32,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx2d-4x32",
+      "family": "memory",
+      "vcpu": 4,
+      "memory_gb": 32,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-4x32",
+      "family": "memory",
+      "vcpu": 4,
+      "memory_gb": 32,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx3d-4x40",
+      "family": "memory",
+      "vcpu": 4,
+      "memory_gb": 40,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mxf-4x32",
+      "family": "memory",
+      "vcpu": 4,
+      "memory_gb": 32,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mx2d-8x64",
+      "family": "memory",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-8x64",
+      "family": "memory",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2-8x64",
+      "family": "memory",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4-8x64",
+      "family": "memory",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mxf-8x64",
+      "family": "memory",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mx3d-8x80",
+      "family": "memory",
+      "vcpu": 8,
+      "memory_gb": 80,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mxf-16x128",
+      "family": "memory",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx2-16x128",
+      "family": "memory",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4-16x128",
+      "family": "memory",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2d-16x128",
+      "family": "memory",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-16x128",
+      "family": "memory",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx3d-16x160",
+      "family": "memory",
+      "vcpu": 16,
+      "memory_gb": 160,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mx3d-24x240",
+      "family": "memory",
+      "vcpu": 24,
+      "memory_gb": 240,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "mx4-24x192",
+      "family": "memory",
+      "vcpu": 24,
+      "memory_gb": 192,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mxf-24x192",
+      "family": "memory",
+      "vcpu": 24,
+      "memory_gb": 192,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx4d-24x192",
+      "family": "memory",
+      "vcpu": 24,
+      "memory_gb": 192,
+      "bandwidth_gbps": 48.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2-32x256",
+      "family": "memory",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mxf-32x256",
+      "family": "memory",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx4-32x256",
+      "family": "memory",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2d-32x256",
+      "family": "memory",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-32x256",
+      "family": "memory",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx3d-32x320",
+      "family": "memory",
+      "vcpu": 32,
+      "memory_gb": 320,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx3d-48x480",
+      "family": "memory",
+      "vcpu": 48,
+      "memory_gb": 480,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx2-48x384",
+      "family": "memory",
+      "vcpu": 48,
+      "memory_gb": 384,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4-48x384",
+      "family": "memory",
+      "vcpu": 48,
+      "memory_gb": 384,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mxf-48x384",
+      "family": "memory",
+      "vcpu": 48,
+      "memory_gb": 384,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx4d-48x384",
+      "family": "memory",
+      "vcpu": 48,
+      "memory_gb": 384,
+      "bandwidth_gbps": 96.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2d-48x384",
+      "family": "memory",
+      "vcpu": 48,
+      "memory_gb": 384,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4-64x512",
+      "family": "memory",
+      "vcpu": 64,
+      "memory_gb": 512,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mxf-64x512",
+      "family": "memory",
+      "vcpu": 64,
+      "memory_gb": 512,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx3d-64x640",
+      "family": "memory",
+      "vcpu": 64,
+      "memory_gb": 640,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx2d-64x512",
+      "family": "memory",
+      "vcpu": 64,
+      "memory_gb": 512,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-64x512",
+      "family": "memory",
+      "vcpu": 64,
+      "memory_gb": 512,
+      "bandwidth_gbps": 128.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2-64x512",
+      "family": "memory",
+      "vcpu": 64,
+      "memory_gb": 512,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx2-96x768",
+      "family": "memory",
+      "vcpu": 96,
+      "memory_gb": 768,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4-96x768",
+      "family": "memory",
+      "vcpu": 96,
+      "memory_gb": 768,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx4d-96x768",
+      "family": "memory",
+      "vcpu": 96,
+      "memory_gb": 768,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx3d-96x960",
+      "family": "memory",
+      "vcpu": 96,
+      "memory_gb": 960,
+      "bandwidth_gbps": 192.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx2d-96x768",
+      "family": "memory",
+      "vcpu": 96,
+      "memory_gb": 768,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx3d-128x1280",
+      "family": "memory",
+      "vcpu": 128,
+      "memory_gb": 1280,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx4-128x1024",
+      "family": "memory",
+      "vcpu": 128,
+      "memory_gb": 1024,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2d-128x1024",
+      "family": "memory",
+      "vcpu": 128,
+      "memory_gb": 1024,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx4d-128x1024",
+      "family": "memory",
+      "vcpu": 128,
+      "memory_gb": 1024,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx2-128x1024",
+      "family": "memory",
+      "vcpu": 128,
+      "memory_gb": 1024,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "mx3d-176x1760",
+      "family": "memory",
+      "vcpu": 176,
+      "memory_gb": 1760,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": null
+    },
+    {
+      "name": "mx4d-176x1408",
+      "family": "memory",
+      "vcpu": 176,
+      "memory_gb": 1408,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "mx4-176x1408",
+      "family": "memory",
+      "vcpu": 176,
+      "memory_gb": 1408,
+      "bandwidth_gbps": 200.0,
+      "gpu_count": null,
+      "numa_count": 2,
+      "regions": [
+        "us-south"
+      ]
+    },
+    {
+      "name": "nxf-1x8",
+      "family": "nano",
+      "vcpu": 1,
+      "memory_gb": 8,
+      "bandwidth_gbps": 1.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "nxf-1x4",
+      "family": "nano",
+      "vcpu": 1,
+      "memory_gb": 4,
+      "bandwidth_gbps": 1.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "nxf-1x2",
+      "family": "nano",
+      "vcpu": 1,
+      "memory_gb": 2,
+      "bandwidth_gbps": 1.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "nxf-1x1",
+      "family": "nano",
+      "vcpu": 1,
+      "memory_gb": 1,
+      "bandwidth_gbps": 1.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "nxf-2x2",
+      "family": "nano",
+      "vcpu": 2,
+      "memory_gb": 2,
+      "bandwidth_gbps": 2.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "nxf-2x1",
+      "family": "nano",
+      "vcpu": 2,
+      "memory_gb": 1,
+      "bandwidth_gbps": 2.0,
+      "gpu_count": null,
+      "numa_count": 1,
+      "regions": null
+    },
+    {
+      "name": "ox2-2x16",
+      "family": "storage-optimized",
+      "vcpu": 2,
+      "memory_gb": 16,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-4x32",
+      "family": "storage-optimized",
+      "vcpu": 4,
+      "memory_gb": 32,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-8x64",
+      "family": "storage-optimized",
+      "vcpu": 8,
+      "memory_gb": 64,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-16x128",
+      "family": "storage-optimized",
+      "vcpu": 16,
+      "memory_gb": 128,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-32x256",
+      "family": "storage-optimized",
+      "vcpu": 32,
+      "memory_gb": 256,
+      "bandwidth_gbps": 64.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-64x512",
+      "family": "storage-optimized",
+      "vcpu": 64,
+      "memory_gb": 512,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-96x768",
+      "family": "storage-optimized",
+      "vcpu": 96,
+      "memory_gb": 768,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "ox2-128x1024",
+      "family": "storage-optimized",
+      "vcpu": 128,
+      "memory_gb": 1024,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-2x28",
+      "family": "very-high-memory",
+      "vcpu": 2,
+      "memory_gb": 28,
+      "bandwidth_gbps": 4.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-4x56",
+      "family": "very-high-memory",
+      "vcpu": 4,
+      "memory_gb": 56,
+      "bandwidth_gbps": 8.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-8x112",
+      "family": "very-high-memory",
+      "vcpu": 8,
+      "memory_gb": 112,
+      "bandwidth_gbps": 16.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-16x224",
+      "family": "very-high-memory",
+      "vcpu": 16,
+      "memory_gb": 224,
+      "bandwidth_gbps": 32.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-44x616",
+      "family": "very-high-memory",
+      "vcpu": 44,
+      "memory_gb": 616,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-88x1232",
+      "family": "very-high-memory",
+      "vcpu": 88,
+      "memory_gb": 1232,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-144x2016",
+      "family": "very-high-memory",
+      "vcpu": 144,
+      "memory_gb": 2016,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    },
+    {
+      "name": "vx2d-176x2464",
+      "family": "very-high-memory",
+      "vcpu": 176,
+      "memory_gb": 2464,
+      "bandwidth_gbps": 80.0,
+      "gpu_count": null,
+      "numa_count": null,
+      "regions": null
+    }
+  ],
+  "bms_profiles": [
+    {
+      "name": "bx3-metal-48x256",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 24,
+      "cpu_speed": null,
+      "memory_gb": 256,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "bx3d-metal-48x256",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 24,
+      "cpu_speed": null,
+      "memory_gb": 256,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "in-mum-1",
+            "available": true
+          },
+          {
+            "zone": "in-mum-2",
+            "available": true
+          },
+          {
+            "zone": "in-mum-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "bx3-metal-64x256",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 32,
+      "cpu_speed": null,
+      "memory_gb": 256,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "bx3d-metal-64x256",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 32,
+      "cpu_speed": null,
+      "memory_gb": 256,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "in-mum-1",
+            "available": true
+          },
+          {
+            "zone": "in-mum-2",
+            "available": true
+          },
+          {
+            "zone": "in-mum-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "bx2d-metal-96x384",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 384,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-1",
+            "available": true
+          },
+          {
+            "zone": "eu-es-2",
+            "available": true
+          },
+          {
+            "zone": "eu-es-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "eu-gb-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-east-1",
+            "available": true
+          },
+          {
+            "zone": "us-east-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "bx2-metal-96x384",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 384,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-1",
+            "available": true
+          },
+          {
+            "zone": "eu-es-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "bx3d-metal-192x1024",
+      "family": "balanced",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 96,
+      "cpu_speed": null,
+      "memory_gb": 1024,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "cx3-metal-48x128",
+      "family": "compute",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 24,
+      "cpu_speed": null,
+      "memory_gb": 128,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "cx3d-metal-48x128",
+      "family": "compute",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 24,
+      "cpu_speed": null,
+      "memory_gb": 128,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "cx3-metal-64x128",
+      "family": "compute",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 32,
+      "cpu_speed": null,
+      "memory_gb": 128,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "cx3d-metal-64x128",
+      "family": "compute",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 32,
+      "cpu_speed": null,
+      "memory_gb": 128,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "cx2d-metal-96x192",
+      "family": "compute",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 192,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-1",
+            "available": true
+          },
+          {
+            "zone": "eu-es-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "eu-gb-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-east-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "cx2-metal-96x192",
+      "family": "compute",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 192,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-1",
+            "available": true
+          },
+          {
+            "zone": "eu-es-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "ux3d-metal-16x512",
+      "family": "high-memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 8,
+      "cpu_speed": null,
+      "memory_gb": 512,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "in-che-1",
+            "available": true
+          },
+          {
+            "zone": "in-che-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "in-mum-1",
+            "available": true
+          },
+          {
+            "zone": "in-mum-2",
+            "available": true
+          },
+          {
+            "zone": "in-mum-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "ux3-metal-16x512",
+      "family": "high-memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 8,
+      "cpu_speed": null,
+      "memory_gb": 512,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "ux2d-metal-224x6144",
+      "family": "high-memory",
+      "cpu_socket_count": 4,
+      "cpu_core_count": 112,
+      "cpu_speed": null,
+      "memory_gb": 6144,
+      "network_bandwidth": null,
+      "zones": [],
+      "capacity_by_region": {
+        "au-syd": [],
+        "br-sao": [],
+        "ca-mon": [],
+        "ca-tor": [],
+        "eu-de": [],
+        "eu-es": [],
+        "eu-gb": [],
+        "in-che": [],
+        "in-mum": [],
+        "jp-osa": [],
+        "jp-tok": [],
+        "us-east": [],
+        "us-south": []
+      }
+    },
+    {
+      "name": "mx3-metal-16x128",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 8,
+      "cpu_speed": null,
+      "memory_gb": 128,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3d-metal-16x128",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 8,
+      "cpu_speed": null,
+      "memory_gb": 128,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3d-metal-48x512",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 24,
+      "cpu_speed": null,
+      "memory_gb": 512,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "in-che-1",
+            "available": true
+          },
+          {
+            "zone": "in-che-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "in-mum-1",
+            "available": true
+          },
+          {
+            "zone": "in-mum-2",
+            "available": true
+          },
+          {
+            "zone": "in-mum-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3-metal-48x512",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 24,
+      "cpu_speed": null,
+      "memory_gb": 512,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3-metal-64x512",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 32,
+      "cpu_speed": null,
+      "memory_gb": 512,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3d-metal-64x512",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 32,
+      "cpu_speed": null,
+      "memory_gb": 512,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "in-che-1",
+            "available": true
+          },
+          {
+            "zone": "in-che-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "in-mum-1",
+            "available": true
+          },
+          {
+            "zone": "in-mum-2",
+            "available": true
+          },
+          {
+            "zone": "in-mum-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx2d-metal-96x768",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 768,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "eu-gb-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-east-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3d-metal-96x1024",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 1024,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx2de-metal-96x768",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 768,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx2-metal-96x768",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 768,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "eu-es-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3d-metal-128x1024",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 64,
+      "cpu_speed": null,
+      "memory_gb": 1024,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "ca-tor-2",
+            "available": true
+          },
+          {
+            "zone": "ca-tor-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mx3d-metal-192x2048",
+      "family": "memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 96,
+      "cpu_speed": null,
+      "memory_gb": 2048,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-2"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "br-sao-1",
+            "available": true
+          },
+          {
+            "zone": "br-sao-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "eu-gb-1",
+            "available": true
+          },
+          {
+            "zone": "eu-gb-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-east-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-2",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "vx3-metal-16x256",
+      "family": "very-high-memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 8,
+      "cpu_speed": null,
+      "memory_gb": 256,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "jp-tok-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "vx3d-metal-16x256",
+      "family": "very-high-memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 8,
+      "cpu_speed": null,
+      "memory_gb": 256,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "in-mum-1",
+            "available": true
+          },
+          {
+            "zone": "in-mum-2",
+            "available": true
+          },
+          {
+            "zone": "in-mum-3",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "vx2d-metal-96x1536",
+      "family": "very-high-memory",
+      "cpu_socket_count": 2,
+      "cpu_core_count": 48,
+      "cpu_speed": null,
+      "memory_gb": 1536,
+      "network_bandwidth": null,
+      "zones": [
+        "us-south-1",
+        "us-south-2",
+        "us-south-3"
+      ],
+      "capacity_by_region": {
+        "au-syd": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "br-sao": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-mon": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "ca-tor": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-de": [
+          {
+            "zone": "eu-de-1",
+            "available": true
+          },
+          {
+            "zone": "eu-de-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-es": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "eu-gb": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-che": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "in-mum": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-osa": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "jp-tok": [
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-east": [
+          {
+            "zone": "us-east-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-1",
+            "available": false
+          },
+          {
+            "zone": "us-south-2",
+            "available": false
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ],
+        "us-south": [
+          {
+            "zone": "us-south-1",
+            "available": true
+          },
+          {
+            "zone": "us-south-2",
+            "available": true
+          },
+          {
+            "zone": "us-south-3",
+            "available": false
+          }
+        ]
+      }
+    }
+  ]
+}

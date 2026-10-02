@@ -1,0 +1,11 @@
+{
+  "default": "vpc",
+  "views": [
+    {
+      "id": "vpc",
+      "label": "VPC",
+      "hint": "Compute · Networking · Storage · Security · Connectivity · Platform",
+      "path": "data/vpc"
+    }
+  ]
+}

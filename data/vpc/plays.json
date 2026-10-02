@@ -1,0 +1,28 @@
+{
+  "view": {
+    "id": "vpc",
+    "label": "IBM Cloud VPC",
+    "short": "VPC",
+    "mode": "mapped",
+    "blurb": "Explore integrations, services, and synergies across the IBM Cloud Virtual Private Cloud platform."
+  },
+  "plays": {
+    "0": { "id": 0, "name": "VPC Core",               "short": "VPC Core",      "cat": "vpc",          "varName": "--play-0" },
+    "1": { "id": 1, "name": "Compute",                 "short": "Compute",       "cat": "compute",      "varName": "--play-1" },
+    "2": { "id": 2, "name": "Networking",              "short": "Networking",    "cat": "networking",   "varName": "--play-2" },
+    "3": { "id": 3, "name": "Storage",                 "short": "Storage",       "cat": "storage",      "varName": "--play-3" },
+    "4": { "id": 4, "name": "Security & Compliance",   "short": "Security",      "cat": "security",     "varName": "--play-4" },
+    "5": { "id": 5, "name": "Connectivity",            "short": "Connectivity",  "cat": "connectivity", "varName": "--play-5" },
+    "6": { "id": 6, "name": "IBM Cloud Platform",      "short": "Platform",      "cat": "platform",     "varName": "--play-6" }
+  },
+  "playOrder": [0, 1, 2, 3, 4, 5, 6],
+  "categories": [
+    { "id": "vpc",          "label": "VPC Core",               "playId": 0 },
+    { "id": "compute",      "label": "Compute",                "playId": 1 },
+    { "id": "networking",   "label": "Networking",             "playId": 2 },
+    { "id": "storage",      "label": "Storage",                "playId": 3 },
+    { "id": "security",     "label": "Security & Compliance",  "playId": 4 },
+    { "id": "connectivity", "label": "Connectivity",           "playId": 5 },
+    { "id": "platform",     "label": "IBM Cloud Platform",     "playId": 6 }
+  ]
+}

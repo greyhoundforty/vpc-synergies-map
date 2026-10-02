@@ -1,0 +1,1032 @@
+[
+  {
+    "id": "vpc_core",
+    "label": "IBM Cloud VPC",
+    "cat": "vpc",
+    "plays": [0],
+    "hub": true,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-getting-started",
+    "desc": "IBM Cloud Virtual Private Cloud (VPC) is a software-defined, logically isolated network environment on the IBM Cloud public infrastructure. It gives you full control over your networking topology — subnets, IP addressing, routing, security groups, and access control lists — while connecting seamlessly to IBM Cloud services and on-premises networks. All compute, storage, and connectivity resources in this map live inside a VPC.",
+    "value": "Deliver enterprise workloads in a private, secure, and compliant cloud network without the overhead of managing physical infrastructure.",
+    "questions": [
+      "Are your workloads currently running on-premises, in a public cloud, or both?",
+      "Do you have regulatory requirements that mandate network isolation or data residency?",
+      "How do you handle connectivity between your data centers and cloud workloads today?"
+    ],
+    "differentiators": [
+      "Fully software-defined: subnets, routing, ACLs, and security groups managed via API/CLI/Terraform",
+      "Multi-zone architecture for high availability within a single region",
+      "Supports both x86 and IBM Z (s390x) compute resources in the same VPC",
+      "IBM FS Cloud ready — meets Financial Services regulated workload requirements"
+    ],
+    "competitors": ["AWS VPC", "Azure Virtual Network", "GCP VPC"]
+  },
+  {
+    "id": "vsi",
+    "label": "Virtual Server Instances",
+    "cat": "compute",
+    "plays": [1],
+    "hub": false,
+    "status": "ga",
+    "os": ["linux", "windows"],
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-vsi",
+    "desc": "IBM Cloud Virtual Server Instances (VSI) for VPC are on-demand compute instances provisioned inside your VPC. Choose from Balanced, Compute, Memory, GPU, Confidential Computing, and High-Frequency profile families. Each instance inherits VPC-wide networking — security groups, subnets, and routing — with no additional configuration. Network throughput scales up to 80 Gbps, and instances can be stopped, started, resized, or imaged without leaving the VPC boundary.",
+    "value": "Provision right-sized, high-throughput compute in seconds inside a secure, isolated VPC — no pod boundaries, no shared-tenancy risk.",
+    "questions": [
+      "Are you running Linux or Windows workloads, and do you need to bring your own license?",
+      "What are your peak CPU and memory requirements, and how often do they fluctuate?",
+      "Do any of your workloads require hardware-level security (SGX, TDX, or secure boot)?",
+      "Are you currently paying for compute capacity you don't always use?"
+    ],
+    "differentiators": [
+      "10 profile families including Confidential Computing (Intel SGX/TDX) built into the profile — no separate service",
+      "Network bandwidth up to 80 Gbps with burstable CPU option for variable workloads",
+      "Consistent provisioning in seconds; stop/start billed at $0 for stopped instances",
+      "BYOL support with custom images and private catalog"
+    ],
+    "competitors": ["AWS EC2", "Azure Virtual Machines", "GCP Compute Engine"]
+  },
+  {
+    "id": "bare_metal",
+    "label": "Bare Metal Servers",
+    "cat": "compute",
+    "plays": [1],
+    "hub": false,
+    "status": "ga",
+    "os": ["linux", "windows"],
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-bare-metal-servers",
+    "desc": "IBM Cloud Bare Metal Servers for VPC are single-tenant physical servers that sit inside your VPC. They deliver up to 200 Gbps of network throughput via SmartNICs and integrate fully with VPC networking, security groups, and subnets — just like VSIs. Ideal for high-performance databases, HPC workloads, VMware, and compliance scenarios that require hardware-level isolation. Servers provision in approximately 10 minutes and support iPXE network boot for BYOL OS images.",
+    "value": "Run performance-sensitive workloads on dedicated, single-tenant hardware while keeping the same VPC networking, security, and management plane as your virtual servers.",
+    "questions": [
+      "Do any workloads require physical hardware isolation for compliance or licensing reasons?",
+      "Are you running VMware, high-performance databases, or HPC applications that saturate shared hypervisors?",
+      "How important is maximum network throughput — are you hitting NIC limits on current infrastructure?",
+      "Do you need to bring your own OS image or use iPXE boot?"
+    ],
+    "differentiators": [
+      "Up to 200 Gbps SmartNIC bandwidth — 2× the limit of comparable cloud bare metal",
+      "Full VPC networking stack: same security groups, subnets, and routing as VSIs",
+      "iPXE network boot enables any OS image including fully custom BYOL configurations",
+      "~10-minute provisioning with stop/start lifecycle management via UI, CLI, and API"
+    ],
+    "competitors": ["AWS EC2 Bare Metal", "Azure Dedicated Host", "GCP Bare Metal Solution"]
+  },
+  {
+    "id": "instance_profiles",
+    "label": "Instance Profiles",
+    "cat": "compute",
+    "plays": [1],
+    "hub": false,
+    "status": "ga",
+    "os": ["linux", "windows"],
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-profiles",
+    "desc": "Instance profiles are predefined combinations of vCPU, RAM, network bandwidth, and storage bandwidth that define what a VSI can do. IBM Cloud VPC offers 10 profile families: Balanced, Compute, Memory, Very High Memory, Ultra High Memory, GPU, Storage-Optimized, Confidential Computing, Flex, and High Frequency. Profiles are listed via the console, CLI (`ibmcloud is instance-profiles`), or API. Network and storage bandwidth are allocated at a 3:1 ratio with optional bandwidth pooling.",
+    "value": "Match compute to workload precisely — from ultra-high memory for SAP HANA to confidential computing profiles with hardware-enforced SGX/TDX, all within a single product family.",
+    "questions": [
+      "What are the CPU, memory, and I/O profiles of your key workloads?",
+      "Do any workloads require hardware-enforced confidential computing or secure enclaves?",
+      "Are you running SAP, Oracle, or other workloads with socket-based or core-based licensing?",
+      "Do you need GPU acceleration for AI inference or HPC?"
+    ],
+    "differentiators": [
+      "Confidential Computing profiles embed Intel SGX or TDX — no separate enclave service required",
+      "High-Frequency profiles deliver higher clock speeds for latency-sensitive workloads",
+      "Bandwidth pooling lets you redistribute network/storage allocation across instances",
+      "Flex profiles allow fine-grained vCPU scaling for cost optimization"
+    ],
+    "competitors": ["AWS EC2 Instance Types", "Azure VM Sizes", "GCP Machine Types"]
+  },
+  {
+    "id": "dedicated_hosts",
+    "label": "Dedicated Hosts",
+    "cat": "compute",
+    "plays": [1],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-dedicated-hosts-instances",
+    "desc": "IBM Cloud Dedicated Hosts for VPC allocate a physical server to a single account within a VPC. VSIs are then pinned to that host, giving you guaranteed single-tenant placement, visibility into socket and core counts, and the ability to optimize license costs for software metered per socket or core. Dedicated hosts are created in dedicated groups and billed per-host-hour. They integrate natively with VPC networking — no extra configuration needed.",
+    "value": "Cut per-socket or per-core software license costs and meet strict data-isolation requirements by placing workloads on dedicated hardware that is still fully managed by the VPC control plane.",
+    "questions": [
+      "Do you have enterprise software licenses (SAP, Oracle, Microsoft) billed per socket or core?",
+      "Do compliance mandates require proof of physical hardware isolation?",
+      "Are you consolidating on-premises dedicated servers into the cloud?",
+      "Would visibility into socket and core topology help with capacity planning?"
+    ],
+    "differentiators": [
+      "Host-level socket and core visibility — critical for optimizing per-socket/per-core licensed software",
+      "Mix dedicated and shared VSIs within the same VPC without separate networking configuration",
+      "Fully integrated with VPC security groups, subnets, and IAM policies",
+      "Supports host-affinity and anti-affinity placement policies"
+    ],
+    "competitors": ["AWS EC2 Dedicated Hosts", "Azure Dedicated Host", "GCP Sole-Tenant Nodes"]
+  },
+  {
+    "id": "instance_groups",
+    "label": "Instance Groups",
+    "cat": "compute",
+    "plays": [1],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-bulk-provisioning",
+    "desc": "Instance Groups are collections of identically configured VSIs created from a single instance template within a VPC. They form the foundation for Auto Scale and bulk provisioning. All group members share the same VPC routing, subnets, and security groups automatically. A single CLI command can provision dozens of instances; the group exposes a single API endpoint for lifecycle management and integrates with IBM Cloud Load Balancer for automatic pool registration.",
+    "value": "Eliminate manual fleet management — define your workload template once and let instance groups handle consistent provisioning, zone distribution, and load-balancer registration at any scale.",
+    "questions": [
+      "Are you running horizontally scalable workloads like web tiers, batch processors, or API services?",
+      "How do you currently manage adding and removing servers during traffic spikes?",
+      "Do you need to distribute workloads across multiple availability zones automatically?",
+      "How much time does your team spend on repetitive VM provisioning tasks?"
+    ],
+    "differentiators": [
+      "Single instance template ensures configuration consistency across the entire fleet",
+      "VPC-wide networking — all group members share routing and security groups with zero extra config",
+      "Bulk provisioning via CLI reduces dozens of API calls to a single command",
+      "Native integration with IBM Cloud Load Balancer for automatic pool registration"
+    ],
+    "competitors": ["AWS EC2 Auto Scaling Groups", "Azure VM Scale Sets", "GCP Managed Instance Groups"]
+  },
+  {
+    "id": "auto_scale",
+    "label": "Auto Scale for VPC",
+    "cat": "compute",
+    "plays": [1],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-creating-auto-scale-instance-group",
+    "desc": "Auto Scale for VPC automatically adds or removes VSIs in an instance group in response to metric-based scaling policies — CPU, memory, or network utilization. A scaling manager monitors the group, applies target-utilization rules (e.g. maintain 70% CPU), and adds newly provisioned instances directly to the VPC Load Balancer pool. Custom user-data scripts run on each new instance, and private-catalog images can be used for fully controlled fleet composition.",
+    "value": "Maintain performance and reduce cost automatically — Auto Scale keeps your application right-sized across demand spikes without manual intervention, all within your VPC's compliance boundary.",
+    "questions": [
+      "Does your application experience predictable or unpredictable traffic spikes?",
+      "Are you currently over-provisioning to avoid capacity shortfalls?",
+      "How quickly do you need to scale out — seconds or minutes?",
+      "Do you need new instances to automatically join a load balancer pool without manual steps?"
+    ],
+    "differentiators": [
+      "Policy-driven target utilization scaling — set a %-based threshold, not just fixed min/max counts",
+      "Native NLB/ALB integration: new instances automatically join the load balancer pool",
+      "Supports private-catalog images for air-gapped or compliance-controlled fleet scaling",
+      "Works across zones for high-availability scaling without manual AZ configuration"
+    ],
+    "competitors": ["AWS EC2 Auto Scaling", "Azure VM Scale Set Autoscale", "GCP Managed Instance Group Autoscaler"]
+  },
+  {
+    "id": "subnets",
+    "label": "Subnets",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-subnets-vpc",
+    "desc": "Subnets are private IP address ranges that live inside a VPC and are confined to a single zone. They enable logical isolation of workload tiers — web, application, database — and provide automatic intra-VPC routing via an implicit router, eliminating the need for manual route tables for basic east-west connectivity. Subnets support IBM-assigned CIDR prefixes or customer-supplied BYOIP blocks.",
+    "value": "Partition workloads into isolated network segments across availability zones — with zero-configuration east-west routing built in.",
+    "questions": [
+      "How do you currently segment your network tiers (web, app, database)?",
+      "Do you need to bring your own IP address space (BYOIP) to the cloud?",
+      "Are your workloads spread across multiple availability zones today?"
+    ],
+    "differentiators": [
+      "Implicit intra-VPC router provides automatic east-west routing — no manual route tables needed",
+      "Single-zone scope with multi-zone VPC architecture for high availability",
+      "BYOIP support for full control over address planning and compliance",
+      "Default address prefix suggestions accelerate provisioning for new users"
+    ],
+    "competitors": ["AWS VPC Subnets", "Azure Virtual Network Subnets", "GCP Subnetworks"]
+  },
+  {
+    "id": "security_groups",
+    "label": "Security Groups",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-using-security-groups",
+    "desc": "Security Groups are stateful, instance-level firewalls that filter inbound and outbound traffic by protocol, port, and source or destination. They attach to Virtual Network Interfaces (VNIs) on VSIs, load balancers, and endpoint gateways. By default, all inbound traffic is denied and all outbound traffic is allowed; rules are additive and evaluated together. A default security group applies automatically to every new VPC resource, providing a baseline protection posture.",
+    "value": "Enforce least-privilege network access per instance — stateful rules that don't require ACL mirroring, automatically applied to every new resource.",
+    "questions": [
+      "How granular is your current network access control — per subnet or per instance?",
+      "Do you have compliance requirements that mandate stateful traffic inspection?",
+      "How do you manage firewall rule changes today — are they audited and versioned?"
+    ],
+    "differentiators": [
+      "Attached to VNIs, not subnets — enables per-instance policies without subnet restructuring",
+      "Stateful rules eliminate the need to mirror inbound/outbound pairs as with ACLs",
+      "Default security group auto-applies to every new resource for zero-gap protection",
+      "Supports rule references to other security groups for dynamic, group-based policies"
+    ],
+    "competitors": ["AWS EC2 Security Groups", "Azure Network Security Groups", "GCP Firewall Rules"]
+  },
+  {
+    "id": "network_acls",
+    "label": "Network ACLs",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-using-acls",
+    "desc": "Network Access Control Lists (ACLs) are stateless, subnet-level traffic filters that evaluate inbound and outbound rules in priority order. They complement security groups to provide a second layer of defense — useful for explicit deny rules at the subnet edge, broad traffic blocking, or regulatory frameworks like PCI-DSS and HIPAA that require both stateful and stateless controls. The default ACL allows all traffic, letting you tighten incrementally.",
+    "value": "Add a stateless subnet-edge firewall layer that satisfies defense-in-depth requirements for PCI, HIPAA, and other regulated workloads.",
+    "questions": [
+      "Do your compliance frameworks require both stateful and stateless network controls?",
+      "Are there IP ranges or ports you need to explicitly deny at the subnet boundary?",
+      "How do you enforce network segmentation between your workload tiers today?"
+    ],
+    "differentiators": [
+      "Stateless evaluation enables explicit deny rules not possible with security groups alone",
+      "Subnet-level scope covers all instances in a tier with a single ACL policy",
+      "Rule priority ordering gives fine-grained control over traffic evaluation sequence",
+      "Satisfies dual-control requirements (stateful + stateless) for PCI-DSS, HIPAA, FedRAMP"
+    ],
+    "competitors": ["AWS Network ACLs", "Azure NSG subnet-level rules", "GCP Firewall hierarchical policies"]
+  },
+  {
+    "id": "public_gateway",
+    "label": "Public Gateway",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-public-gateways",
+    "desc": "A Public Gateway provides outbound-only Internet access for all instances in a subnet via managed source NAT (SNAT), without exposing those instances to inbound connections. It is attached at the subnet level, is zone-specific, and requires no dedicated NAT appliance to manage or scale. One public gateway per zone can serve all subnets in that zone, and it integrates with IBM Cloud Direct Link for hybrid connectivity scenarios.",
+    "value": "Give private subnet instances secure outbound Internet access — managed, highly available, and zero-ops, with no NAT appliances to provision or patch.",
+    "questions": [
+      "Do your backend instances need to pull software updates, call external APIs, or access public endpoints?",
+      "Are you currently managing NAT gateways or NAT instances — what is that operational overhead costing you?",
+      "Do any subnets need outbound-only Internet access while blocking all inbound connections?"
+    ],
+    "differentiators": [
+      "Fully managed SNAT — no NAT VM to provision, patch, scale, or monitor",
+      "Outbound-only by design: instances remain unreachable from the Internet",
+      "Zone-specific for high availability — one gateway serves all subnets in a zone",
+      "Compatible with Direct Link and VPN Gateway for hybrid egress routing"
+    ],
+    "competitors": ["AWS NAT Gateway", "Azure Virtual Network NAT", "GCP Cloud NAT"]
+  },
+  {
+    "id": "floating_ip",
+    "label": "Floating IP",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-fip-about",
+    "desc": "A Floating IP is a publicly routable IPv4 address allocated from IBM's pool and attached to a Virtual Network Interface on a VSI or other resource, making it reachable from the Internet. Floating IPs are independent of the instance lifecycle — they can be detached and reassigned to another instance in seconds, enabling rapid failover without DNS propagation delays. IP-spoofing protection at the VNI level prevents misuse.",
+    "value": "Assign a portable public IP to any instance for direct Internet reachability — reassignable in seconds for fast failover without DNS changes.",
+    "questions": [
+      "Do any of your instances need direct inbound Internet access (e.g., jump servers, public APIs)?",
+      "How do you handle failover for public-facing instances today — DNS TTL, load balancer, or manual re-IP?",
+      "Do you need a stable public IP address that survives instance replacement?"
+    ],
+    "differentiators": [
+      "Lifecycle-independent: detach and re-attach to any instance without changing the public IP",
+      "Reassignment takes seconds — faster failover than DNS TTL-based approaches",
+      "IP-spoofing protection at the VNI level is enforced automatically",
+      "No charge for reserved but unattached Floating IP (unlike AWS Elastic IPs)"
+    ],
+    "competitors": ["AWS Elastic IP", "Azure Public IP Address", "GCP External IP Addresses"]
+  },
+  {
+    "id": "nlb",
+    "label": "Network Load Balancer",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-network-load-balancers",
+    "desc": "The IBM Cloud Network Load Balancer (NLB) operates at Layer 4 and distributes TCP and UDP traffic across VPC instances with ultra-low latency. It provides a single static IP per zone, supports up to 15 subnets per load balancer for high availability across zones, and integrates natively with VPC Auto Scale so newly provisioned instances are automatically added to the backend pool. Built-in health monitoring removes unhealthy targets without manual intervention.",
+    "value": "Distribute high-throughput, latency-sensitive TCP/UDP traffic across VPC instances with a stable static IP and automatic pool management — no appliances to manage.",
+    "questions": [
+      "Are you running latency-sensitive workloads like financial trading, gaming, or real-time data pipelines?",
+      "Do you need a static IP for your load balancer endpoint (e.g., for firewall allow-listing)?",
+      "How are you currently distributing traffic across server pools — are there single points of failure?"
+    ],
+    "differentiators": [
+      "Single static IP per zone — ideal for clients that require allow-listing by IP",
+      "Layer 4 (TCP/UDP) for maximum throughput and minimum latency overhead",
+      "Auto-registers new Auto Scale instances into the backend pool automatically",
+      "Built-in health checks remove unhealthy backends without operator intervention"
+    ],
+    "competitors": ["AWS Network Load Balancer", "Azure Load Balancer (Standard)", "GCP Network Load Balancing"]
+  },
+  {
+    "id": "alb",
+    "label": "Application Load Balancer",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-load-balancers-about",
+    "desc": "The IBM Cloud Application Load Balancer (ALB) operates at Layer 7 (HTTP/HTTPS) and supports URL-based routing, host-based routing, SSL/TLS termination, and session persistence. It can front VSIs, bare-metal servers, and even PowerVS instances, making it one of the few load balancers with cross-infrastructure routing. Up to 15 subnets are supported for zone-spanning high availability. IAM-based access controls govern who can modify listener and pool configuration.",
+    "value": "Route HTTP/HTTPS traffic intelligently across your VPC workloads — content-aware routing, centralized TLS termination, and cross-infrastructure backend support in a single managed service.",
+    "questions": [
+      "Do you need to route traffic based on URL path or hostname (e.g., /api vs /static)?",
+      "Where does TLS terminate today — at each server or at a centralized proxy?",
+      "Are any of your backend services running on bare metal, PowerVS, or classic infrastructure?"
+    ],
+    "differentiators": [
+      "Layer 7 content-based routing: path-based and host-based rules in a single listener",
+      "Cross-infrastructure backends: route to VSIs, bare metal, and PowerVS instances",
+      "Centralized TLS/SSL termination reduces certificate management overhead",
+      "IAM-integrated: fine-grained access control for listener and pool configuration changes"
+    ],
+    "competitors": ["AWS Application Load Balancer", "Azure Application Gateway", "GCP Application Load Balancing"]
+  },
+  {
+    "id": "dns_services",
+    "label": "DNS Services",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-dns-srvcs",
+    "desc": "IBM Cloud DNS Services provides both public and private authoritative DNS resolution. Private DNS zones are scoped to specific VPCs and are not resolvable from the public Internet, enabling internal service discovery without DNS leakage. Public zones include global anycast for low-latency resolution and built-in DDoS mitigation. DNSSEC is supported for both zone types. VPC resources can register automatically, and cross-VPC resolution is supported via permitted networks.",
+    "value": "Resolve internal VPC hostnames privately without Internet-visible DNS — scoped to your VPC, protected by DDoS mitigation, and integrated with DNSSEC.",
+    "questions": [
+      "How do your services discover each other inside the cloud — static IPs, DNS, or service registries?",
+      "Do you have compliance requirements around DNS data residency or preventing DNS leakage?",
+      "Are you currently managing your own DNS servers inside VMs — what is that costing you?"
+    ],
+    "differentiators": [
+      "Private zones scoped per VPC — internal hostnames never exposed to the public Internet",
+      "Cross-VPC resolution via permitted networks without DNS forwarders",
+      "Global anycast for public zones delivers sub-10ms resolution globally",
+      "DNSSEC support for both public and private zones for tamper-proof resolution"
+    ],
+    "competitors": ["AWS Route 53 (private hosted zones)", "Azure Private DNS", "GCP Cloud DNS"]
+  },
+  {
+    "id": "vni",
+    "label": "Virtual Network Interface",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-vni-about",
+    "desc": "A Virtual Network Interface (VNI) is a first-class VPC resource representing a logical NIC in a subnet. VNIs carry their own CRN, IAM policies, security group memberships, and multiple secondary private IP addresses. They can be detached from one instance and re-attached to another without IP change — enabling fast failover and network identity portability. IP-spoofing protection is enforced per VNI. VNIs are the attachment point for Floating IPs and security group rules.",
+    "value": "Decouple network identity from compute — move a VNI between instances in seconds for failover, and manage security policies on the network interface independently of the instance lifecycle.",
+    "questions": [
+      "Do you need to move a network identity (IP, security policy) from one instance to another quickly?",
+      "Are you building high-availability active-passive configurations?",
+      "Do different applications on the same instance need distinct security group policies?"
+    ],
+    "differentiators": [
+      "Independent lifecycle: detach and re-attach to any instance without IP address changes",
+      "First-class IAM resource — security policies on the interface, not just the instance",
+      "Multiple secondary IPs per VNI for virtual appliances or multi-homed configurations",
+      "IP-spoofing protection enforced at the VNI level, not just the subnet"
+    ],
+    "competitors": ["AWS Elastic Network Interface (ENI)", "Azure Network Interface", "GCP Network Interface"]
+  },
+  {
+    "id": "public_address_ranges",
+    "label": "Public Address Ranges",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-par",
+    "desc": "Public Address Ranges (PAR) for VPC let you reserve a contiguous block of IBM-managed public IPv4 addresses and bind it to a VPC in an availability zone. Once bound, the range integrates with VPC ingress routing tables — traffic destined for any IP in the range can be steered to a next-hop inside the VPC (a firewall, NVF appliance, or load balancer) before delivery. The range is a regional resource that can be moved between VPCs and zones without releasing individual IPs. Custom authorized CIDRs (BYOIP) — bringing your own publicly routable IPv4 range into VPC as a PAR pool — is a separate beta feature currently available to allowlisted accounts (announced September 29 2026).",
+    "value": "Reserve a contiguous public IP block and route all inbound Internet traffic through a centralized inspection point before it reaches your instances — then move the entire prefix between zones or VPCs for DR without re-advertising addresses.",
+    "questions": [
+      "Are you running a virtual network function (firewall, IDS/IPS) that needs to inspect all inbound Internet traffic before it reaches your instances?",
+      "Do you need public IP addresses that can fail over between zones or VPCs for disaster recovery without DNS TTL delays?",
+      "Are you managing a large number of individual Floating IPs and need a simpler, contiguous block model?",
+      "Do you have IP reputation, firewall allowlists, or compliance requirements that require you to bring your own public IPv4 range (BYOIP)?"
+    ],
+    "differentiators": [
+      "Ingress routing integration: steer all traffic for the range through a next-hop (firewall/NVF) before delivery — not possible with individual Floating IPs",
+      "Regional resource: move the entire prefix between zones and VPCs without releasing or re-allocating individual addresses",
+      "Contiguous block simplifies BGP advertisements, firewall rules, and compliance IP whitelisting vs. managing disparate Floating IPs",
+      "BYOIP via custom authorized CIDRs (beta, allowlisted): bring your own publicly routable IPv4 range to retain IP reputation and addressing continuity"
+    ],
+    "competitors": ["AWS Bring Your Own IP (BYOIP) + Public IP Prefix", "Azure Custom IP Address Prefix (BYOIP)", "GCP Bring Your Own IP"]
+  },
+
+  {
+    "id": "block_storage",
+    "label": "Block Storage for VPC",
+    "cat": "storage",
+    "plays": [3],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-block-storage-about",
+    "desc": "Block Storage for VPC delivers SSD-backed, persistent volumes attachable to VSIs as boot disks or secondary data volumes. Four volume profiles cover the most common workload shapes: general-purpose (3 IOPS/GB), 5 IOPS-tier, 10 IOPS-tier, and a fully custom profile allowing up to 48,000 IOPS independent of size. Volumes are stored redundantly across multiple physical disks within a zone. On-demand snapshots are incremental and can be cached in any zone for fast restore. All volumes are encrypted at rest by default; customer-managed root keys are supported via Key Protect or HPCS.",
+    "value": "Replace traditional SAN/LUN infrastructure with high-performance SSD volumes that provision in seconds, snap on-demand, and encrypt automatically — all managed from the same VPC console as your compute.",
+    "questions": [
+      "What IOPS and throughput do your database or application volumes require at peak?",
+      "Are you currently managing on-premises SAN/NAS infrastructure you want to eliminate?",
+      "Do your compliance requirements mandate customer-managed encryption keys for data at rest?",
+      "How quickly do you need to restore a volume from a snapshot in a DR scenario?"
+    ],
+    "differentiators": [
+      "Custom IOPS profile: set IOPS independently of volume size, up to 48,000 IOPS",
+      "Snapshots cached in any zone — faster restores than AWS EBS (which restores from S3)",
+      "Consistent customer-managed encryption across block, file, and object via the same Key Protect CRK",
+      "Unified VPC management: volumes, snapshots, and backups in the same console as compute"
+    ],
+    "competitors": ["AWS EBS (gp3, io2)", "Azure Managed Disks (Premium SSD v2, Ultra Disk)", "GCP Persistent Disk"]
+  },
+  {
+    "id": "block_storage_snapshots",
+    "label": "Block Storage Snapshots",
+    "cat": "storage",
+    "plays": [3],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-snapshots-vpc-about",
+    "desc": "Block Storage Snapshots for VPC capture the state of a block volume at a point in time. Snapshots are incremental — only changed blocks are stored after the first full snapshot — and are stored in Cloud Object Storage at object-storage pricing. A snapshot can be used to provision a new volume in any zone of the region, restore a corrupted boot volume, or seed a volume in a disaster recovery failover. Fast Restore clones cache a snapshot in a specific zone for sub-minute volume hydration. Cross-regional copies enable multi-region DR topologies.",
+    "value": "Create instant, incremental point-in-time copies of any block volume with no performance impact — restore entire volumes in seconds from a cached clone, or seed new volumes across regions for DR.",
+    "questions": [
+      "How do you currently protect block storage data — backups, snapshots, or replication?",
+      "What is your RTO for restoring a corrupted or deleted volume in a production outage?",
+      "Do you need to replicate volumes to a second region for disaster recovery?",
+      "Are your snapshots stored efficiently, or are you paying for full copies each time?"
+    ],
+    "differentiators": [
+      "Fast Restore: cache a snapshot clone in any zone for sub-minute volume restoration — faster than AWS EBS snapshot restores from S3",
+      "Cross-regional copy: copy snapshots to any IBM Cloud region for multi-region DR, not just a fixed pair",
+      "Incremental snapshots: only changed blocks stored after the first snapshot — cost-efficient at scale",
+      "Bootable snapshots: restore a failed boot volume or provision new instances directly from a snapshot"
+    ],
+    "competitors": ["AWS EBS Snapshots", "Azure Managed Disk Snapshots", "GCP Persistent Disk Snapshots"]
+  },
+  {
+    "id": "file_storage",
+    "label": "File Storage for VPC",
+    "cat": "storage",
+    "plays": [3],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-file-storage-vpc-about",
+    "desc": "File Storage for VPC provides NFS-based, network-attached file shares that multiple VSIs can mount simultaneously. Shares scale up to 32 TB and choose between two performance profiles: dp2 (zonal, up to 96,000 IOPS and 8,192 Mbps) or rfs (regional, 35,000 IOPS baseline). A unique cross-VPC sharing capability lets the same share be exported to multiple VPCs without data duplication or extra networking constructs. Policy-driven backups via Backup for VPC apply snapshot retention schedules automatically.",
+    "value": "Mount the same high-performance NFS share across multiple VSIs and even multiple VPCs — no data copies, no extra network config, with automated backup policies built in.",
+    "questions": [
+      "Do you have workloads that need shared file access across multiple servers simultaneously?",
+      "Are you running containerised stateful apps that need persistent shared storage?",
+      "Do different teams or VPCs need access to the same dataset without duplicating it?",
+      "How are you handling NFS or SMB shared storage today — on-premises filers?"
+    ],
+    "differentiators": [
+      "Cross-VPC sharing: mount the same share from multiple VPCs — unique among major cloud providers",
+      "dp2 profile delivers up to 96,000 IOPS and 8,192 Mbps — competitive with Azure Premium Files",
+      "Policy-driven backup schedules via Backup for VPC, up to 4 plans per share",
+      "Consistent customer-managed encryption via the same Key Protect CRK as block and object"
+    ],
+    "competitors": ["AWS EFS", "Azure Files (NFS)", "GCP Filestore"]
+  },
+  {
+    "id": "file_storage_snapshots",
+    "label": "File Storage Snapshots",
+    "cat": "storage",
+    "plays": [3],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-fs-snapshots-about",
+    "desc": "File Storage Snapshots for VPC capture the state of an NFS file share at a point in time. Snapshots are incremental — only changed data is stored after the first full snapshot. A snapshot can be used to create a new share in any zone of the region, revert the share to an earlier state, or recover individual files. Snapshots are stored at object-storage pricing with cumulative capacity up to 100 TB per share. Context-based restrictions can be applied to snapshot APIs for fine-grained access control.",
+    "value": "Protect NFS file shares with incremental point-in-time snapshots — restore individual files, revert an entire share, or provision a new share from a snapshot with no performance impact during capture.",
+    "questions": [
+      "How are you currently protecting NFS file shares from accidental deletion or corruption?",
+      "Do you need to recover individual files from a share without restoring the entire volume?",
+      "What is your RPO for shared file storage — hourly, daily, or longer?",
+      "Do you need to provision a new share from a known-good snapshot for testing or DR?"
+    ],
+    "differentiators": [
+      "Share-level snapshots: capture the entire NFS share state, not just individual files",
+      "Revert in place: restore a share to a previous snapshot state without provisioning a new share",
+      "Incremental storage: only changed blocks consumed after the first snapshot — cost-efficient for large shares",
+      "Consistent management: same snapshot workflow as Block Storage, managed from the VPC console and API"
+    ],
+    "competitors": ["AWS EFS (no native snapshots — requires AWS Backup)", "Azure Files Snapshots", "GCP Filestore Snapshots"]
+  },
+  {
+    "id": "cloud_object_storage",
+    "label": "Cloud Object Storage",
+    "cat": "storage",
+    "plays": [3],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-getting-started-cloud-object-storage",
+    "desc": "IBM Cloud Object Storage (COS) is a highly durable, S3-compatible object store offering unlimited capacity for unstructured data — backups, logs, AI/ML datasets, media assets, and archives. It delivers 11 nines (99.999999999%) durability across three resiliency options: regional, cross-regional, and single-site. Asynchronous cross-regional replication can target any IBM Cloud region — not just fixed pairs — enabling flexible compliance and disaster-recovery topologies. Storage classes (Standard, Cold Vault, Archive) reduce cost for infrequently accessed data. The S3-compatible API integrates natively with IBM Watson, IBM Analytics, and Cloud Functions.",
+    "value": "Store unlimited unstructured data with 11-nines durability, flexible cross-regional replication to any IBM Cloud region, and S3-compatible APIs — the foundation for data lakes, AI pipelines, and backup at cloud scale.",
+    "questions": [
+      "Where are you storing backups, logs, and large datasets today — on-premises or another cloud?",
+      "Do you have data residency or compliance requirements that dictate where replicas must live?",
+      "Are you building AI/ML pipelines that need a scalable, cost-effective data lake?",
+      "How much are you spending on object storage egress and what flexibility do you need in choosing replica regions?"
+    ],
+    "differentiators": [
+      "Flexible cross-regional replication: target any IBM Cloud region, not a fixed paired region",
+      "11-nines (99.999999999%) durability with regional, cross-regional, and single-site resiliency options",
+      "S3-compatible API integrates natively with IBM Watson, Analytics Engine, and Cloud Functions",
+      "Consistent customer-managed encryption via Key Protect across all storage tiers"
+    ],
+    "competitors": ["AWS S3", "Azure Blob Storage", "GCP Cloud Storage"]
+  },
+  {
+    "id": "key_protect",
+    "label": "Key Protect",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/key-protect?topic=key-protect-getting-started-tutorial",
+    "desc": "IBM Cloud Key Protect is a multi-tenant key management service (KMS) built on FIPS 140-2 Level 3 certified HSMs. It provides full symmetric key lifecycle management — create, import, rotate, disable, and delete — via a REST API and console. It integrates natively with virtually every IBM Cloud service that encrypts data at rest, including Block Storage, File Storage, Cloud Object Storage, and Cloud Databases. BYOK (Bring Your Own Key) lets you import existing symmetric keys from on-premises HSMs without re-encrypting your data.",
+    "value": "Secure all IBM Cloud data-at-rest encryption from a single KMS — own the key lifecycle, audit every operation, and satisfy BYOK compliance requirements without dedicated hardware cost.",
+    "questions": [
+      "Do your compliance mandates require you to own and control the encryption keys protecting cloud data?",
+      "Are you currently managing encryption keys on-premises and looking to centralise in the cloud?",
+      "Which IBM Cloud services store sensitive data that needs customer-managed encryption keys?",
+      "How do you audit key usage and access today — is that process automated?"
+    ],
+    "differentiators": [
+      "FIPS 140-2 Level 3 HSMs — stronger assurance than Azure Key Vault standard tier (Level 2)",
+      "BYOK import: bring existing symmetric keys from on-premises HSMs without re-encrypting data",
+      "Native integration with Block Storage, File Storage, COS, Cloud Databases, and more — one CRK covers all",
+      "Full IAM-based access control for key usage, enabling least-privilege key access policies"
+    ],
+    "competitors": ["AWS KMS", "Azure Key Vault (standard tier)", "GCP Cloud KMS"]
+  },
+  {
+    "id": "hpcs",
+    "label": "Hyper Protect Crypto Services",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "deprecated",
+    "docsUrl": "https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-deprecation",
+    "desc": "⚠️ Deprecated — no new instances from March 28 2026; existing premium plan instances supported until March 20 2027, then permanently deleted. IBM Cloud Hyper Protect Crypto Services (HPCS) was a dedicated, single-tenant cloud HSM service on FIPS 140-2 Level 4 certified hardware implementing Keep Your Own Key (KYOK). Migration paths: CloudKMS/KMIP customers → IBM Cloud Key Protect Dedicated (single-tenant, KYOK-enabled) or Key Protect Multi-Tenant; CloudHSM/GREP11 → on-premises IBM LinuxONE or Key Protect Dedicated PKCS#11; Unified Key Orchestrator → UKO for Containers or UKO for z/OS on-premises.",
+    "value": "⚠️ Deprecated. Migrate existing HPCS workloads to IBM Cloud Key Protect Dedicated for KYOK/KMIP continuity, or Key Protect Multi-Tenant for standard BYOK — migration tooling is available and end-of-support is March 20 2027.",
+    "questions": [
+      "Are you currently using HPCS — have you assessed your migration path to Key Protect Dedicated or Multi-Tenant?",
+      "Which HPCS capabilities are in use: CloudKMS/KMIP, CloudHSM/GREP11, or Unified Key Orchestrator?",
+      "Do you have ISV applications dependent on HPCS that need coordinated migration planning?",
+      "What is your timeline relative to the March 20 2027 end-of-support deadline?"
+    ],
+    "differentiators": [
+      "DEPRECATED — no new instances can be created as of March 28 2026",
+      "Migration target for CloudKMS/KMIP: Key Protect Dedicated (single-tenant, KYOK) or Key Protect Multi-Tenant",
+      "Migration target for CloudHSM/GREP11: Key Protect Dedicated PKCS#11 or on-premises IBM LinuxONE",
+      "Migration target for UKO: Unified Key Orchestrator for Containers or z/OS on-premises"
+    ],
+    "competitors": ["AWS CloudHSM", "Azure Dedicated HSM (Thales Luna)", "GCP Cloud HSM"]
+  },
+  {
+    "id": "scc",
+    "label": "Security & Compliance Center",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/security-compliance?topic=security-compliance-getting-started",
+    "desc": "IBM Cloud Security and Compliance Center (SCC) is a unified cloud-native application protection platform (CNAPP) providing continuous security posture management, policy-as-code enforcement, and audit-ready compliance reporting across IBM Cloud environments. It aggregates findings from IBM services and applies built-in policy libraries mapped to standards including ISO 27001, SOC 2, PCI-DSS, GDPR, and HIPAA. Automated remediation workflows and immutable audit trails via Activity Tracker reduce the manual effort of periodic compliance assessments.",
+    "value": "Replace point-in-time compliance audits with continuous, automated posture management — always know your compliance score against ISO 27001, PCI-DSS, HIPAA, and more, with audit-ready evidence on demand.",
+    "questions": [
+      "How do you currently assess and report on compliance against frameworks like PCI-DSS, ISO 27001, or HIPAA?",
+      "How many person-hours does your team spend collecting evidence for compliance audits each year?",
+      "Do you have visibility into misconfigured resources across all your IBM Cloud workloads in real time?",
+      "Are you moving workloads to IBM Cloud Financial Services that must meet FS Cloud controls?"
+    ],
+    "differentiators": [
+      "Built-in policy library with mappings to 20+ regulatory frameworks — no custom rule authoring required to start",
+      "Continuous posture management: real-time drift detection vs. point-in-time snapshots from manual audits",
+      "IBM FS Cloud integration: pre-built controls for IBM Cloud for Financial Services regulated workloads",
+      "Immutable audit trails via Activity Tracker — evidence is tamper-proof for regulator submissions"
+    ],
+    "competitors": ["AWS Security Hub + Config", "Microsoft Defender for Cloud", "GCP Security Command Center"]
+  },
+  {
+    "id": "secrets_manager",
+    "label": "Secrets Manager",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-getting-started",
+    "desc": "IBM Cloud Secrets Manager is a dedicated, single-tenant secrets management service powered by HashiCorp Vault. It centralises storage, rotation, and audit of secrets — API keys, passwords, database credentials, and TLS/SSL certificates — in an isolated instance with data-at-rest encryption via IBM-managed HSMs. Dynamic secret generation creates short-lived database credentials on demand. HashiCorp Vault compatibility lets teams reuse existing Vault policies and tooling. Certificate lifecycle management covers imported, public, and private certificates with versioning and revocation metadata.",
+    "value": "Eliminate credential sprawl and certificate expiry incidents — centralise all secrets in a dedicated Vault-compatible instance with automated rotation, audit logs, and a single IAM policy controlling access.",
+    "questions": [
+      "Are application credentials (API keys, DB passwords) hard-coded in config files or environment variables today?",
+      "Have you experienced outages or security incidents caused by expired TLS certificates?",
+      "How do you currently rotate secrets — manually, via scripts, or an automated vault?",
+      "Do your developers use HashiCorp Vault today that you want to migrate to a managed cloud service?"
+    ],
+    "differentiators": [
+      "Single-tenant dedicated instance — secrets are never co-located with another customer's data",
+      "HashiCorp Vault-compatible APIs — reuse existing Vault tooling, policies, and integrations",
+      "Dynamic secret generation for databases: short-lived credentials with automatic expiry reduce blast radius",
+      "Certificate lifecycle management: import, store, rotate, and audit TLS/SSL certs in one place"
+    ],
+    "competitors": ["AWS Secrets Manager", "Azure Key Vault (secrets)", "HashiCorp Vault (self-managed)"]
+  },
+  {
+    "id": "flow_logs",
+    "label": "Flow Logs for VPC",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-flow-logs",
+    "desc": "Flow Logs for VPC captures metadata about IP traffic to and from every network interface inside a VPC and writes it to a Cloud Object Storage bucket. Collection scope is configurable at four levels of granularity: VPC, subnet, instance, or individual network interface — the finest scope wins for overlapping rules. Logging occurs out-of-band and has no impact on network latency or throughput. Log data supports security forensics, traffic troubleshooting, anomaly detection, and regulatory network-traffic auditability requirements.",
+    "value": "Get full network visibility across your VPC — capture who talked to whom, when, and how much — stored durably in COS for forensics, compliance, and anomaly detection, with zero network performance impact.",
+    "questions": [
+      "If a security incident occurred in your VPC today, how quickly could you reconstruct what network traffic happened?",
+      "Do your compliance frameworks (PCI-DSS, GDPR, HIPAA) require network traffic logging and retention?",
+      "Are you troubleshooting connectivity issues between VPC resources and need packet-level metadata?",
+      "Do you have a SIEM or log analytics platform you need to feed VPC flow data into?"
+    ],
+    "differentiators": [
+      "Four-level granularity (VPC / subnet / instance / interface) — target exactly the traffic you need to log",
+      "Out-of-band collection: zero impact on network latency or throughput",
+      "Writes directly to COS for durable, cost-effective long-term retention",
+      "Integrates with IBM Cloud Security and Compliance Center for automated compliance policy checks"
+    ],
+    "competitors": ["AWS VPC Flow Logs", "Azure Virtual Network Flow Logs", "GCP VPC Flow Logs"]
+  },
+  {
+    "id": "cbr",
+    "label": "Context-Based Restrictions",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-cbr",
+    "desc": "Context-Based Restrictions (CBR) for VPC allow account administrators to define network-context rules that restrict access to VPC Infrastructure Services APIs based on where requests originate — a specific IP range, a VPC, or a set of IBM Cloud service references. Unlike IAM policies (which control who can act), CBR controls where requests can come from — the two layers work together. Rules can apply to all VPC child services or be scoped to individual resources by resource attribute. Every CBR enforcement generates an audit event in IBM Cloud Logs, providing a complete access-denial trail. Rules take up to 10 minutes to propagate after creation.",
+    "value": "Add a network-context guardrail on top of IAM — even a compromised or over-permissioned token cannot access VPC APIs from outside the approved network zones, eliminating a class of credential-based attacks.",
+    "questions": [
+      "Do you need to ensure VPC management APIs can only be called from your corporate network or a specific VPC?",
+      "Are you meeting compliance requirements (FS Cloud, SOC 2, ISO 27001) that mandate network-based access controls?",
+      "Would you benefit from a defense-in-depth layer that blocks compromised credential abuse from unexpected locations?",
+      "Do you have IBM Cloud services (e.g., Backup for VPC) that call VPC APIs and need to be allowlisted?"
+    ],
+    "differentiators": [
+      "Network-context enforcement independent of IAM identity — compromised tokens from untrusted networks are still blocked",
+      "Per-resource-attribute scoping: restrict individual subnets, instances, or volumes, not just the whole VPC service",
+      "Service references in network zones: allowlist IBM Cloud service-to-service calls without opening broad IP ranges",
+      "Full audit trail: every CBR enforcement generates an event in IBM Cloud Logs for forensics and compliance reporting"
+    ],
+    "competitors": ["AWS VPC Endpoint Policies + SCPs", "Azure Conditional Access + NSG", "GCP VPC Service Controls"]
+  },
+  {
+    "id": "cis",
+    "label": "Cloud Internet Services",
+    "cat": "security",
+    "plays": [4],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/cis?topic=cis-getting-started",
+    "desc": "IBM Cloud Internet Services (CIS) is a Cloudflare-powered reverse proxy that protects, accelerates, and makes highly available any internet-facing application hosted on IBM Cloud VPC — or anywhere else. CIS acts as the public-facing edge for your domain: all inbound traffic passes through Cloudflare's global network before reaching your VPC origin servers. Security capabilities include a Web Application Firewall (WAF) with managed rulesets, volumetric and application-layer DDoS protection, bot management, rate limiting, IP/country/ASN firewall rules, and TLS termination with universal SSL. Reliability features include global load balancing across multi-region VPC origin pools with health checks and automatic failover. Performance features include a global CDN, Brotli/gzip compression, HTTP/2 and HTTP/3, and image optimization. CIS is an external IBM Cloud service — it protects traffic arriving from the public Internet before it reaches your VPC.",
+    "value": "Put a global security and performance edge in front of your VPC-hosted applications — stop DDoS attacks, filter malicious bots, enforce WAF rules, and accelerate content delivery without changing your VPC architecture.",
+    "questions": [
+      "Are your VPC-hosted applications directly exposed to the Internet — do you have WAF or DDoS protection in front of them today?",
+      "Have you experienced bot abuse, credential stuffing, or application-layer attacks against your web applications?",
+      "Do you need global load balancing across multi-region VPC deployments with automatic failover?",
+      "Are your customers geographically distributed and experiencing high latency reaching your VPC-hosted applications?"
+    ],
+    "differentiators": [
+      "Cloudflare's global network: 300+ PoPs absorbing DDoS traffic before it reaches your VPC — no on-premises scrubbing hardware",
+      "Managed WAF rulesets updated continuously for new CVEs — zero rule-maintenance overhead vs. self-managed WAF appliances",
+      "Global load balancer with health checks and automatic failover across multi-region VPC origin pools",
+      "Single IBM Cloud bill: CIS is a fully managed IBM Cloud service — no separate Cloudflare contract or support relationship"
+    ],
+    "competitors": ["AWS CloudFront + WAF + Shield", "Azure Front Door + WAF", "GCP Cloud Armor + Cloud CDN", "Cloudflare (direct)"]
+  },
+
+  {
+    "id": "transit_gateway",
+    "label": "Transit Gateway",
+    "cat": "connectivity",
+    "plays": [5],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/transit-gateway?topic=transit-gateway-about",
+    "desc": "IBM Cloud Transit Gateway is a fully managed hub-and-spoke network interconnect that connects VPCs, IBM Cloud classic infrastructure, Direct Link connections, VPN gateways, Power Virtual Server workspaces, and GRE tunnels — all within the IBM Cloud private backbone. A single Transit Gateway can span multiple regions (global routing) or be scoped to a single region (local routing). Cross-account network sharing is supported via IAM authorizations. Prefix filtering and route reports give operators fine-grained control and visibility over what routes propagate between connected networks.",
+    "value": "Replace complex point-to-point VPC peering meshes with a single Transit Gateway hub — connect any combination of VPCs, on-premises networks, and classic infrastructure with one managed control plane.",
+    "questions": [
+      "How many VPCs do you need to connect, and are they in the same region or across multiple regions?",
+      "Do you need connectivity between VPC workloads and IBM Cloud classic infrastructure?",
+      "Are you building a hub-and-spoke network topology for shared services (DNS, security tools, logging)?",
+      "Do multiple teams or IBM Cloud accounts need network connectivity to shared resources?"
+    ],
+    "differentiators": [
+      "Single hub replaces O(n²) VPC peering connections — connect 10 VPCs with 1 gateway, not 45 peering pairs",
+      "Global routing spans multiple IBM Cloud regions on the private backbone — no public Internet traversal",
+      "Cross-account connectivity via IAM authorizations — share network access without sharing credentials",
+      "Connects VPCs, classic infrastructure, Direct Link, VPN, PowerVS, and GRE in a single control plane"
+    ],
+    "competitors": ["AWS Transit Gateway", "Azure Virtual WAN", "GCP Network Connectivity Center"]
+  },
+  {
+    "id": "direct_link",
+    "label": "Direct Link 2.0",
+    "cat": "connectivity",
+    "plays": [5],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/dl?topic=dl-dl-about",
+    "desc": "IBM Cloud Direct Link 2.0 provides dedicated, private, high-bandwidth connectivity between customer on-premises data centres and IBM Cloud VPC — bypassing the public Internet entirely. Two offerings cover different needs: Direct Link Dedicated (physical cross-connect, up to 10 Gbps) and Direct Link Connect (virtual connection via a network service provider, up to 5 Gbps). Connecting Direct Link to Transit Gateway extends private connectivity to all VPCs, classic infrastructure, and Power Virtual Server workspaces on that gateway — without separate connections to each.",
+    "value": "Replace public Internet VPN tunnels with a dedicated private circuit to IBM Cloud — predictable latency, consistent throughput up to 10 Gbps, and no public Internet exposure for sensitive workloads.",
+    "questions": [
+      "Do you have latency-sensitive workloads (trading, real-time analytics, SAP) that can't tolerate Internet variability?",
+      "What bandwidth do you need between on-premises and IBM Cloud — and is that growing?",
+      "Are you subject to compliance requirements that prohibit workload traffic traversing the public Internet?",
+      "Do you need to connect multiple IBM Cloud services (VPC, classic, PowerVS) from a single on-premises connection?"
+    ],
+    "differentiators": [
+      "Dedicated private circuit — no public Internet, no shared bandwidth, predictable sub-ms latency",
+      "Up to 10 Gbps (Dedicated) — higher sustained throughput than VPN for large data-transfer workloads",
+      "Connect once to Transit Gateway: one Direct Link reaches all connected VPCs, classic, and PowerVS",
+      "Direct Link Connect uses service provider PoPs — available where physical cross-connects aren't feasible"
+    ],
+    "competitors": ["AWS Direct Connect", "Azure ExpressRoute", "GCP Cloud Interconnect"]
+  },
+  {
+    "id": "vpn_s2s",
+    "label": "Site-to-Site VPN",
+    "cat": "connectivity",
+    "plays": [5],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn",
+    "desc": "IBM Cloud VPN for VPC provides IPsec-encrypted site-to-site connectivity between an on-premises network (or another VPC) and IBM Cloud VPC over the public Internet. Two modes suit different topologies: policy-based VPN (active-standby, traffic filtered by defined policies) for simpler environments, and route-based VPN (active-active BGP, virtual tunnel interfaces) for complex or dynamic architectures. HA mode pairs two VPN appliances for throughput up to 1,200 Mbps. Site-to-Site VPN attaches to Transit Gateway as a spoke, so one gateway reaches all VPCs and classic infrastructure on the gateway — and is commonly deployed as an encrypted automatic failover backup for Direct Link.",
+    "value": "Extend your on-premises network into IBM Cloud VPC over encrypted IPsec tunnels — deploy in minutes as a cost-effective primary link or an automatic failover for Direct Link, with no dedicated hardware required.",
+    "questions": [
+      "Do you need encrypted connectivity between your on-premises network and IBM Cloud VPC quickly and at low cost?",
+      "Are you using or planning Direct Link, and need an automatic encrypted failover path?",
+      "Do you need a scalable, BGP-based VPN that can handle dynamic routing and topology changes?",
+      "Do you need active-active redundancy, or will policy-based active-standby suffice?"
+    ],
+    "differentiators": [
+      "Route-based VPN with active-active BGP redundancy — no single point of failure for site-to-site VPN",
+      "1,200 Mbps HA throughput — highest site-to-site VPN bandwidth available natively in VPC",
+      "Attaches to Transit Gateway as a spoke: one VPN reaches all connected VPCs and classic infrastructure",
+      "Direct Link failover: BGP AS path prepending ensures VPN automatically takes over if Direct Link fails"
+    ],
+    "competitors": ["AWS Site-to-Site VPN", "Azure VPN Gateway", "GCP Cloud VPN"]
+  },
+  {
+    "id": "vpn_c2s",
+    "label": "Client-to-Site VPN",
+    "cat": "connectivity",
+    "plays": [5],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-client-to-site-overview",
+    "desc": "IBM Cloud Client VPN for VPC provides OpenVPN-compatible client-to-site connectivity, allowing individual remote devices (laptops, mobile workstations) to securely connect to VPC resources over TLS 1.2/1.3. A VPN server is deployed inside one or two VPC subnets; in high-availability mode it spans two zones (active/active) for resilience. Integrated authentication supports certificate-based, username/password, and multi-factor methods. When connected to Transit Gateway, a single Client VPN server provides remote access to all VPCs and classic infrastructure on the gateway — eliminating per-region VPN servers for remote workers.",
+    "value": "Give remote workers and branch offices secure OpenVPN access to VPC resources without managing VPN appliances — deploy in minutes, scale across zones for HA, and enforce MFA through integrated authentication.",
+    "questions": [
+      "Do remote workers, contractors, or branch offices need secure access to resources inside your VPC?",
+      "Are you managing per-user VPN access separately from your IBM Cloud IAM and identity policies today?",
+      "Do you need multi-factor authentication on VPN access for compliance (SOC 2, HIPAA, ISO 27001)?",
+      "Do your remote users need access to multiple VPCs or classic infrastructure through a single VPN connection?"
+    ],
+    "differentiators": [
+      "OpenVPN-compatible — works with any standard OpenVPN client, no proprietary software required",
+      "HA spanning two zones in active/active mode — resilient to single-zone failures",
+      "MFA integration: certificate, username/password, and multi-factor authentication in a single deployment",
+      "Transit Gateway integration: one Client VPN server gives remote users access to all connected VPCs and classic IaaS"
+    ],
+    "competitors": ["AWS Client VPN", "Azure VPN Gateway (P2S)", "GCP Cloud VPN (client access)"]
+  },
+  {
+    "id": "vpc_peering",
+    "label": "VPC Peering",
+    "cat": "connectivity",
+    "plays": [5],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-vpc-peering-overview",
+    "desc": "IBM Cloud VPC Peering creates a direct, private network connection between two VPCs — in the same region or across regions — without traffic traversing the public Internet or requiring a Transit Gateway. Peering is non-transitive: traffic flows only between the two directly peered VPCs. It is suited for simple two-VPC connectivity scenarios, such as a shared-services VPC or a development VPC connecting to a production VPC, where the overhead of a Transit Gateway is not justified.",
+    "value": "Connect two VPCs directly with a simple peering relationship — no Transit Gateway required, no public Internet, minimal configuration for straightforward two-VPC topologies.",
+    "questions": [
+      "Do you need to connect just two or three VPCs, or are you building a larger multi-VPC mesh?",
+      "Do you have a shared-services VPC (DNS, Active Directory, monitoring) that other VPCs need to reach?",
+      "Are you looking for the simplest possible way to allow private traffic between two isolated VPCs?",
+      "Do your VPCs have overlapping CIDR ranges that would need to be resolved before peering?"
+    ],
+    "differentiators": [
+      "No Transit Gateway required — the simplest path for two-VPC private connectivity",
+      "Works within a region and across regions on the IBM Cloud private backbone",
+      "Non-transitive by design — traffic only flows between the two peered VPCs, enforcing network isolation",
+      "Low operational overhead: no routing tables to manage beyond the initial peering setup"
+    ],
+    "competitors": ["AWS VPC Peering", "Azure VNet Peering", "GCP VPC Network Peering"]
+  },
+
+  {
+    "id": "iam",
+    "label": "Identity & Access Management",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/account?topic=account-iamoverview",
+    "desc": "IBM Cloud Identity and Access Management (IAM) is the central authorization layer for all IBM Cloud resources. It controls who (users, service IDs, trusted profiles, access groups) can do what (platform and service roles) on which resources (by resource type, resource group, or specific CRN). Fine-grained policies govern every API call to VPC, storage, key management, and platform services. IAM also enables service-to-service authorizations — for example, allowing Secrets Manager to read Key Protect keys without storing credentials.",
+    "value": "Enforce least-privilege access across every IBM Cloud resource from a single policy engine — no per-service ACLs, no shared credentials, and full audit trail of every authorization decision.",
+    "questions": [
+      "How do you currently manage who has access to cloud infrastructure — individual user credentials or centralized identity?",
+      "Do your compliance frameworks require role-based access control with audit evidence of every privileged action?",
+      "How do application services authenticate to other IBM Cloud services today — are shared API keys involved?",
+      "Do you need to federate your corporate identity provider (Active Directory, Okta) with IBM Cloud?"
+    ],
+    "differentiators": [
+      "Unified policy engine for users, service IDs, trusted profiles, and access groups — one model for all principals",
+      "Service-to-service authorizations: allow IBM Cloud services to talk to each other without storing credentials",
+      "Trusted profiles: grant access to compute identities (VSIs, IKS pods) without managing API keys",
+      "Resource group-based access boundaries align with team and project ownership models"
+    ],
+    "competitors": ["AWS IAM", "Azure RBAC / Entra ID", "GCP IAM"]
+  },
+  {
+    "id": "activity_tracker",
+    "label": "Activity Tracker Event Routing",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/atracker?topic=atracker-getting-started",
+    "desc": "IBM Cloud Activity Tracker Event Routing is an account-level platform service that captures every API call and state change across IBM Cloud services — including all VPC resource operations — and routes those audit events to destinations of your choice (IBM Cloud Logs, Cloud Object Storage, or Event Streams). It provides the tamper-proof audit trail required for regulatory compliance: who did what, when, from where, and whether it succeeded. Events are emitted automatically by all IBM Cloud services without instrumentation.",
+    "value": "Get a tamper-proof, automatic audit trail of every IBM Cloud API action — no agents to deploy, no services to instrument — and route events to your SIEM or long-term archive in real time.",
+    "questions": [
+      "How do you currently capture and retain audit logs of privileged actions on cloud infrastructure?",
+      "Do your compliance frameworks (PCI-DSS, SOC 2, ISO 27001) require immutable records of all administrative actions?",
+      "Do you need to feed IBM Cloud audit events into an existing SIEM or log management platform?",
+      "How long do you need to retain audit logs, and where do they need to be stored for compliance?"
+    ],
+    "differentiators": [
+      "Zero-instrumentation: all IBM Cloud services emit audit events automatically — nothing to configure per service",
+      "Flexible routing: send events to IBM Cloud Logs, COS (long-term archive), or Event Streams (SIEM feed) simultaneously",
+      "Account-level scope: captures events across all regions and services from a single configuration",
+      "Immutable events: routing destinations are tamper-proof — evidence survives even if source resources are deleted"
+    ],
+    "competitors": ["AWS CloudTrail", "Azure Monitor Activity Log", "GCP Cloud Audit Logs"]
+  },
+  {
+    "id": "cloud_monitoring",
+    "label": "IBM Cloud Monitoring",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/monitoring?topic=monitoring-getting-started",
+    "desc": "IBM Cloud Monitoring is a fully managed, cloud-native monitoring service built on Sysdig. It collects metrics from VPC VSIs, Kubernetes clusters, bare metal servers, and IBM Cloud services — including load balancers, VPN gateways, and block storage — and provides dashboards, alerting, and anomaly detection. Deep Kubernetes observability includes cluster health, pod metrics, namespace-level resource usage, and application golden signals (latency, error rate, saturation). Metrics are retained for up to 12 months with configurable granularity.",
+    "value": "Monitor every VPC workload — VMs, containers, storage, and network — from a single Sysdig-powered dashboard with pre-built IBM Cloud service dashboards and no agents to manage.",
+    "questions": [
+      "How do you currently monitor the health and performance of your cloud infrastructure and applications?",
+      "Do you have visibility into Kubernetes cluster health, pod-level resource usage, and application golden signals?",
+      "Are you receiving alerts before customers notice performance degradation, or are you reacting after incidents?",
+      "Do you need to correlate infrastructure metrics with application logs and audit events in one view?"
+    ],
+    "differentiators": [
+      "Pre-built IBM Cloud service dashboards for VPC Load Balancers, VPN, Block Storage, and more — no custom queries",
+      "Deep Kubernetes observability: cluster, node, namespace, pod, and container metrics out of the box",
+      "Sysdig-compatible: existing Sysdig dashboards, alerts, and integrations work natively",
+      "Up to 12 months metric retention with configurable granularity — supports trend analysis and capacity planning"
+    ],
+    "competitors": ["AWS CloudWatch", "Azure Monitor", "GCP Cloud Monitoring / Datadog"]
+  },
+  {
+    "id": "cloud_logs",
+    "label": "IBM Cloud Logs",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/cloud-logs?topic=cloud-logs-getting-started",
+    "desc": "IBM Cloud Logs is the unified observability logging service that consolidates application logs, platform logs, and audit events (from Activity Tracker Event Routing) into a single platform. Built on an OpenSearch-compatible engine with an AI-assisted query interface, it provides full-text search, structured log parsing, alerting, and long-term archival to Cloud Object Storage. IBM Cloud Logs replaces the deprecated IBM Log Analysis and IBM Cloud Activity Tracker services, and is the recommended destination for all IBM Cloud audit and application log data.",
+    "value": "Unify application logs and audit events in one platform — search, alert, and archive everything from VPC workloads and IBM Cloud services without managing log infrastructure.",
+    "questions": [
+      "Where do application logs from your VPC workloads go today — are they centralised and searchable?",
+      "Do you need to correlate application errors with IBM Cloud audit events and infrastructure metrics in one tool?",
+      "How long do you need to retain logs, and are you paying too much for log storage on your current platform?",
+      "Are you currently using IBM Log Analysis or Activity Tracker that you need to migrate before deprecation?"
+    ],
+    "differentiators": [
+      "Unified platform: application logs and IBM Cloud audit events in a single service — replaces Log Analysis + Activity Tracker",
+      "AI-assisted query and anomaly detection reduce mean-time-to-detect for incidents",
+      "OpenSearch-compatible: existing dashboards, Kibana queries, and integrations work natively",
+      "Long-term archival to COS: retain logs for years at object storage pricing, not log-platform pricing"
+    ],
+    "competitors": ["AWS CloudWatch Logs", "Azure Log Analytics (Monitor)", "GCP Cloud Logging / Elastic"]
+  },
+  {
+    "id": "container_registry",
+    "label": "Container Registry",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/Registry?topic=Registry-getting-started",
+    "desc": "IBM Cloud Container Registry is a private, managed Docker image registry hosted on the IBM Cloud private backbone. It stores OCI-compatible container images for deployment to IBM Cloud Kubernetes Service (IKS), Red Hat OpenShift on IBM Cloud, or VPC-hosted container workloads. Images are accessible from within a VPC via a Virtual Private Endpoint (VPE), keeping registry traffic off the public Internet. Vulnerability Advisor scans every pushed image for known CVEs and configuration issues, generating a detailed risk report before images are promoted to production.",
+    "value": "Store, scan, and serve container images privately within IBM Cloud — zero public Internet egress for image pulls from VPC, with automated CVE scanning on every push.",
+    "questions": [
+      "Where are you storing container images today, and are image pulls traversing the public Internet?",
+      "How do you scan container images for vulnerabilities before they reach production?",
+      "Do you need to enforce that only scanned, approved images can be deployed to your Kubernetes clusters?",
+      "Are you paying per-GB egress charges to pull images from a public registry?"
+    ],
+    "differentiators": [
+      "VPE access from VPC: image pulls stay on the IBM Cloud private backbone — no public Internet, no egress charges",
+      "Vulnerability Advisor: automatic CVE and configuration scanning on every image push",
+      "IAM-integrated: namespace-level access control with the same IBM Cloud IAM policies as all other resources",
+      "Geo-redundant storage within a region for high availability of the image registry"
+    ],
+    "competitors": ["AWS ECR (Elastic Container Registry)", "Azure Container Registry", "GCP Artifact Registry"]
+  },
+  {
+    "id": "backup_policies",
+    "label": "Backup Policies for VPC",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-backup-service-about",
+    "desc": "Backup Policies for VPC provide automated, tag-based snapshot scheduling for Block Storage volumes, File Storage shares, and multi-volume consistency groups attached to VSIs. A policy defines which resources to back up (by user tag) and up to four backup plans define the frequency (daily, weekly, monthly, or cron expression) and retention rules (age up to 1000 days or count up to 750 snapshots). Plans run automatically within 90 minutes of the scheduled time and create incremental snapshots stored in COS at object-storage pricing. Enterprise accounts can scope a single policy across the entire account hierarchy.",
+    "value": "Automate protection of every tagged block volume and file share with policy-driven schedules — no scripting, no cron jobs, no manual snapshots — with up to four independent plans per policy and enterprise-wide scope.",
+    "questions": [
+      "How are you currently scheduling and managing snapshots across dozens of block volumes and file shares?",
+      "Do you have a recovery point objective (RPO) that requires automated, consistent backups at regular intervals?",
+      "Are you tagging IBM Cloud resources today — and could you use those same tags to trigger backup policies automatically?",
+      "Do you need crash-consistent backups of all volumes attached to a VSI at the same point in time?"
+    ],
+    "differentiators": [
+      "Tag-based targeting: one policy covers all volumes or shares with matching tags — no per-volume configuration",
+      "Multi-volume consistency groups: crash-consistent snapshots of all volumes on a VSI in a single coordinated operation",
+      "Enterprise-scope: a single backup policy can span an enterprise account and all subaccounts",
+      "Up to four backup plans per policy: combine daily, weekly, and monthly schedules under one policy"
+    ],
+    "competitors": ["AWS Backup", "Azure Backup", "GCP Backup and DR Service"]
+  },
+  {
+    "id": "backup_recovery",
+    "label": "IBM Cloud Backup and Recovery",
+    "cat": "platform",
+    "plays": [6],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/backup-recovery?topic=backup-recovery-getting-started-backup-recovery",
+    "desc": "IBM Cloud Backup and Recovery is a fully managed, agent-based backup service for workloads running on IBM Cloud — VPC VSIs, VMware VMs, IKS and ROKS clusters, and databases including Microsoft SQL Server, SAP HANA, IBM Db2, and Oracle. It delivers application-consistent, policy-driven backups (Gold, Silver, Bronze tiers or custom) with flexible scheduling. Recovery options include full, granular file-level, database, and Kubernetes namespace restores to the original or alternate location. All backup data is deduplicated, compressed, and encrypted at rest. BYOK via Key Protect and DataLock (immutable backups) are supported for compliance.",
+    "value": "Protect VSIs, databases, Kubernetes clusters, and VMware VMs from a single managed service — agent-based application-consistent backups with granular recovery, immutable DataLock, and BYOK encryption, all without managing backup infrastructure.",
+    "questions": [
+      "How are you protecting workloads that require application-consistent backups — SQL Server, SAP HANA, Oracle?",
+      "Do you have a managed backup service today, or are you running your own backup agents and infrastructure?",
+      "What is your recovery time objective (RTO) for restoring a database or Kubernetes namespace after a failure?",
+      "Do your compliance requirements mandate immutable, tamper-proof backup retention (DataLock)?"
+    ],
+    "differentiators": [
+      "Application-consistent: automatic log backups and quiescing for SQL Server, SAP HANA, and Db2 — not just crash-consistent snapshots",
+      "DataLock: immutable backups that cannot be deleted or modified — satisfies compliance requirements for tamper-proof retention",
+      "Kubernetes-native: backup and restore individual namespaces or entire IKS/ROKS clusters with granular recovery",
+      "Fully managed: IBM manages the backup infrastructure — no agents to patch, no backup servers to maintain"
+    ],
+    "competitors": ["AWS Backup (with application plugins)", "Azure Backup", "Veeam on IBM Cloud", "Commvault"]
+  },
+
+  {
+    "id": "vpe",
+    "label": "Virtual Private Endpoints",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-about-vpe",
+    "desc": "IBM Cloud Virtual Private Endpoints (VPE) for VPC let you connect to supported IBM Cloud services — Cloud Object Storage, Key Protect, Container Registry, databases, and more — using private IP addresses allocated from your own VPC subnets. An endpoint gateway is a highly available, zone-spanning virtual function; you bind one reserved IP per zone so service traffic never leaves the IBM Cloud private backbone and never traverses the public Internet. VPE integrates natively with VPC networking primitives: NACLs and security groups apply to endpoint traffic, DNS Services automatically resolves service hostnames to private IPs, and IAM governs gateway provisioning. Cross-account VPE gateways allow workloads to access IBM Cloud service instances hosted in other accounts privately.",
+    "value": "Eliminate public Internet exposure for IBM Cloud service calls — every COS bucket, Key Protect operation, and database query from your VPC uses a private IP on your subnet, with no data egress charges and full NACL/security group control.",
+    "questions": [
+      "Are API calls from your VPC to IBM Cloud services (COS, Key Protect, databases) going over the public Internet today?",
+      "Do you have compliance requirements mandating that service traffic never leave a private network?",
+      "Are you paying public data egress charges for IBM Cloud service calls from your VPC workloads?",
+      "Do you need granular network-level controls (NACLs, security groups) on your IBM Cloud service access?"
+    ],
+    "differentiators": [
+      "Private IPs from your own subnet — service traffic uses your VPC address space, not a shared endpoint",
+      "NACL and security group enforcement on service traffic — the same controls you apply to VSI traffic",
+      "DNS integration: service hostnames automatically resolve to private IPs inside the VPC via DNS Services",
+      "Cross-account support: access IBM Cloud service instances in other accounts over the IBM private backbone"
+    ],
+    "competitors": ["AWS VPC Endpoints (Interface type)", "Azure Private Endpoint", "GCP Private Service Connect"]
+  },
+
+  {
+    "id": "private_path",
+    "label": "Private Path",
+    "cat": "networking",
+    "plays": [2],
+    "hub": false,
+    "status": "ga",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc?topic=vpc-private-path-service-intro",
+    "desc": "IBM Cloud Private Path services provide private, directional connectivity between a service provider's VPC and one or more consumer VPCs — across accounts, regions, or on-premises environments — without traffic ever traversing the public Internet. A provider deploys a Private Path network load balancer (PPNLB) behind their service; consumers connect via a VPE gateway they provision in their own VPC. The provider controls access through per-consumer approval policies (auto-approve, deny, or review). The PPNLB scales horizontally for fault tolerance and can serve millions of requests per second across hundreds of pool members. Use cases include ISV SaaS providers exposing services to customer VPCs, IBM Cloud services connecting to provider VPCs (e.g., Code Engine to a backend), and on-premises services exposed via an ALB + Direct Link behind the PPNLB.",
+    "value": "Expose your service to specific consumer VPCs and accounts privately — without peering, without giving consumers access to your entire VPC, and without any traffic on the public Internet. IBM's answer to AWS PrivateLink.",
+    "questions": [
+      "Do you provide a SaaS or shared service that needs to be consumed privately by customers in their own VPCs or accounts?",
+      "Are you looking for a way to share a service with another team or account without full VPC peering?",
+      "Do you need to expose an on-premises service privately to IBM Cloud consumers via Direct Link?",
+      "Are IBM Cloud services (Code Engine, MQ as a Service) calling into your VPC, and do you need to control that access?"
+    ],
+    "differentiators": [
+      "Consumer-initiated only: consumers can connect but cannot probe your VPC — directional by design",
+      "Per-consumer approval policies: auto-approve trusted accounts, require review for others, deny by default",
+      "Private Path NLB scales to millions of requests/second with zone-level fault tolerance",
+      "Works with ALB + Direct Link to expose on-premises services to VPC consumers privately"
+    ],
+    "competitors": ["AWS PrivateLink", "Azure Private Link", "GCP Private Service Connect (producer side)"]
+  }
+]
