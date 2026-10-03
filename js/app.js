@@ -21,8 +21,9 @@ const state = {
   connections:  null,
   profiles:     null,   // { vsi_profiles, bms_profiles, regions, fetched_at }
   images:       null,   // { images, region, fetched_at }
-  viewMode:     'grid', // 'grid' | 'matrix' | 'profiles' | 'availability'
-  activeId:     null,
+  viewMode:          'grid', // 'grid' | 'matrix' | 'profiles' | 'availability' | 'integration'
+  activeId:          null,
+  integrationFilter: null,   // null = all dimmed; one of: 'compute'|'networking'|'storage'|'security'|'platform'
   osFilter:     'all',
   query:        '',
   profilesTab:  'vsi',  // 'vsi' | 'bms'
@@ -103,11 +104,35 @@ function matchesOs(p) {
   return p.os.includes(tag);
 }
 
+// ── Integration view pillar → category mapping ────────────────────────────────
+const PILLAR_CATS = {
+  compute:     ['compute'],
+  networking:  ['networking', 'connectivity'],
+  storage:     ['storage'],
+  security:    ['security'],
+  platform:    ['platform'],
+};
+
 // ── Card state classes ────────────────────────────────────────────────────────
 function cardClasses(p) {
   const classes = ['card'];
   if (p.hub) classes.push('is-hub');
   if (state.activeId && state.activeId === p.id) classes.push('is-active');
+
+  if (state.viewMode === 'integration') {
+    if (state.integrationFilter === null) {
+      // Nothing selected — hub stays full, everything else dimmed
+      classes.push(p.hub ? 'is-highlighted' : 'is-dimmed');
+    } else {
+      const allowedCats = PILLAR_CATS[state.integrationFilter] ?? [];
+      if (p.hub || allowedCats.includes(p.cat)) {
+        classes.push('is-highlighted');
+      } else {
+        classes.push('is-dimmed');
+      }
+    }
+    return classes.join(' ');
+  }
 
   if (state.query) {
     classes.push(matchesQuery(p, state.query) ? 'is-query-hit' : 'is-dimmed');
@@ -151,6 +176,97 @@ function cardHtml(p) {
          style="--lane-color:${color}; --lane-color-muted:${muted}">
       <div class="card-label">${p.label}</div>
       ${badgeHtml(p.status)}
+    </div>`;
+}
+
+// ── Integration view ──────────────────────────────────────────────────────────
+const PILLARS = [
+  { id: 'compute',    label: 'Compute',     playVar: '--play-1' },
+  { id: 'networking', label: 'Networking',  playVar: '--play-2' },
+  { id: 'storage',    label: 'Storage',     playVar: '--play-3' },
+  { id: 'security',   label: 'Security',    playVar: '--play-4' },
+  { id: 'platform',   label: 'Platform',    playVar: '--play-6' },
+];
+
+function renderIntegration() {
+  const cats    = state.plays?.categories ?? [];
+  const active  = state.integrationFilter;
+
+  // Hub products
+  const hubProducts = state.products.filter(p => p.cat === 'vpc');
+
+  // ── Pillar buttons ──
+  let pillarsHtml = '';
+  for (const pillar of PILLARS) {
+    const isActive = active === pillar.id;
+    pillarsHtml += `
+      <button class="int-pillar ${isActive ? 'is-active' : ''}"
+              style="--pillar-color:var(${pillar.playVar})"
+              data-pillar="${pillar.id}">
+        ${pillar.label}
+      </button>`;
+  }
+
+  // ── Service cards grouped per pillar ──
+  // Show all pillars' cards stacked under each pillar header
+  let columnsHtml = '';
+  for (const pillar of PILLARS) {
+    const pillarCats  = PILLAR_CATS[pillar.id];
+    const products    = state.products.filter(p => pillarCats.includes(p.cat));
+    const isActive    = active === pillar.id;
+
+    let cardsHtml = '';
+    for (const p of products) {
+      const playId = catToPlayId(p.cat);
+      const color  = laneColor(playId);
+      const muted  = laneMuted(playId);
+      cardsHtml += `
+        <div class="${cardClasses(p)}"
+             data-id="${p.id}"
+             style="--lane-color:${color}; --lane-color-muted:${muted}">
+          <div class="card-label">${p.label}</div>
+          ${badgeHtml(p.status)}
+        </div>`;
+    }
+
+    columnsHtml += `
+      <div class="int-column ${isActive ? 'is-active' : ''}"
+           style="--pillar-color:var(${pillar.playVar})">
+        <div class="int-column-header">${pillar.label}</div>
+        <div class="int-column-cards">${cardsHtml}</div>
+      </div>`;
+  }
+
+  // ── Hub cards ──
+  let hubHtml = '';
+  for (const p of hubProducts) {
+    const playId = catToPlayId(p.cat);
+    const color  = laneColor(playId);
+    const muted  = laneMuted(playId);
+    hubHtml += `
+      <div class="${cardClasses(p)}"
+           data-id="${p.id}"
+           style="--lane-color:${color}; --lane-color-muted:${muted}">
+        <div class="card-label">${p.label}</div>
+        ${badgeHtml(p.status)}
+      </div>`;
+  }
+
+  const hint = active === null
+    ? 'Select a pillar to highlight its services'
+    : `Showing ${PILLARS.find(p => p.id === active)?.label ?? ''} services`;
+
+  return `
+    <div class="int-layout">
+      <div class="int-hub-row">
+        <div class="int-hub-block">
+          <div class="int-hub-label">VPC Core</div>
+          <div class="int-hub-cards">${hubHtml}</div>
+          <div class="int-pillars">${pillarsHtml}</div>
+          <div class="int-hint">${hint}</div>
+        </div>
+      </div>
+      <div class="int-columns">${columnsHtml}</div>
     </div>`;
 }
 
@@ -814,7 +930,12 @@ function renderAvailability() {
 
   let html = `<div class="avail-area">`;
 
-  // Header bar with total stats and Family / Profile Select Dropdowns
+  // Regions sorted by available profile count (desc) for the region dropdown
+  const regionsByCount = [...allRegionKeys].sort(
+    (a, b) => (regionProfileCounts[b] || 0) - (regionProfileCounts[a] || 0)
+  );
+
+  // Header bar with total stats and Family / Region / Profile Select Dropdowns
   html += `
     <div class="avail-header">
       <div class="avail-title">
@@ -836,6 +957,19 @@ function renderAvailability() {
           </select>
         </div>
         <div class="avail-select-group">
+          <label for="availRegionSelect" class="avail-select-label">Region</label>
+          <select id="availRegionSelect" class="avail-select" data-avail-region-select>
+            <option value="all" ${activeRegion === 'all' ? 'selected' : ''}>All Regions (${allRegionKeys.length})</option>`;
+  for (const r of regionsByCount) {
+    const meta = REGION_GEO_MAP[r] || {};
+    const cnt = regionProfileCounts[r] || 0;
+    const label = meta.name ? `${meta.name} (${r}) — ${cnt}` : `${r} — ${cnt}`;
+    html += `<option value="${r}" ${activeRegion === r ? 'selected' : ''}>${label}</option>`;
+  }
+  html += `
+          </select>
+        </div>
+        <div class="avail-select-group">
           <label for="availProfileSelect" class="avail-select-label">Profile</label>
           <select id="availProfileSelect" class="avail-select" data-avail-profile-select>
             <option value="all" ${activeProfile === 'all' ? 'selected' : ''}>All Profiles (${eligibleProfilesForDropdown.length})</option>`;
@@ -850,7 +984,7 @@ function renderAvailability() {
   html += `
           </select>
         </div>
-        ${(activeFamily !== 'all' || activeProfile !== 'all') ? `
+        ${(activeFamily !== 'all' || activeRegion !== 'all' || activeProfile !== 'all') ? `
           <button type="button" class="avail-reset-btn" id="availResetBtn">Reset filters</button>
         ` : ''}
       </div>
@@ -1161,11 +1295,14 @@ function render() {
   const loading = document.getElementById('loadingState');
   if (loading) loading.remove();
 
-  const isProfiles = state.viewMode === 'profiles';
-  const isAvail = state.viewMode === 'availability';
+  const isProfiles    = state.viewMode === 'profiles';
+  const isAvail       = state.viewMode === 'availability';
+  const isIntegration = state.viewMode === 'integration';
 
   if (state.viewMode === 'grid') {
     main.innerHTML = renderGrid();
+  } else if (state.viewMode === 'integration') {
+    main.innerHTML = renderIntegration();
   } else if (state.viewMode === 'matrix') {
     main.innerHTML = renderMatrix();
   } else if (state.viewMode === 'profiles') {
@@ -1174,10 +1311,10 @@ function render() {
     main.innerHTML = renderAvailability();
   }
 
-  // Sidebar — hidden in profiles and availability views
+  // Sidebar — hidden in profiles, availability, and integration views
   const sidebar        = document.getElementById('sidebar');
   const sidebarContent = document.getElementById('sidebarContent');
-  if (isProfiles || isAvail) {
+  if (isProfiles || isAvail || isIntegration) {
     sidebar.classList.remove('is-open');
     main.classList.remove('sidebar-open');
     sidebarContent.innerHTML = '';
@@ -1203,6 +1340,16 @@ function render() {
       e.stopPropagation();
       const id = el.dataset.id;
       state.activeId = state.activeId === id ? null : id;
+      render();
+    });
+  });
+
+  // ── Integration pillar buttons ──
+  main.querySelectorAll('[data-pillar]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const p = btn.dataset.pillar;
+      state.integrationFilter = state.integrationFilter === p ? null : p;
       render();
     });
   });
@@ -1326,7 +1473,16 @@ function render() {
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       state.availFamilyFilter = 'all';
+      state.availRegionFilter = 'all';
       state.availProfileFilter = 'all';
+      render();
+    });
+  }
+
+  const availRegionSelect = main.querySelector('[data-avail-region-select]');
+  if (availRegionSelect) {
+    availRegionSelect.addEventListener('change', e => {
+      state.availRegionFilter = e.target.value;
       render();
     });
   }
@@ -1380,6 +1536,7 @@ function bindHeader() {
     if (!tab) return;
     state.viewMode = tab.dataset.view;
     state.activeId = null;
+    if (state.viewMode !== 'integration') state.integrationFilter = null;
     render();
   });
 
