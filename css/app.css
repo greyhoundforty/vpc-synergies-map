@@ -1445,3 +1445,300 @@ a:hover { text-decoration: underline; }
 [data-theme="light"] .avail-fam-text--high-memory      { color: #9f1853; }
 [data-theme="light"] .avail-fam-text--very-high-memory { color: #da1e28; }
 [data-theme="light"] .avail-fam-text--storage          { color: #1192e8; }
+
+/* ── Integration view ────────────────────────────────────────────────────────── */
+.int-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Hub block — centred VPC Core card + pillar buttons below it */
+.int-hub-row {
+  display: flex;
+  justify-content: center;
+}
+
+.int-hub-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 320px;
+  width: 100%;
+}
+
+.int-hub-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.int-hub-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Pillar buttons */
+.int-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.int-pillar {
+  padding: 8px 20px;
+  border-radius: 4px;
+  border: 1px solid var(--pillar-color, var(--border));
+  background: transparent;
+  color: var(--pillar-color, var(--text-primary));
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.int-pillar:hover {
+  background: color-mix(in srgb, var(--pillar-color) 15%, transparent);
+}
+.int-pillar.is-active {
+  background: var(--pillar-color);
+  color: #fff;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--pillar-color) 50%, transparent);
+}
+
+.int-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 18px;
+}
+
+/* Column grid — one column per pillar */
+.int-columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.int-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.int-column-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border-left: 3px solid var(--pillar-color, var(--border));
+  background: color-mix(in srgb, var(--pillar-color) 15%, transparent);
+  color: var(--text-secondary);
+}
+
+.int-column-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Network view ─────────────────────────────────────────────────────────────── */
+.net-area {
+  padding: 24px 32px 40px;
+  max-width: 1400px;
+}
+
+.net-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 20px 148px;
+  height: 18px;
+}
+
+.net-stats {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 24px;
+  margin-left: 148px;
+  letter-spacing: 0.03em;
+}
+
+.net-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+  padding: 10px 0;
+}
+
+.net-row + .net-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 140px;
+  right: 0;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.net-row-label {
+  width: 140px;
+  flex-shrink: 0;
+  padding-top: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.net-row-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+}
+
+.net-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-subtle);
+  border-left: 4px solid var(--net-color, var(--accent));
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.12s, box-shadow 0.12s, border-color 0.12s;
+  min-width: 180px;
+  max-width: 280px;
+  user-select: none;
+  position: relative;
+}
+
+.net-card:hover {
+  background: var(--bg-hover);
+  border-top-color:    var(--net-color, var(--accent));
+  border-right-color:  var(--net-color, var(--accent));
+  border-bottom-color: var(--net-color, var(--accent));
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.net-card-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--net-color, var(--accent));
+  opacity: 0.85;
+  margin-right: 10px;
+  align-self: flex-start;
+  margin-top: 1px;
+}
+
+.net-card-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.net-card-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.net-card-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+/* Badge inside net-card — float top-right */
+.net-card .badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 9px;
+  padding: 1px 5px;
+}
+
+/* Selected card */
+.net-card.is-selected {
+  background: color-mix(in srgb, var(--net-color, var(--accent)) 15%, var(--bg-secondary));
+  border-top-color:    var(--net-color, var(--accent));
+  border-right-color:  var(--net-color, var(--accent));
+  border-bottom-color: var(--net-color, var(--accent));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--net-color, var(--accent)) 45%, transparent),
+              0 2px 12px rgba(0,0,0,0.15);
+}
+
+/* Reachable (in path) */
+.net-card.is-reachable {
+  background: color-mix(in srgb, var(--net-color, var(--accent)) 8%, var(--bg-secondary));
+  border-top-color:    color-mix(in srgb, var(--net-color, var(--accent)) 55%, transparent);
+  border-right-color:  color-mix(in srgb, var(--net-color, var(--accent)) 55%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--net-color, var(--accent)) 55%, transparent);
+  opacity: 1;
+}
+
+/* Dimmed — not in current path */
+.net-card.is-dimmed {
+  opacity: 0.2;
+  filter: grayscale(0.4);
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .net-card.is-selected {
+  background: color-mix(in srgb, var(--net-color, var(--accent)) 20%, var(--bg-secondary));
+}
+
+[data-theme="dark"] .net-card.is-reachable {
+  background: color-mix(in srgb, var(--net-color, var(--accent)) 12%, var(--bg-secondary));
+}
+
+/* Row 0 — hub anchor row */
+.net-row[data-row="0"] .net-card {
+  min-width: 220px;
+}
+
+/* Intent toggle cards (Row 1 — Secure / Public Connections) */
+.net-card--intent {
+  min-width: 200px;
+  max-width: 260px;
+  padding: 12px 18px;
+  border-left-width: 5px;
+  background: color-mix(in srgb, var(--net-color) 10%, var(--bg-secondary));
+}
+
+.net-card--intent .net-card-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.net-card--intent:hover {
+  background: color-mix(in srgb, var(--net-color) 18%, var(--bg-secondary));
+}
+
+.net-card--intent.is-selected {
+  background: color-mix(in srgb, var(--net-color) 22%, var(--bg-secondary));
+}
+
+[data-theme="dark"] .net-card--intent {
+  background: color-mix(in srgb, var(--net-color) 14%, var(--bg-secondary));
+}
+
+[data-theme="dark"] .net-card--intent.is-selected {
+  background: color-mix(in srgb, var(--net-color) 26%, var(--bg-secondary));
+}

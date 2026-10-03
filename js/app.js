@@ -21,9 +21,10 @@ const state = {
   connections:  null,
   profiles:     null,   // { vsi_profiles, bms_profiles, regions, fetched_at }
   images:       null,   // { images, region, fetched_at }
-  viewMode:          'grid', // 'grid' | 'matrix' | 'profiles' | 'availability' | 'integration'
+  viewMode:          'grid', // 'grid' | 'matrix' | 'profiles' | 'availability' | 'network'
   activeId:          null,
-  integrationFilter: null,   // null = all dimmed; one of: 'compute'|'networking'|'storage'|'security'|'platform'
+  netSelected:       null,   // selected node id in network view
+  integrationFilter: null,   // unused but kept for compat
   osFilter:     'all',
   query:        '',
   profilesTab:  'vsi',  // 'vsi' | 'bms'
@@ -179,14 +180,319 @@ function cardHtml(p) {
     </div>`;
 }
 
-// ── Integration view ──────────────────────────────────────────────────────────
-const PILLARS = [
-  { id: 'compute',    label: 'Compute',     playVar: '--play-1' },
-  { id: 'networking', label: 'Networking',  playVar: '--play-2' },
-  { id: 'storage',    label: 'Storage',     playVar: '--play-3' },
-  { id: 'security',   label: 'Security',    playVar: '--play-4' },
-  { id: 'platform',   label: 'Platform',    playVar: '--play-6' },
+// ── Carbon icon SVG paths (32px) for network nodes ────────────────────────────
+// Source: @carbon/icons@11.89.0 (Apache 2.0)
+const NET_ICONS = {
+  // IBM Cloud service-specific icons
+  vpc_core:             '<path d="m23.4141,22-13.4141-13.4141V2H2v8h6.5859l13.4141,13.4141v6.5859h8v-8h-6.5859ZM8,8H4V4h4v4Zm20,20h-4v-4h4v4Z"/><path d="m30,6c0-2.2056-1.7944-4-4-4-1.8584,0-3.4106,1.2798-3.8579,3h-9.1421v2h9.1421c.3638,1.3989,1.4592,2.4941,2.8579,2.8579v9.1421h2v-9.1421c1.7202-.4473,3-1.9995,3-3.8579Zm-4,2c-1.103,0-2-.8975-2-2s.897-2,2-2,2,.8975,2,2-.897,2-2,2Z"/>',
+  transit_gateway:      '<path d="m12.5,7.5-1.4-1.4,3.5-3.5c.8-.8,2.1-.8,2.8,0l3.5,3.5-1.4,1.4-3.5-3.5-3.5,3.5Z"/><path d="m19.5,24.5,1.4,1.4-3.5,3.5c-.8.8-2.1.8-2.8,0l-3.5-3.5,1.4-1.4,3.5,3.5,3.5-3.5Z"/><path d="M16,11a5,5,0,1,0,5,5A5,5,0,0,0,16,11Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,16,19Z"/><path d="M4,13H6V15H4zM26,13H28V15H26zM4,17H6V19H4zM26,17H28V19H26zM13,4H15V6H13zM17,4H19V6H17zM13,26H15V28H13zM17,26H19V28H17z"/>',
+  subnets:              '<path d="M26,22a3.6069,3.6069,0,0,0-2,.6L19.4143,18,18,19.4141,22.6,24a4.1755,4.1755,0,0,0-.4,1H9.8583A3.5525,3.5525,0,0,0,9.4,24L24,9.4a3.6069,3.6069,0,0,0,2,.6,4,4,0,1,0-3.8569-5H9.9A4.0785,4.0785,0,0,0,6,2a4,4,0,0,0,0,8,3.6066,3.6066,0,0,0,2-.6L12.5858,14,14,12.5859,9.4,8a4.175,4.175,0,0,0,.4-1H22.1418A3.5553,3.5553,0,0,0,22.6,8L8,22.6A3.6066,3.6066,0,0,0,6,22a4,4,0,1,0,3.8569,5H22.1A4.0118,4.0118,0,1,0,26,22ZM26,4a2,2,0,1,1-2,2A2.0058,2.0058,0,0,1,26,4ZM6,8A2,2,0,1,1,8,6,2.0058,2.0058,0,0,1,6,8ZM6,28a2,2,0,1,1,2-2A2.0058,2.0058,0,0,1,6,28Zm20,0a2,2,0,1,1,2-2A2.0058,2.0058,0,0,1,26,28Z"/>',
+  security_groups:      '<path d="M22.86,25.86c-.72.75-1.54,1.42-2.46,1.94l-5.4,3.2-5.5-3.2c-3.4-2-5.5-5.6-5.5-9.5V4c0-1.1.9-2,2-2h18c1.1,0,2,.9,2,2v5h-2v-5H6v14.3c0,3.2,1.7,6.2,4.5,7.8l4.5,2.7,4.5-2.7c.73-.47,1.41-.99,2-1.6ZM28,12H18v2h10v-2ZM28,20H18v2h10v-2ZM30,16H20v2h10v-2Z"/>',
+  network_acls:         '<path d="M18,28H14a2,2,0,0,1-2-2V18.41L4.59,11A2,2,0,0,1,4,9.59V6A2,2,0,0,1,6,4H26a2,2,0,0,1,2,2V9.59A2,2,0,0,1,27.41,11L20,18.41V26A2,2,0,0,1,18,28ZM6,6V9.59l8,8V26h4V17.59l8-8V6Z"/>',
+  flow_logs:            '<path d="M18 19H30V21H18z"/><path d="M18 23H30V25H18z"/><path d="M2,28H4V26H2V6H4V4H2A2,2,0,0,0,0,6V26A2,2,0,0,0,2,28Z"/><path d="M6,4H8V6H6zM6,10H8V12H6zM6,16H8V18H6zM6,22H8V24H6z"/><path d="M10 4H30V6H10z"/><path d="M10 10H16V12H10z"/><path d="M10 16H16V18H10z"/><path d="M10 22H16V24H10z"/>',
+  vpe:                  '<path d="M20,27H7a2.0059,2.0059,0,0,1-2-2V12H7V25H20Z"/><path d="M23.4,22l-4-4a3.6057,3.6057,0,0,0,.6-2,4.0118,4.0118,0,0,0-4-4,3.6057,3.6057,0,0,0-2,.6l-4-4V2H2v8H8.6l4,4a3.6057,3.6057,0,0,0-.6,2,4.0118,4.0118,0,0,0,4,4,3.6057,3.6057,0,0,0,2-.6l4,4V30h8V22ZM8,8H4V4H8Zm8,10a2,2,0,1,1,2-2A2.0059,2.0059,0,0,1,16,18ZM28,28H24V24h4Z"/>',
+  cis:                  '<path d="M27,22c-.7,0-1.4.3-1.9.7l-5.2-3.1c0-.2.1-.4.1-.6s0-.4-.1-.6l5.2-3.1c.5.4,1.2.7,1.9.7,1.7,0,3-1.3,3-3s-1.3-3-3-3-3,1.3-3,3c0,.2,0,.4.1.6l-5.2,3.1C18.4,16.3,17.7,16,17,16c-1.7,0-3,1.3-3,3s1.3,3,3,3c.7,0,1.4-.3,1.9-.7l5.2,3.1c0,.2-.1.4-.1.6,0,1.7,1.3,3,3,3s3-1.3,3-3-1.3-3-3-3ZM27,12c.6,0,1,.4,1,1s-.4,1-1,1-1-.4-1-1,.4-1,1-1Zm-10,8c-.6,0-1-.4-1-1s.4-1,1-1,1,.4,1,1-.4,1-1,1Zm10,6c-.6,0-1-.4-1-1s.4-1,1-1,1,.4,1,1-.4,1-1,1Z"/><path d="M19,25H8.5c-3,0-5.5-2.5-5.5-5.5,0-2.7,1.9-4.9,4.5-5.4l1.3-.2.3-1.3C9.9,8.7,13.2,6,17,6c.5,0,1,0,1.5.1,1.6.3,3,1.1,4.2,2.2l1.4-1.4C22.7,5.5,20.9,4.5,18.9,4.2,18.3,4.1,17.6,4,17,4c-4.7,0-8.9,3.3-9.8,8.1C3.6,12.8,1,15.9,1,19.5,1,23.6,4.3,27,8.5,27H19V25Z"/>',
+  direct_link:          '<path d="M32,11h-3V5c0-1.1-.9-2-2-2H13c-1.1,0-2,.9-2,2v4h2V5h14v14H13v-4h-2v4c0,1.1.9,2,2,2h14c1.1,0,2-.9,2-2v-6h3V11Z"/><path d="M21,17v-4c0-1.1-.9-2-2-2H5c-1.1,0-2,.9-2,2v6H0v2h3v6c0,1.1.9,2,2,2h14c1.1,0,2-.9,2-2v-4h-2v4H5V13h14v4h2Z"/>',
+  vpn_s2s:              '<path d="M16,29c-.373,0-.7151-.2076-.8872-.5386l-2.0801-4,1.7744-.9229,1.1929,2.2939,4.3127-8.2938,1.7744.9226-5.2,10c-.1721.3311-.5142.5387-.8872.5387Z"/><path d="M11,15.2783v-2.2783c0-2.2056-1.7944-4-4-4s-4,1.7944-4,4v2.2783c-.595.3467-1,.9849-1,1.7217v5c0,1.1025.897,2,2,2h6c1.103,0,2-.8975,2-2v-5c0-.7368-.405-1.375-1-1.7217Zm-4-4.2783c1.103,0,2,.8975,2,2v2H5v-2c0-1.1025.897-2,2-2Zm3,11H4v-5h6v5Z"/><path d="M29,5h-4c-1.654,0-3,1.346-3,3v2h-1v8h9V10h-1v-2c0-.552.449-1,1-1h4V5Zm-5,5v-2c0-.552.449-1,1-1s1,.449,1,1v2h-2Zm3,5h-5v-3h5v3Z"/>',
+  vpn_c2s:              '<path d="M16,2C8.3,2,2,8.3,2,16s6.3,14,14,14h1V2h-1ZM15,4v11h-5c.2-4.2,1.9-8.1,4.8-10.9h.2v-.1ZM15,17v11h-.2c-2.9-2.8-4.6-6.7-4.8-10.9h5v-.1ZM11.5,4.9c-2.1,2.9-3.3,6.4-3.5,10.1h-4c.4-4.6,3.4-8.5,7.5-10.1ZM4,17h4c.2,3.7,1.4,7.2,3.5,10.1-4.1-1.7-7.1-5.5-7.5-10.1ZM29,23h-1v-2c0-1.7-1.3-3-3-3s-3,1.3-3,3v2h-1c-.6,0-1,.4-1,1v5c0,.6.4,1,1,1h8c.6,0,1-.4,1-1v-5c0-.6-.4-1-1-1ZM24,21c0-.6.4-1,1-1s1,.4,1,1v2h-2v-2ZM28,28h-6v-3h6v3ZM25,8c1.7,0,3-1.3,3-3s-1.3-3-3-3-3,1.3-3,3,1.3,3,3,3ZM25,4c.6,0,1,.4,1,1s-.4,1-1,1-1-.4-1-1,.4-1,1-1ZM25,14c.6,0,1,.4,1,1s-.4,1-1,1-1-.4-1-1,.4-1,1-1ZM25,10c.6,0,1,.4,1,1s-.4,1-1,1-1-.4-1-1,.4-1,1-1Z"/>',
+  vpc_peering:          '<path d="M23.4141,22,10,8.5859V2H2v8H8.5859L22,23.4141V30h8V22ZM8,8H4V4H8ZM28,28H24V24h4Z"/><path d="M30,6a3.9915,3.9915,0,0,0-7.8579-1H13V7h9.1421A3.9945,3.9945,0,0,0,25,9.8579V19h2V9.8579A3.9962,3.9962,0,0,0,30,6ZM26,8a2,2,0,1,1,2-2A2.0023,2.0023,0,0,1,26,8Z"/>',
+  floating_ip:          '<path d="M25,11a5.0083,5.0083,0,0,0-4.8989,4H11.8989a5,5,0,1,0,0,2h8.2022A5,5,0,1,0,25,11Zm0,8a3,3,0,1,1,3-3A3.0033,3.0033,0,0,1,25,19Z"/><circle cx="7" cy="16" r="3"/>',
+  public_address_ranges:'<path d="M22.5,13c-4.7,0-8.5,3.8-8.5,8.5s3.8,8.5,8.5,8.5,8.5-3.8,8.5-8.5-3.8-8.5-8.5-8.5Zm6.5,8H26c0-2-.3-4-.9-5.5,2.1,1.5,3.7,3.5,3.9,5.5Zm-6.5,7c0,0,0,0,0,0-.4-.2-1.3-1.8-1.5-5h2.9c-.2,3.2-1,4.8-1.4,5Zm-1.5-7c.1-3.8,1.1-5.8,1.4-6,0,0,0,0,0,0,.4.2,1.4,2.2,1.5,6h-2.9Zm-1.1-5.5c-.6,1.5-.8,3.5-.9,5.5h-3c.2-2.5,1.8-4.5,3.9-5.5Zm-3.9,7.5h3c.1,1.6.4,3.2.9,4.5-2-.8-3.4-2.5-3.9-4.5Zm8.5,4.5c.5-1.3.8-2.8.9-4.5h2.9c-.6,2-2,3.7-3.8,4.5Z"/><path d="M25.8,10c-.9-4.6-5-8-9.8-8-4.8,0-8.9,3.4-9.8,8.1-3.5.7-6.2,3.7-6.2,7.4,0,4.1,3.4,7.5,7.5,7.5H11v-2h-3.5c-3,0-5.5-2.5-5.5-5.5,0-2.9,2.2-5.3,5.1-5.5l.9-.1.1-.9c.5-4,3.9-7.1,8-7.1,3.7,0,6.8,2.6,7.7,6h2.1Z"/>',
+  nlb:                  '<path d="M8,30H2V24H8ZM4,28H6V26H4Z"/><path d="M19,30H13V24h6Zm-4-2h2V26H15Z"/><path d="M30,30H24V24h6Zm-4-2h2V26H26Z"/><path d="M25,22H7v-4H9V20h14V18h2v4Z"/><path d="M17,18H15V8H7V6H25V8H17Z"/><path d="M4,8H2V2H8V4H4Z"/><path d="M30,8H26V6H28V4H24V2H30Z"/><path d="M8,4H16V6H8z"/>',
+  alb:                  '<path d="M4,26H8V30H4Zm10,0h4v4H14Zm10,0h4v4H24Z"/><path d="M25,22H7v-4H9V20H23V18h2v4Z"/><path d="M17,18H15V8H7V6H25V8H17Z"/><path d="M4,2H8V6H4Zm20,0h4V6H24Z"/>',
+  // Secure/Public intent icons
+  _intent_secure:       '<path d="M24,14H22V8A6,6,0,0,0,10,8v6H8a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V16A2,2,0,0,0,24,14ZM12,8a4,4,0,0,1,8,0v6H12ZM24,28H8V16H24Z"/>',
+  _intent_public:       '<path d="M28,11a13.9563,13.9563,0,0,0-4.1051-9.8949L22.4813,2.5187A11.9944,11.9944,0,0,1,5.5568,19.5194l-.0381-.0381L4.1051,20.8949A13.9563,13.9563,0,0,0,14,25v3H10v2H20V28H16V24.84A14.0094,14.0094,0,0,0,28,11Z"/><path d="M14,4a7,7,0,1,1-7,7,7,7,0,0,1,7-7m0-2a9,9,0,1,0,9,9A9,9,0,0,0,14,2Z"/>',
+  cbr:                  '<path d="M18,28H14a2,2,0,0,1-2-2V18.41L4.59,11A2,2,0,0,1,4,9.59V6A2,2,0,0,1,6,4H26a2,2,0,0,1,2,2V9.59A2,2,0,0,1,27.41,11L20,18.41V26A2,2,0,0,1,18,28ZM6,6V9.59l8,8V26h4V17.59l8-8V6Z"/>',
+};
+
+function netIconSvg(id) {
+  const paths = NET_ICONS[id];
+  if (!paths) return '';
+  return `<svg class="net-card-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">${paths}</svg>`;
+}
+
+// ── Network view — curated VPC connection-flow layout ─────────────────────────
+// Structure mirrors the PVS Synergy Map network tab exactly:
+//   Row 0  VPC Workload      — the hub anchor
+//   Row 1  Connection Intent — "Secure Connections" toggle vs. "Public Connections" toggle
+//   Row 2  Entry Mechanism   — entry services, coloured by which intent(s) they belong to
+//   Row 3  Routing & Gateway — Transit Gateway · Subnets · VPE
+//   Row 4  Security Controls — Network ACLs · Security Groups · Flow Logs · CBR
+//
+// Row 1 intent nodes are synthetic (no products.json match); all other nodes
+// map to real product IDs.  NET_EDGES drives highlight propagation.
+
+const NET_NODES = [
+  // ── Row 0 — VPC Workload anchor ──────────────────────────────────────────
+  {
+    id: 'vpc_core', row: 0,
+    sub: 'Your IBM Cloud VPC environment',
+    color: 'var(--play-0)',
+  },
+
+  // ── Row 1 — Connection Intent (synthetic toggle nodes) ───────────────────
+  {
+    id: '_intent_secure', row: 1,
+    label: 'Secure Connections',
+    sub: 'Private / dedicated path',
+    color: 'var(--play-3)',   // teal — matches PVS
+  },
+  {
+    id: '_intent_public', row: 1,
+    label: 'Public Connections',
+    sub: 'Internet-facing path',
+    color: 'var(--play-8)',   // orange — matches PVS
+  },
+
+  // ── Row 2 — Entry Mechanism (secure side) ────────────────────────────────
+  {
+    id: 'direct_link', row: 2,
+    sub: 'Dedicated private WAN · bypasses public Internet',
+    color: 'var(--play-3)',
+  },
+  {
+    id: 'vpn_s2s', row: 2,
+    sub: 'IPsec site-to-site · on-prem or another VPC',
+    color: 'var(--play-3)',
+  },
+  {
+    id: 'vpn_c2s', row: 2,
+    sub: 'OpenVPN client-to-site · remote users / branch',
+    color: 'var(--play-3)',
+  },
+  {
+    id: 'vpc_peering', row: 2,
+    sub: 'Direct VPC-to-VPC · no Transit Gateway required',
+    color: 'var(--play-3)',
+  },
+
+  // ── Row 2 — Entry Mechanism (public side) ────────────────────────────────
+  {
+    id: 'floating_ip', row: 2,
+    sub: 'Native VPC · portable public IPv4 · direct inbound',
+    color: 'var(--play-8)',
+  },
+  {
+    id: 'public_address_ranges', row: 2,
+    sub: 'Native VPC · contiguous public block · ingress routing',
+    color: 'var(--play-8)',
+  },
+  {
+    id: 'nlb', row: 2,
+    sub: 'Native VPC · Layer-4 TCP/UDP · static IP',
+    color: 'var(--play-8)',
+  },
+  {
+    id: 'alb', row: 2,
+    sub: 'Native VPC · Layer-7 HTTP/HTTPS · TLS termination',
+    color: 'var(--play-8)',
+  },
+  {
+    id: 'cis', row: 2,
+    sub: 'External IBM Cloud service · WAF / DDoS / CDN edge',
+    color: 'var(--play-8)',
+  },
+
+  // ── Row 3 — Routing & Gateway ─────────────────────────────────────────────
+  {
+    id: 'transit_gateway', row: 3,
+    sub: 'Hub-and-spoke · connects VPCs, Direct Link, VPN',
+    color: 'var(--play-5)',
+  },
+  {
+    id: 'subnets', row: 3,
+    sub: 'Zone-scoped CIDRs · implicit intra-VPC routing',
+    color: 'var(--play-2)',
+  },
+  {
+    id: 'vpe', row: 3,
+    sub: 'Private access to IBM Cloud services · no public egress',
+    color: 'var(--play-2)',
+  },
+
+  // ── Row 4 — Security Controls ─────────────────────────────────────────────
+  {
+    id: 'network_acls', row: 4,
+    sub: 'Subnet-level · stateless · ordered rules',
+    color: 'var(--play-4)',
+  },
+  {
+    id: 'security_groups', row: 4,
+    sub: 'Instance-level · stateful · VNI-attached',
+    color: 'var(--play-4)',
+  },
+  {
+    id: 'flow_logs', row: 4,
+    sub: 'Traffic metadata · COS storage · forensics',
+    color: 'var(--play-4)',
+  },
+  {
+    id: 'cbr', row: 4,
+    sub: 'API access control · network-context rules',
+    color: 'var(--play-4)',
+  },
 ];
+
+// Logical data-path edges — drives ancestor/descendant highlight propagation.
+// Intent nodes (_intent_secure / _intent_public) fan out to their entry mechanisms.
+const NET_EDGES = [
+  // hub → intent
+  { from: 'vpc_core',        to: '_intent_secure'       },
+  { from: 'vpc_core',        to: '_intent_public'       },
+
+  // secure intent → entry mechanisms
+  { from: '_intent_secure',  to: 'direct_link'          },
+  { from: '_intent_secure',  to: 'vpn_s2s'              },
+  { from: '_intent_secure',  to: 'vpn_c2s'              },
+  { from: '_intent_secure',  to: 'vpc_peering'          },
+
+  // public intent → entry mechanisms
+  { from: '_intent_public',  to: 'floating_ip'          },
+  { from: '_intent_public',  to: 'public_address_ranges'},
+  { from: '_intent_public',  to: 'nlb'                  },
+  { from: '_intent_public',  to: 'alb'                  },
+  { from: '_intent_public',  to: 'cis'                  },
+
+  // entry mechanisms → routing layer
+  { from: 'direct_link',          to: 'transit_gateway' },
+  { from: 'vpn_s2s',              to: 'transit_gateway' },
+  { from: 'vpn_c2s',              to: 'transit_gateway' },
+  { from: 'vpc_peering',          to: 'subnets'         },
+  { from: 'floating_ip',          to: 'subnets'         },
+  { from: 'public_address_ranges',to: 'subnets'         },
+  { from: 'nlb',                  to: 'subnets'         },
+  { from: 'alb',                  to: 'subnets'         },
+  { from: 'cis',                  to: 'alb'             }, // CIS sits in front of ALB
+  { from: 'transit_gateway',      to: 'subnets'         },
+
+  // routing → security controls
+  { from: 'subnets',         to: 'network_acls'         },
+  { from: 'subnets',         to: 'security_groups'      },
+  { from: 'subnets',         to: 'flow_logs'            },
+  { from: 'subnets',         to: 'vpe'                  },
+  { from: 'vpe',             to: 'security_groups'      },
+  { from: 'vpc_core',        to: 'cbr'                  },
+];
+
+const NET_ROW_LABELS = [
+  'VPC Workload',
+  'Connection Intent',
+  'Entry Mechanism',
+  'Routing & Gateway',
+  'Security Controls',
+];
+
+// Given a clicked node, collect all nodes that should light up
+// (ancestors + descendants via NET_EDGES).
+function netReachable(clickedId) {
+  const reachable = new Set([clickedId]);
+
+  // Walk descendants
+  const queue = [clickedId];
+  while (queue.length) {
+    const cur = queue.shift();
+    for (const e of NET_EDGES) {
+      if (e.from === cur && !reachable.has(e.to)) {
+        reachable.add(e.to);
+        queue.push(e.to);
+      }
+    }
+  }
+
+  // Walk ancestors
+  const aQueue = [clickedId];
+  const visited = new Set([clickedId]);
+  while (aQueue.length) {
+    const cur = aQueue.shift();
+    for (const e of NET_EDGES) {
+      if (e.to === cur && !visited.has(e.from)) {
+        visited.add(e.from);
+        reachable.add(e.from);
+        aQueue.push(e.from);
+      }
+    }
+  }
+
+  return reachable;
+}
+
+function applyNetworkHighlights() {
+  const area = document.getElementById('net-area');
+  if (!area) return;
+  const sel = state.netSelected;
+  const reachable = sel ? netReachable(sel) : null;
+  area.querySelectorAll('.net-card').forEach(card => {
+    const id = card.dataset.id;
+    const isSelected  = id === sel;
+    const isReachable = reachable ? reachable.has(id) : false;
+    card.classList.toggle('is-selected', isSelected);
+    card.classList.toggle('is-reachable', !isSelected && isReachable);
+    card.classList.toggle('is-dimmed', Boolean(reachable && !isReachable));
+  });
+}
+
+function renderNetwork() {
+  // Build a product lookup by id for label/status/desc
+  const productById = new Map((state.products ?? []).map(p => [p.id, p]));
+
+  // Group NET_NODES by row
+  const rows = {};
+  for (const n of NET_NODES) {
+    if (!rows[n.row]) rows[n.row] = [];
+    rows[n.row].push(n);
+  }
+  const maxRow = Math.max(...NET_NODES.map(n => n.row));
+
+  let html = `<div class="net-area" id="net-area">`;
+  html += `<p class="net-hint">Click any node to trace its connection path</p>`;
+
+  const sel = state.netSelected;
+  const reachable = sel ? netReachable(sel) : null;
+
+  for (let r = 0; r <= maxRow; r++) {
+    const rowNodes = rows[r] ?? [];
+    if (!rowNodes.length) continue;
+
+    html += `<div class="net-row" data-row="${r}">`;
+    html += `<div class="net-row-label">${NET_ROW_LABELS[r] ?? `Row ${r}`}</div>`;
+    html += `<div class="net-row-cards">`;
+
+    for (const n of rowNodes) {
+      const isIntent = n.id.startsWith('_intent_');
+      const p        = productById.get(n.id);
+      const label    = n.label ?? p?.label ?? n.id;
+      const status   = p?.status ?? 'ga';
+      const isSel    = sel === n.id;
+      const isDimmed  = reachable && !reachable.has(n.id);
+      const isReach   = reachable && !isSel && reachable.has(n.id);
+
+      const classes = ['net-card',
+        isIntent ? 'net-card--intent' : '',
+        isSel    ? 'is-selected'      : '',
+        isReach  ? 'is-reachable'     : '',
+        isDimmed ? 'is-dimmed'        : '',
+      ].filter(Boolean).join(' ');
+
+      html += `
+        <div class="${classes}" data-id="${n.id}" style="--net-color:${n.color}">
+          ${netIconSvg(n.id)}
+          <div class="net-card-body">
+            <div class="net-card-label">${label}</div>
+            <div class="net-card-sub">${n.sub}</div>
+          </div>
+          ${isIntent ? '' : badgeHtml(status)}
+        </div>`;
+    }
+
+    html += `</div></div>`;
+  }
+
+  html += `<div class="net-stats">${NET_NODES.length} nodes · ${NET_EDGES.length} path edges · click to trace</div>`;
+  html += `</div>`;
+  return html;
+}
+
 
 function renderIntegration() {
   const cats    = state.plays?.categories ?? [];
@@ -1297,12 +1603,12 @@ function render() {
 
   const isProfiles    = state.viewMode === 'profiles';
   const isAvail       = state.viewMode === 'availability';
-  const isIntegration = state.viewMode === 'integration';
+  const isNetwork     = state.viewMode === 'network';
 
   if (state.viewMode === 'grid') {
     main.innerHTML = renderGrid();
-  } else if (state.viewMode === 'integration') {
-    main.innerHTML = renderIntegration();
+  } else if (state.viewMode === 'network') {
+    main.innerHTML = renderNetwork();
   } else if (state.viewMode === 'matrix') {
     main.innerHTML = renderMatrix();
   } else if (state.viewMode === 'profiles') {
@@ -1311,10 +1617,10 @@ function render() {
     main.innerHTML = renderAvailability();
   }
 
-  // Sidebar — hidden in profiles, availability, and integration views
+  // Sidebar — hidden in profiles, availability, and network views
   const sidebar        = document.getElementById('sidebar');
   const sidebarContent = document.getElementById('sidebarContent');
-  if (isProfiles || isAvail || isIntegration) {
+  if (isProfiles || isAvail || isNetwork) {
     sidebar.classList.remove('is-open');
     main.classList.remove('sidebar-open');
     sidebarContent.innerHTML = '';
@@ -1334,15 +1640,40 @@ function render() {
     btn.classList.toggle('is-active', btn.dataset.view === state.viewMode);
   });
 
-  // ── Card click handlers (grid / matrix) ──
-  main.querySelectorAll('[data-id]').forEach(el => {
-    el.addEventListener('click', e => {
-      e.stopPropagation();
-      const id = el.dataset.id;
-      state.activeId = state.activeId === id ? null : id;
-      render();
+  // ── Network card click handlers ──
+  if (isNetwork) {
+    main.querySelectorAll('.net-card[data-id]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        const id = el.dataset.id;
+        state.netSelected = state.netSelected === id ? null : id;
+        applyNetworkHighlights();
+        // Intent nodes are synthetic — no sidebar entry
+        const isIntent = id.startsWith('_intent_');
+        if (state.netSelected && !isIntent) {
+          sidebarContent.innerHTML = renderSidebar(state.netSelected);
+          sidebar.classList.add('is-open');
+          main.classList.add('sidebar-open');
+        } else {
+          sidebar.classList.remove('is-open');
+          main.classList.remove('sidebar-open');
+          sidebarContent.innerHTML = '';
+        }
+      });
     });
-  });
+  }
+
+  // ── Card click handlers (grid / matrix) ──
+  if (!isNetwork) {
+    main.querySelectorAll('[data-id]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        const id = el.dataset.id;
+        state.activeId = state.activeId === id ? null : id;
+        render();
+      });
+    });
+  }
 
   // ── Integration pillar buttons ──
   main.querySelectorAll('[data-pillar]').forEach(btn => {
@@ -1366,8 +1697,24 @@ function render() {
   sidebarContent.querySelectorAll('.conn-card[data-id]').forEach(el => {
     el.style.cursor = 'pointer';
     el.addEventListener('click', () => {
-      state.activeId = el.dataset.id;
-      render();
+      if (isNetwork) {
+        // In network view: update selection + highlights without full re-render
+        state.netSelected = el.dataset.id;
+        applyNetworkHighlights();
+        sidebarContent.innerHTML = renderSidebar(state.netSelected);
+        // Re-bind conn cards in the freshly rendered sidebar
+        sidebarContent.querySelectorAll('.conn-card[data-id]').forEach(inner => {
+          inner.style.cursor = 'pointer';
+          inner.addEventListener('click', () => {
+            state.netSelected = inner.dataset.id;
+            applyNetworkHighlights();
+            sidebarContent.innerHTML = renderSidebar(state.netSelected);
+          });
+        });
+      } else {
+        state.activeId = el.dataset.id;
+        render();
+      }
     });
   });
 
@@ -1536,7 +1883,7 @@ function bindHeader() {
     if (!tab) return;
     state.viewMode = tab.dataset.view;
     state.activeId = null;
-    if (state.viewMode !== 'integration') state.integrationFilter = null;
+    if (state.viewMode !== 'network') state.netSelected = null;
     render();
   });
 
@@ -1585,6 +1932,7 @@ function bindHeader() {
 // ── URL hash on load ──────────────────────────────────────────────────────────
 function readHash() {
   const hash = window.location.hash.replace('#', '');
+  if (hash === 'network')      state.viewMode = 'network';
   if (hash === 'matrix')       state.viewMode = 'matrix';
   if (hash === 'profiles')     state.viewMode = 'profiles';
   if (hash === 'availability') state.viewMode = 'availability';
