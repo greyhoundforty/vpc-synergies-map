@@ -3,7 +3,7 @@
  * Zero-dependency vanilla ES module. All rendering driven by data/vpc/*.json.
  */
 
-// Category IDs that appear as integration columns in Grid view
+// Category IDs that appear as lane arcs in the Map view
 // (everything except the hub lane "vpc")
 const GRID_INTEGRATION_CATS = [
   'compute',
@@ -14,30 +14,23 @@ const GRID_INTEGRATION_CATS = [
   'platform',
 ];
 
+function escHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
+  ));
+}
+
 // ── State ─────────────────────────────────────────────────────────────────────
 const state = {
   plays:        null,
   products:     null,
   connections:  null,
-  profiles:     null,   // { vsi_profiles, bms_profiles, regions, fetched_at }
-  images:       null,   // { images, region, fetched_at }
-  viewMode:          'grid', // 'grid' | 'matrix' | 'profiles' | 'availability' | 'network'
+  viewMode:          'grid', // 'grid' | 'architecture' | 'network'
   activeId:          null,
   netSelected:       null,   // selected node id in network view
+  archSelected:      null,   // selected node id in architecture view
   integrationFilter: null,   // unused but kept for compat
-  osFilter:     'all',
   query:        '',
-  profilesTab:  'vsi',  // 'vsi' | 'bms'
-  profileFamily:'all',  // active family filter in profiles view
-  vsiGenFilter: 'all',  // active generation filter in VSI tab ('all'|'2'|'3'|'4'|'flex')
-  vsiProfileFilter: 'all', // active specific profile filter in VSI tab
-  vsiFlexOnly:  false,  // kept for compat but replaced by vsiGenFilter
-  expandedVsiGens: new Set(), // gen keys explicitly expanded/collapsed in VSI table
-  bmsRegion:   'all',  // active region filter in BMS tab
-  availFamilyFilter: 'all',  // active family filter in Bare Metal Availability view
-  availProfileFilter: 'all', // active profile filter in Bare Metal Availability view
-  availRegionFilter: 'all',  // active region filter in Bare Metal Availability view ('all' or e.g. 'eu-de')
-  expandedRegions: new Set(), // set of expanded region IDs in Bare Metal view
 };
 
 // ── Colour helpers ────────────────────────────────────────────────────────────
@@ -56,12 +49,10 @@ function catToPlayId(cat) {
 // ── Data loading ──────────────────────────────────────────────────────────────
 async function load() {
   const base = 'data/vpc';
-  const [playsRes, productsRes, connsRes, profilesRes, imagesRes] = await Promise.all([
+  const [playsRes, productsRes, connsRes] = await Promise.all([
     fetch(`${base}/plays.json`),
     fetch(`${base}/products.json`),
     fetch(`${base}/connections.json`),
-    fetch(`${base}/profiles.json`),
-    fetch(`${base}/images.json`),
   ]);
   if (!playsRes.ok || !productsRes.ok || !connsRes.ok) {
     throw new Error('Failed to load one or more data files.');
@@ -69,10 +60,6 @@ async function load() {
   state.plays       = await playsRes.json();
   state.products    = await productsRes.json();
   state.connections = await connsRes.json();
-
-  // Profiles and images are optional — degrade gracefully if absent
-  if (profilesRes.ok) state.profiles = await profilesRes.json();
-  if (imagesRes.ok)   state.images   = await imagesRes.json();
 }
 
 
@@ -87,22 +74,6 @@ function matchesQuery(p, q) {
     ...(p.competitors     ?? []),
   ];
   return fields.some(f => f && f.toLowerCase().includes(s));
-}
-
-// ── OS filter ─────────────────────────────────────────────────────────────────
-// In the matrix the OS key is the image family key (ubuntu, rhel, windows, …)
-// Products still use broad os:["linux","windows"] tags — map accordingly
-const OS_FAMILY_TO_TAG = {
-  ubuntu:  'linux', debian: 'linux', rhel:    'linux',
-  rocky:   'linux', centos: 'linux', fedora:  'linux',
-  other:   'linux', windows: 'windows',
-};
-
-function matchesOs(p) {
-  if (state.osFilter === 'all') return true;
-  if (!p.os || p.os.length === 0) return true; // OS-agnostic stays visible
-  const tag = OS_FAMILY_TO_TAG[state.osFilter] ?? state.osFilter;
-  return p.os.includes(tag);
 }
 
 // ── Integration view pillar → category mapping ────────────────────────────────
@@ -141,8 +112,6 @@ function cardClasses(p) {
     // Dim cards not connected to the active node
     const connected = getConnectedIds(state.activeId);
     classes.push(connected.has(p.id) ? 'is-highlighted' : 'is-dimmed');
-  } else if (state.osFilter !== 'all') {
-    classes.push(matchesOs(p) ? 'is-highlighted' : 'is-dimmed');
   }
 
   return classes.join(' ');
@@ -204,12 +173,483 @@ const NET_ICONS = {
   _intent_secure:       '<path d="M24,14H22V8A6,6,0,0,0,10,8v6H8a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V16A2,2,0,0,0,24,14ZM12,8a4,4,0,0,1,8,0v6H12ZM24,28H8V16H24Z"/>',
   _intent_public:       '<path d="M28,11a13.9563,13.9563,0,0,0-4.1051-9.8949L22.4813,2.5187A11.9944,11.9944,0,0,1,5.5568,19.5194l-.0381-.0381L4.1051,20.8949A13.9563,13.9563,0,0,0,14,25v3H10v2H20V28H16V24.84A14.0094,14.0094,0,0,0,28,11Z"/><path d="M14,4a7,7,0,1,1-7,7,7,7,0,0,1,7-7m0-2a9,9,0,1,0,9,9A9,9,0,0,0,14,2Z"/>',
   cbr:                  '<path d="M18,28H14a2,2,0,0,1-2-2V18.41L4.59,11A2,2,0,0,1,4,9.59V6A2,2,0,0,1,6,4H26a2,2,0,0,1,2,2V9.59A2,2,0,0,1,27.41,11L20,18.41V26A2,2,0,0,1,18,28ZM6,6V9.59l8,8V26h4V17.59l8-8V6Z"/>',
+  // Reference Architecture diagram icons
+  vsi:                  '<path d="M26,14H6a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V16A2,2,0,0,0,26,14Zm0,12H6V16H26ZM10,20H8V18h2Zm4,0H12V18h2Zm12,0H20V18h6ZM24,4H8A2,2,0,0,0,6,6V8H8V6H24V12h2V6A2,2,0,0,0,24,4Z"/>',
+  bastion:              '<path d="M27,4H23V8H19V4H13V8H9V4H5A2,2,0,0,0,3,6V12a4,4,0,0,0,2,3.46V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V15.46A4,4,0,0,0,29,12V6A2,2,0,0,0,27,4ZM7,6H9V10H13V6H19V10H23V6h2v6a2,2,0,0,1-2,2H9a2,2,0,0,1-2-2ZM25,28H7V16H25Zm-7-2H14V20a2,2,0,0,1,4,0Z"/>',
+  roks:                 '<path d="M16 2L3 9.5v13L16 30l13-7.5v-13L16 2zm0 2.31l10.5 6.06L16 16.43 5.5 10.37 16 4.31zM5 12.1l10 5.77v10.39L5 22.49V12.1zm12 16.16V17.87l10-5.77v10.39L17 28.26z"/>',
+  block_storage:        '<path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,22H6V6H26ZM10,10H8V8h2Zm4,0H12V8h2Zm-4,6H8V14h2Zm4,0H12V14h2Zm-4,6H8V20h2Zm4,0H12V20h2Zm12,0H18V8h8Z"/>',
+  cloud_object_storage: '<path d="M26 14a6 6 0 0 0-5.69-4.08A8 8 0 0 0 5 15a6 6 0 0 0 1 11.92h20A5 5 0 0 0 26 14zm0 10H6a4 4 0 0 1-.6-7.95l1-.16.2-.95A6 6 0 0 1 18 11.83l.8.63.8-.57A4 4 0 0 1 26 14a3 3 0 0 1 0 6 1 1 0 0 0 0 2 3 3 0 0 1 0 2z"/>',
+  cloud_logs:           '<path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,6H26V10H6ZM26,26H6V12H26ZM10,16H8V14h2Zm0,4H8V18h2Zm0,4H8V22h2Zm12-8H14V14h8Zm0,4H14V18h8Zm0,4H14V22h8Z"/>',
+  cloud_monitoring:     '<path d="M28,4H4A2,2,0,0,0,2,6V22a2,2,0,0,0,2,2h8v2H8v2H24V26H20V24h8a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4Zm0,18H4V6H28ZM8,18l4-5,4,3,6-7,1.4,1.4-7.4,8.6-4-3-2.6,3.4Z"/>',
+  container_registry:   '<path d="M28,6H20V2H4A2,2,0,0,0,2,4V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,4H18V6H4ZM28,26H4V8H28ZM8,12h4v4H8Zm6,0h4v4H14Zm6,0h4v4H20ZM8,18h4v4H8Zm6,0h4v4H14Zm6,0h4v4H20Z"/>',
+  event_streams:        '<path d="M26,18a4,4,0,0,0-3.86,3H15a4,4,0,0,0-3.86-3H4V16H11.14A4,4,0,0,0,15,13h7.14A4,4,0,1,0,26,6a4,4,0,0,0-3.86,3H15a6,6,0,0,0-5.29,3.17A4,4,0,0,0,4,14v4a2,2,0,0,0,2,2h5.14A6,6,0,0,0,15,23h7.14A4,4,0,1,0,26,18ZM26,8a2,2,0,1,1-2,2A2,2,0,0,1,26,8Zm0,14a2,2,0,1,1,2-2A2,2,0,0,1,26,22Z"/>',
+  backup_recovery:      '<path d="M28,4H18L16,2H4A2,2,0,0,0,2,4V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4ZM4,4H15.17l2,2H28V8H4ZM28,26H4V10H28ZM16,13a5,5,0,1,0,5,5A5,5,0,0,0,16,13Zm0,8a3,3,0,1,1,3-3A3,3,0,0,1,16,21Zm1-5H15v3h3V17Z"/>',
+  app_id:               '<path d="M16,2A14,14,0,1,0,30,16,14.016,14.016,0,0,0,16,2Zm0,4a4,4,0,1,1-4,4A4,4,0,0,1,16,6Zm0,20a9.98,9.98,0,0,1-7.07-2.93,8.02,8.02,0,0,1,14.14,0A9.98,9.98,0,0,1,16,26Z"/>',
+  iam:                  '<path d="M26,16a4,4,0,0,0-3.86,3H17.83a6,6,0,1,0,0-2H22.14A4,4,0,1,0,26,16ZM12,20a4,4,0,1,1,4-4A4,4,0,0,1,12,20ZM26,22a2,2,0,1,1,2-2A2,2,0,0,1,26,22ZM16,4a4,4,0,1,0-4,4A4,4,0,0,0,16,4Zm-2,6H10A6,6,0,0,0,4,16v1H6V16a4,4,0,0,1,4-4h4a4,4,0,0,1,4,4v1h2V16A6,6,0,0,0,14,10Z"/>',
+  key_protect:          '<path d="M26,10H17.86A4.98,4.98,0,0,0,9,7a5,5,0,0,0-5,5,4.98,4.98,0,0,0,4.14,4.92V25H14V21h2V19h2V15h8a2,2,0,0,0,2-2V12A2,2,0,0,0,26,10ZM9,15a3,3,0,1,1,3-3A3,3,0,0,1,9,15Zm17-3h-2v2H22v2H20v2H18v2H16v-6.14A4.98,4.98,0,0,0,19,12h7Z"/>',
+  hpcs:                 '<path d="M16 2L4 7v6c0 8.5 5.1 16.4 12 19 6.9-2.6 12-10.5 12-19V7L16 2zm0 2.2L26 8.4V13c0 7.4-4.4 14.3-10 16.7-5.6-2.4-10-9.3-10-16.7V8.4L16 4.2zM15 10v6h2v-6h-2zm0 8v2h2v-2h-2z"/>',
+  secrets_manager:      '<path d="M24,14H22V8A6,6,0,0,0,10,8v6H8a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V16A2,2,0,0,0,24,14ZM12,8a4,4,0,0,1,8,0v6H12ZM24,28H8V16H24Z"/>',
+  scc:                  '<path d="M26,14a6,6,0,0,0-5.69-4.08A8,8,0,0,0,5,15a6,6,0,0,0,1,11.92h20A5,5,0,0,0,26,14ZM26,24H6a4,4,0,0,1-.6-7.95l1-.16.2-.95A6,6,0,0,1,18,11.83l.8.63.8-.57A4,4,0,0,1,26,14a3,3,0,0,1,0,6A1,1,0,0,0,26,22a3,3,0,0,1,0,2Z"/><path d="M16,14l-4,4,1.4,1.4,2.6-2.6,4.6,4.6,1.4-1.4Z"/>',
+  event_notifications:  '<path d="M16,2A10,10,0,0,0,6,12v7L3,22v1H29V22l-3-3V12A10,10,0,0,0,16,2ZM8,12a8,8,0,0,1,16,0v8H8ZM13,26a3,3,0,0,0,6,0Z"/>',
+  continuous_delivery:  '<path d="M16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Zm0,22A10,10,0,1,1,26,16,10,10,0,0,1,16,26ZM11,10H9v12h2Zm12,0H21v12h2ZM15,12H13v8h2Zm4,0H17v8h2Z"/>',
+  schematics:           '<path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM4,8H28V12H4ZM4,24V14H28V24Z"/><path d="M8,17H6V19H8Zm4,0H10V19h2Z"/>',
+  toolchain:            '<path d="M26,18.4V14.6l-2.1-.5a8.9,8.9,0,0,0-.9-2.1l1.2-1.8L21.5,7.5l-1.8,1.2a8.9,8.9,0,0,0-2.1-.9L17.1,5.7H14.9l-.5,2.1a8.9,8.9,0,0,0-2.1.9L10.5,7.5,7.8,10.2l1.2,1.8a8.9,8.9,0,0,0-.9,2.1L6,14.6v3.8l2.1.5a8.9,8.9,0,0,0,.9,2.1l-1.2,1.8,2.7,2.7,1.8-1.2a8.9,8.9,0,0,0,2.1.9l.5,2.1h2.2l.5-2.1a8.9,8.9,0,0,0,2.1-.9l1.8,1.2,2.7-2.7-1.2-1.8a8.9,8.9,0,0,0,.9-2.1ZM16,19a3,3,0,1,1,3-3A3,3,0,0,1,16,19Z"/>',
+  user:                 '<path d="M16,4a6,6,0,1,0,6,6A6,6,0,0,0,16,4Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,16,14Zm10,14H6V26a6,6,0,0,1,6-6h8a6,6,0,0,1,6,6Zm-18-2H24a4,4,0,0,0-4-4H12A4,4,0,0,0,8,26Z"/>',
+  internet:             '<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm8.9,13H19.9a17.2,17.2,0,0,0-1.2-6.5A12.1,12.1,0,0,1,24.9,15ZM16,4a15.4,15.4,0,0,1,1.9,4.5H14.1A15.4,15.4,0,0,1,16,4ZM13.8,10.5h4.4A15.1,15.1,0,0,1,19,15H13A15.1,15.1,0,0,1,13.8,10.5ZM7.1,17H12.1a17.2,17.2,0,0,0,1.2,6.5A12.1,12.1,0,0,1,7.1,17Zm5-2A12.1,12.1,0,0,1,7.1,8.5,17.2,17.2,0,0,0,12.1,15Zm1.7,2H18.2A15.1,15.1,0,0,1,17,21.5H15A15.1,15.1,0,0,1,13.8,17ZM16,28a15.4,15.4,0,0,1-1.9-4.5h3.8A15.4,15.4,0,0,1,16,28Zm2.7-4.5a17.2,17.2,0,0,0,1.2-6.5h5A12.1,12.1,0,0,1,18.7,23.5Z"/>',
+  enterprise_directory: '<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,4a4,4,0,1,1-4,4A4,4,0,0,1,16,6Zm0,20a9.98,9.98,0,0,1-7.07-2.93,8.02,8.02,0,0,1,14.14,0A9.98,9.98,0,0,1,16,26Z"/>',
+  enterprise_users:     '<path d="M12,4a4,4,0,1,0,4,4A4,4,0,0,0,12,4Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,10Zm8,4a4,4,0,1,0,4-4A4,4,0,0,0,20,14Zm4,6a6,6,0,0,0-4.4-1.9A6,6,0,0,0,12,16H6a6,6,0,0,0-6,6v4H18V26h2v2H30V22A2,2,0,0,0,28,20ZM6,18h6a4,4,0,0,1,4,4v2H2V22A4,4,0,0,1,6,18Zm22,8H22V22a4,4,0,0,1,4-4h2Z"/>',
+  enterprise_apps:      '<path d="M26,14H20a2,2,0,0,1-2-2V6a2,2,0,0,1,2-2h6a2,2,0,0,1,2,2v6A2,2,0,0,1,26,14ZM20,6v6h6V6ZM12,14H6a2,2,0,0,1-2-2V6A2,2,0,0,1,6,4h6a2,2,0,0,1,2,2v6A2,2,0,0,1,12,14ZM6,6v6h6V6ZM26,28H20a2,2,0,0,1-2-2V20a2,2,0,0,1,2-2h6a2,2,0,0,1,2,2v6A2,2,0,0,1,26,28ZM20,20v6h6V20ZM12,28H6a2,2,0,0,1-2-2V20a2,2,0,0,1,2-2h6a2,2,0,0,1,2,2v6A2,2,0,0,1,12,28ZM6,20v6h6V20Z"/>',
+  enterprise_data:      '<path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,6H26V11H6ZM6,13H26v6H6ZM6,26V21H26v5ZM9,8h2v2H9Zm0,7h2v2H9Zm0,8h2v2H9Z"/>',
 };
 
 function netIconSvg(id) {
   const paths = NET_ICONS[id];
   if (!paths) return '';
   return `<svg class="net-card-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">${paths}</svg>`;
+}
+
+// ── Architecture diagram reference data ───────────────────────────────────────
+// Defines the high-level VPC reference architecture for Financial Services / Enterprise VPCs
+// Management VPC has secure connection options; Workload VPC has public connection options.
+
+const ARCH_REGISTRY = {
+  // Public Network column (left)
+  public_network: {
+    title: 'Public Network (Consumer)',
+    items: [
+      { id: 'public_user', icon: 'user', label: 'User', color: '#0f62fe', category: 'Consumer', desc: 'End users and external clients accessing services over the Internet' },
+      { id: 'public_internet', icon: 'internet', label: 'Internet', color: '#0043ce', category: 'Public Network', desc: 'Public Internet transport network' }
+    ]
+  },
+  // Enterprise Network column (right)
+  enterprise_network: {
+    title: 'Enterprise Network (Provider)',
+    items: [
+      { id: 'ent_dir', icon: 'enterprise_directory', label: 'Enterprise User Directory', color: '#161616', category: 'Enterprise', desc: 'Corporate Active Directory / LDAP identity store' },
+      { id: 'ent_users', icon: 'enterprise_users', label: 'Enterprise Users', color: '#161616', category: 'Enterprise', desc: 'Internal enterprise employees, operators, and administrators' },
+      { id: 'ent_apps', icon: 'enterprise_apps', label: 'Enterprise Applications', color: '#8a3ffc', category: 'Enterprise', desc: 'On-premises enterprise applications and systems of record' },
+      { id: 'ent_data', icon: 'enterprise_data', label: 'Enterprise Data', color: '#0f62fe', category: 'Enterprise', desc: 'On-premises enterprise databases and storage mainframes' }
+    ]
+  },
+  // Management VPC (Hub / Operations / Ingress) - Secure Connection focus
+  mgmt_vpc: {
+    title: 'Management VPC',
+    tag: 'Hub & Management',
+    desc: 'Central management and operations hub with secure connectivity endpoints, bastion hosts, and admin services.',
+    connOptionsTitle: 'Secure Connection Options',
+    connOptions: [
+      { id: 'direct_link', icon: 'direct_link', label: 'Direct Link 2.0', color: '#0072c3', type: 'Private Dedicated', desc: 'Dedicated 50 Mbps–100 Gbps private connection bypassing public Internet' },
+      { id: 'vpn_s2s', icon: 'vpn_s2s', label: 'Site-to-Site VPN', color: '#da1e28', type: 'IPsec / Secure', desc: 'Encrypted IPsec tunnels over Internet or Direct Link backup' },
+      { id: 'vpn_c2s', icon: 'vpn_c2s', label: 'Client-to-Site VPN', color: '#da1e28', type: 'TLS / OpenVPN', desc: 'High-availability OpenVPN gateway for enterprise operators and admins' },
+      { id: 'vpc_peering', icon: 'vpc_peering', label: 'VPC Peering', color: '#007d79', type: 'Backbone Peering', desc: 'Direct non-transitive VPC routing on IBM Cloud global backbone' }
+    ],
+    zone: {
+      name: 'Zone 1',
+      acls: [
+        {
+          name: 'ACL1',
+          purpose: 'VPN Subnet',
+          items: [
+            { id: 'vpn_s2s', icon: 'vpn_s2s', label: 'VPN Gateway', color: '#da1e28', desc: 'Site-to-site & client-to-site VPN gateway for secure operator ingress' }
+          ]
+        },
+        {
+          name: 'ACL2',
+          purpose: 'Bastion Subnet',
+          items: [
+            { id: 'bastion', icon: 'bastion', label: 'Bastion Host', color: '#da1e28', desc: 'Hardened jump host for secure administrative shell access' }
+          ]
+        },
+        {
+          name: 'ACL3',
+          purpose: 'Compute & Storage Subnet',
+          items: [
+            { id: 'vsi', icon: 'vsi', label: 'VSI', color: '#007d79', desc: 'Virtual Server Instance for management and monitoring tooling' },
+            { id: 'vsi', icon: 'vsi', label: 'VSI', color: '#007d79', desc: 'Secondary VSI for high-availability management cluster' },
+            { id: 'block_storage', icon: 'block_storage', label: 'Block Storage', color: '#0f62fe', desc: 'Encrypted high-IOPS persistent storage volume for VSIs' }
+          ]
+        },
+        {
+          name: 'ACL4',
+          purpose: 'ROKS Container Subnet',
+          items: [
+            { id: 'roks', icon: 'roks', label: 'ROKS', color: '#007d79', desc: 'Red Hat OpenShift on IBM Cloud management cluster node' },
+            { id: 'roks', icon: 'roks', label: 'ROKS', color: '#007d79', desc: 'Red Hat OpenShift on IBM Cloud secondary worker node' },
+            { id: 'block_storage', icon: 'block_storage', label: 'Block Storage', color: '#0f62fe', desc: 'Encrypted volume for OpenShift stateful storage' }
+          ]
+        },
+        {
+          name: 'ACL5',
+          purpose: 'Private Endpoint Subnet',
+          items: [
+            { id: 'vpe', icon: 'vpe', label: 'VPE', color: '#0072c3', desc: 'Virtual Private Endpoint gateway for Cloud Logs & Monitoring' },
+            { id: 'vpe', icon: 'vpe', label: 'VPE', color: '#0072c3', desc: 'Virtual Private Endpoint gateway for Key Protect / COS' }
+          ]
+        }
+      ]
+    }
+  },
+  // Workload VPC (Spoke / Production Applications) - Public Connection focus
+  workload_vpc: {
+    title: 'Workload VPC',
+    tag: 'Production Workloads',
+    desc: 'Production application VPC hosting business logic, microservices, databases, and public/private ingress load balancers.',
+    connOptionsTitle: 'Public Connection Options',
+    connOptions: [
+      { id: 'cis', icon: 'cis', label: 'Cloud Internet Services', color: '#ba4e00', type: 'Edge WAF / DDoS / CDN', desc: 'Global Cloudflare edge protection, WAF, DDoS mitigation & GLB' },
+      { id: 'alb', icon: 'alb', label: 'Application Load Balancer (Public)', color: '#ba4e00', type: 'Layer-7 Public Ingress', desc: 'Public-facing HTTP/HTTPS TLS-terminating load balancer' },
+      { id: 'nlb', icon: 'nlb', label: 'Network Load Balancer (Public)', color: '#ba4e00', type: 'Layer-4 Public Ingress', desc: 'Public high-throughput TCP/UDP load balancer with static IPs' },
+      { id: 'floating_ip', icon: 'floating_ip', label: 'Floating IP', color: '#ba4e00', type: 'Direct Public IP', desc: 'Directly addressable public IPv4 address attached to instance VNIs' },
+      { id: 'public_address_ranges', icon: 'public_address_ranges', label: 'Public Address Ranges', color: '#ba4e00', type: 'BYOIP / Ingress Routing', desc: 'Contiguous public CIDR allocation with custom ingress routing' }
+    ],
+    zone: {
+      name: 'Zone 1',
+      acls: [
+        {
+          name: 'ACL1',
+          purpose: 'Compute & App Subnet',
+          items: [
+            { id: 'vsi', icon: 'vsi', label: 'VSI', color: '#007d79', desc: 'Virtual Server Instance running core production microservices' },
+            { id: 'vsi', icon: 'vsi', label: 'VSI', color: '#007d79', desc: 'Virtual Server Instance for multi-zone resilience' },
+            { id: 'block_storage', icon: 'block_storage', label: 'Block Storage', color: '#0f62fe', desc: 'Dedicated block storage volume for application workloads' }
+          ]
+        },
+        {
+          name: 'ACL2',
+          purpose: 'ROKS Cluster Subnet',
+          items: [
+            { id: 'roks', icon: 'roks', label: 'ROKS', color: '#007d79', desc: 'Production Red Hat OpenShift container worker instance' },
+            { id: 'roks', icon: 'roks', label: 'ROKS', color: '#007d79', desc: 'Production Red Hat OpenShift container worker instance' },
+            { id: 'block_storage', icon: 'block_storage', label: 'Block Storage', color: '#0f62fe', desc: 'Container storage volume for stateful OpenShift pods' }
+          ]
+        },
+        {
+          name: 'ACL3',
+          purpose: 'VPE Gateway Subnet',
+          items: [
+            { id: 'vpe', icon: 'vpe', label: 'VPE', color: '#0072c3', desc: 'Virtual Private Endpoint gateway for Cloud Object Storage' },
+            { id: 'vpe', icon: 'vpe', label: 'VPE', color: '#0072c3', desc: 'Virtual Private Endpoint gateway for Secrets Manager' }
+          ]
+        }
+      ]
+    }
+  },
+  // Cloud Services (Bottom panel)
+  cloud_services: [
+    {
+      group: 'Logging & Monitoring',
+      items: [
+        { id: 'cloud_logs', icon: 'cloud_logs', label: 'Cloud Logs', color: '#007d79', desc: 'Centralised log analytics and long-term archival' },
+        { id: 'cloud_monitoring', icon: 'cloud_monitoring', label: 'Cloud Monitoring', color: '#007d79', desc: 'Infrastructure metrics, dashboards, and alerting' }
+      ]
+    },
+    {
+      group: 'Container',
+      items: [
+        { id: 'container_registry', icon: 'container_registry', label: 'Container Registry', color: '#007d79', desc: 'Secure, private multi-tenant Docker container image registry' }
+      ]
+    },
+    {
+      group: 'Integration',
+      items: [
+        { id: 'event_streams', icon: 'event_streams', label: 'Event Streams', color: '#0f62fe', desc: 'Enterprise-grade Apache Kafka event streaming platform' }
+      ]
+    },
+    {
+      group: 'Networking',
+      items: [
+        { id: 'flow_logs', icon: 'flow_logs', label: 'Flow Logs', color: '#007d79', desc: 'VPC network traffic metadata collectors writing to COS' }
+      ]
+    },
+    {
+      group: 'Storage',
+      items: [
+        { id: 'backup_recovery', icon: 'backup_recovery', label: 'Backup for VPC', color: '#0f62fe', desc: 'Policy-based automated snapshots for Block & File storage' },
+        { id: 'cloud_object_storage', icon: 'cloud_object_storage', label: 'Object Storage', color: '#0f62fe', desc: 'Durable S3-compatible cloud object storage' }
+      ]
+    },
+    {
+      group: 'Security',
+      items: [
+        { id: 'app_id', icon: 'app_id', label: 'App ID', color: '#da1e28', desc: 'User authentication and authorization for web & mobile apps' },
+        { id: 'iam', icon: 'iam', label: 'IAM', color: '#da1e28', desc: 'Identity & Access Management, access policies and trusted profiles' },
+        { id: 'hpcs', icon: 'hpcs', label: 'HPCS / Key Protect', color: '#da1e28', desc: 'Hardware security module (FIPS 140-2 Level 4) & key management' },
+        { id: 'secrets_manager', icon: 'secrets_manager', label: 'Secrets Manager', color: '#da1e28', desc: 'Centralised vault for API keys, TLS certificates, and secrets' },
+        { id: 'scc', icon: 'scc', label: 'SCC WP', color: '#da1e28', desc: 'Security and Compliance Center Workload Protection' }
+      ]
+    },
+    {
+      group: 'Developer Tools',
+      items: [
+        { id: 'event_notifications', icon: 'event_notifications', label: 'Event Notifications', color: '#007d79', desc: 'Routing critical events to email, SMS, webhooks, and Slack' },
+        { id: 'continuous_delivery', icon: 'continuous_delivery', label: 'Continuous Delivery', color: '#ee5396', desc: 'Automated CI/CD toolchains with Tekton pipelines' },
+        { id: 'schematics', icon: 'schematics', label: 'Schematics', color: '#ee5396', desc: 'Managed Terraform automation for infrastructure deployment' },
+        { id: 'toolchain', icon: 'toolchain', label: 'Toolchain', color: '#ee5396', desc: 'Integrated DevOps toolchains for agile delivery' }
+      ]
+    }
+  ]
+};
+
+// Helper to render an architecture node card (clickable icon block)
+function renderArchNode(node, extraClasses = '') {
+  const p = (state.products ?? []).find(x => x.id === node.id);
+  const isSelected = state.archSelected === node.id;
+  const isDimmed = state.query && p && !matchesQuery(p, state.query);
+  const isQueryHit = state.query && p && matchesQuery(p, state.query);
+
+  const classes = [
+    'arch-node',
+    extraClasses,
+    isSelected ? 'is-selected' : '',
+    isDimmed ? 'is-dimmed' : '',
+    isQueryHit ? 'is-query-hit' : ''
+  ].filter(Boolean).join(' ');
+
+  const iconSvg = NET_ICONS[node.icon] ?? NET_ICONS[node.id] ?? NET_ICONS.vpc_core;
+
+  return `
+    <div class="${classes}"
+         data-id="${node.id}"
+         data-arch-label="${node.label}"
+         data-arch-desc="${node.desc || ''}"
+         tabindex="0"
+         role="button"
+         aria-label="${node.label}"
+         title="${node.label}: ${node.desc || ''}"
+         style="--arch-color:${node.color || '#0f62fe'}">
+      <div class="arch-node-icon-box" style="background-color:${node.color || '#0f62fe'}">
+        <svg class="arch-icon-svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+          ${iconSvg}
+        </svg>
+      </div>
+      <div class="arch-node-label">${node.label}</div>
+      ${node.type ? `<div class="arch-node-type">${node.type}</div>` : ''}
+    </div>`;
+}
+
+// ── Render Architecture View ──────────────────────────────────────────────────
+function renderArchitecture() {
+  const reg = ARCH_REGISTRY;
+
+  let html = `<div class="arch-view-wrapper">`;
+
+  // Top header banner
+  html += `
+    <div class="arch-top-bar">
+      <div class="arch-top-title">
+        <svg class="arch-title-icon" viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+          <path d="M23.4141,22-13.4141-13.4141V2H2v8h6.5859l13.4141,13.4141v6.5859h8v-8h-6.5859ZM8,8H4V4h4v4Zm20,20h-4v-4h4v4Z"/>
+        </svg>
+        <span>High-Level VPC Reference Architecture for Enterprise & Financial Services</span>
+      </div>
+      <div class="arch-traffic-legend">
+        <span class="arch-legend-note">Network Traffic (All TLS 1.2+):</span>
+        <span class="arch-traffic-pill pill-public"><span class="pill-dot"></span>Public</span>
+        <span class="arch-traffic-pill pill-private"><span class="pill-dot"></span>Private</span>
+        <span class="arch-traffic-pill pill-secure"><span class="pill-dot"></span>Secure / VPN</span>
+      </div>
+    </div>`;
+
+  // Main 3-column architecture container
+  html += `<div class="arch-diagram-grid">`;
+
+  // ── LEFT: Public Network (Consumer) ──
+  html += `
+    <div class="arch-col arch-col-consumer">
+      <div class="arch-col-header">
+        <div class="arch-col-title">
+          <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor"><path d="M16 2L3 9.5v13L16 30l13-7.5v-13L16 2z"/></svg>
+          ${reg.public_network.title}
+        </div>
+      </div>
+      <div class="arch-col-body arch-col-consumer-body">
+        <div class="arch-consumer-flow">
+          ${renderArchNode(reg.public_network.items[0], 'arch-consumer-node')}
+          <div class="arch-v-line"></div>
+          ${renderArchNode(reg.public_network.items[1], 'arch-consumer-node')}
+        </div>
+      </div>
+    </div>`;
+
+  // ── CENTER: IBM Cloud Region A ──
+  html += `
+    <div class="arch-col arch-col-cloud">
+      <div class="arch-region-box">
+        <div class="arch-region-header">
+          <span class="arch-cloud-brand">
+            <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor"><path d="M26 14a6 6 0 0 0-5.69-4.08A8 8 0 0 0 5 15a6 6 0 0 0 1 11.92h20A5 5 0 0 0 26 14z"/></svg>
+            IBM Cloud
+          </span>
+          <span class="arch-region-label">
+            <svg viewBox="0 0 32 32" width="14" height="14" fill="currentColor"><path d="M16,2A10,10,0,0,0,6,12c0,7.5,10,18,10,18s10-10.5,10-18A10,10,0,0,0,16,2Zm0,14a4,4,0,1,1,4-4A4,4,0,0,1,16,16Z"/></svg>
+            Region A (Multi-Zone)
+          </span>
+        </div>
+
+        <div class="arch-vpcs-wrapper">
+
+          <!-- ── MANAGEMENT VPC (Secure Connection Options) ── -->
+          <div class="arch-vpc-card arch-vpc-mgmt">
+            <div class="arch-vpc-header">
+              <div class="arch-vpc-title-row">
+                <span class="arch-vpc-icon">
+                  <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor"><path d="M23.4141,22,10,8.5859V2H2v8H8.5859L22,23.4141V30h8V22ZM8,8H4V4H8ZM28,28H24V24h4Z"/></svg>
+                </span>
+                <span class="arch-vpc-title">${reg.mgmt_vpc.title}</span>
+                <span class="arch-vpc-badge mgmt-badge">${reg.mgmt_vpc.tag}</span>
+              </div>
+              <div class="arch-vpc-desc">${reg.mgmt_vpc.desc}</div>
+            </div>
+
+            <!-- Ingress Options Toolbar (Management VPC = Secure Connection Options) -->
+            <div class="arch-conn-options-bar secure-options-bar">
+              <div class="arch-conn-options-title">
+                <svg viewBox="0 0 32 32" width="14" height="14" fill="currentColor"><path d="M24,14H22V8A6,6,0,0,0,10,8v6H8a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H24a2,2,0,0,0,2-2V16A2,2,0,0,0,24,14ZM12,8a4,4,0,0,1,8,0v6H12ZM24,28H8V16H24Z"/></svg>
+                ${reg.mgmt_vpc.connOptionsTitle}
+              </div>
+              <div class="arch-conn-options-grid">
+                ${reg.mgmt_vpc.connOptions.map(opt => renderArchNode(opt, 'arch-conn-node')).join('')}
+              </div>
+            </div>
+
+            <!-- Zone 1 Box -->
+            <div class="arch-zone-box">
+              <div class="arch-zone-title">
+                <svg viewBox="0 0 32 32" width="14" height="14" fill="currentColor"><path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,22H6V6H26Z"/></svg>
+                ${reg.mgmt_vpc.zone.name}
+              </div>
+              <div class="arch-zone-content">
+                <!-- Ingress LB -->
+                <div class="arch-ingress-node-col">
+                  ${renderArchNode({ id: 'nlb', icon: 'nlb', label: 'Private LB', color: '#0072c3', desc: 'Private load balancer for internal administrative ingress' }, 'arch-gateway-node')}
+                </div>
+                <!-- ACL Subnets Grid -->
+                <div class="arch-acls-grid">
+                  ${reg.mgmt_vpc.zone.acls.map(acl => `
+                    <div class="arch-acl-block">
+                      <div class="arch-acl-header">
+                        <svg viewBox="0 0 32 32" width="12" height="12" fill="currentColor"><path d="M18,28H14a2,2,0,0,1-2-2V18.41L4.59,11A2,2,0,0,1,4,9.59V6A2,2,0,0,1,6,4H26a2,2,0,0,1,2,2V9.59A2,2,0,0,1,27.41,11L20,18.41V26A2,2,0,0,1,18,28Z"/></svg>
+                        <span class="arch-acl-name">${acl.name}</span>
+                      </div>
+                      <div class="arch-acl-items">
+                        ${acl.items.map(item => renderArchNode(item)).join('')}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── WORKLOAD VPC (Public Connection Options) ── -->
+          <div class="arch-vpc-card arch-vpc-workload">
+            <div class="arch-vpc-header">
+              <div class="arch-vpc-title-row">
+                <span class="arch-vpc-icon">
+                  <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor"><path d="M23.4141,22,10,8.5859V2H2v8H8.5859L22,23.4141V30h8V22ZM8,8H4V4H8ZM28,28H24V24h4Z"/></svg>
+                </span>
+                <span class="arch-vpc-title">${reg.workload_vpc.title}</span>
+                <span class="arch-vpc-badge workload-badge">${reg.workload_vpc.tag}</span>
+              </div>
+              <div class="arch-vpc-desc">${reg.workload_vpc.desc}</div>
+            </div>
+
+            <!-- Ingress Options Toolbar (Workload VPC = Public Connection Options) -->
+            <div class="arch-conn-options-bar public-options-bar">
+              <div class="arch-conn-options-title">
+                <svg viewBox="0 0 32 32" width="14" height="14" fill="currentColor"><path d="M28,11a13.9563,13.9563,0,0,0-4.1051-9.8949L22.4813,2.5187A11.9944,11.9944,0,0,1,5.5568,19.5194l-.0381-.0381L4.1051,20.8949A13.9563,13.9563,0,0,0,14,25v3H10v2H20V28H16V24.84A14.0094,14.0094,0,0,0,28,11Z"/></svg>
+                ${reg.workload_vpc.connOptionsTitle}
+              </div>
+              <div class="arch-conn-options-grid">
+                ${reg.workload_vpc.connOptions.map(opt => renderArchNode(opt, 'arch-conn-node')).join('')}
+              </div>
+            </div>
+
+            <!-- Zone 1 Box -->
+            <div class="arch-zone-box">
+              <div class="arch-zone-title">
+                <svg viewBox="0 0 32 32" width="14" height="14" fill="currentColor"><path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4Zm0,22H6V6H26Z"/></svg>
+                ${reg.workload_vpc.zone.name}
+              </div>
+              <div class="arch-zone-content">
+                <!-- Ingress LB -->
+                <div class="arch-ingress-node-col">
+                  ${renderArchNode({ id: 'alb', icon: 'alb', label: 'Private / Public LB', color: '#0072c3', desc: 'Layer-7 Application Load Balancer with TLS termination' }, 'arch-gateway-node')}
+                </div>
+                <!-- ACL Subnets Grid -->
+                <div class="arch-acls-grid">
+                  ${reg.workload_vpc.zone.acls.map(acl => `
+                    <div class="arch-acl-block">
+                      <div class="arch-acl-header">
+                        <svg viewBox="0 0 32 32" width="12" height="12" fill="currentColor"><path d="M18,28H14a2,2,0,0,1-2-2V18.41L4.59,11A2,2,0,0,1,4,9.59V6A2,2,0,0,1,6,4H26a2,2,0,0,1,2,2V9.59A2,2,0,0,1,27.41,11L20,18.41V26A2,2,0,0,1,18,28Z"/></svg>
+                        <span class="arch-acl-name">${acl.name}</span>
+                      </div>
+                      <div class="arch-acl-items">
+                        ${acl.items.map(item => renderArchNode(item)).join('')}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── TRANSIT GATEWAY HUB INTERCONNECT ── -->
+          <div class="arch-tgw-banner">
+            <div class="arch-tgw-badge">
+              ${renderArchNode({ id: 'transit_gateway', icon: 'transit_gateway', label: 'Transit Gateway', color: '#0072c3', desc: 'Interconnects Management VPC, Workload VPC, Direct Link, and VPN with BGP routing' }, 'arch-tgw-node')}
+            </div>
+            <div class="arch-tgw-text">
+              <span class="arch-tgw-title">Global Backbone Interconnect</span>
+              <span class="arch-tgw-desc">Cross-VPC private routing, Direct Link aggregation, and on-premise hub connection</span>
+            </div>
+          </div>
+
+          <!-- ── CLOUD SERVICES PANEL (Bottom Box) ── -->
+          <div class="arch-cloud-services-box">
+            <div class="arch-cloud-services-header">
+              <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor"><path d="M26 14a6 6 0 0 0-5.69-4.08A8 8 0 0 0 5 15a6 6 0 0 0 1 11.92h20A5 5 0 0 0 26 14z"/></svg>
+              <span>Cloud Services (Integrated via Private Endpoints / VPE)</span>
+            </div>
+            <div class="arch-services-grid">
+              ${reg.cloud_services.map(group => `
+                <div class="arch-service-group">
+                  <div class="arch-service-group-title">${group.group}</div>
+                  <div class="arch-service-group-items">
+                    ${group.items.map(item => renderArchNode(item, 'arch-service-node')).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>`;
+
+  // ── RIGHT: Enterprise Network (Provider) ──
+  html += `
+    <div class="arch-col arch-col-provider">
+      <div class="arch-col-header">
+        <div class="arch-col-title">
+          <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor"><path d="M26 4H6A2 2 0 0 0 4 6v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/></svg>
+          ${reg.enterprise_network.title}
+        </div>
+      </div>
+      <div class="arch-col-body arch-col-provider-body">
+        <div class="arch-provider-flow">
+          ${reg.enterprise_network.items.map((item, idx) => `
+            ${renderArchNode(item, 'arch-provider-node')}
+            ${idx < reg.enterprise_network.items.length - 1 ? '<div class="arch-v-line"></div>' : ''}
+          `).join('')}
+        </div>
+      </div>
+    </div>`;
+
+  html += `</div>`; // .arch-diagram-grid
+  html += `</div>`; // .arch-view-wrapper
+
+  return html;
 }
 
 // ── Network view — curated VPC connection-flow layout ─────────────────────────
@@ -576,898 +1016,203 @@ function renderIntegration() {
     </div>`;
 }
 
-// ── Grid view ─────────────────────────────────────────────────────────────────
+// ── Map view (radial) ─────────────────────────────────────────────────────────
+function inodeClasses(p) {
+  const classes = ['inode'];
+  if (p.hub) classes.push('is-hub');
+  if (state.activeId && state.activeId === p.id) classes.push('is-active');
+
+  if (state.query) {
+    classes.push(matchesQuery(p, state.query) ? 'is-query-hit' : 'is-dimmed');
+  } else if (state.activeId && state.activeId !== p.id) {
+    const connected = getConnectedIds(state.activeId);
+    classes.push(connected.has(p.id) ? 'is-highlighted' : 'is-dimmed');
+  }
+  return classes.join(' ');
+}
+
 function renderGrid() {
-  const cats     = state.plays.categories;
-  const intCats  = GRID_INTEGRATION_CATS.filter(id => cats.find(c => c.id === id));
-  const laneCount = intCats.length;
+  const cats    = state.plays.categories;
+  const intCats = GRID_INTEGRATION_CATS.filter(id => cats.find(c => c.id === id));
+  const hub     = state.products.find(p => p.hub) || state.products.find(p => p.cat === 'vpc');
+  const hubPlay = cats.find(c => c.id === 'vpc');
+  const hubPlayId = hubPlay?.playId ?? 0;
+  const hubColor  = laneColor(hubPlayId);
 
-  // Hub products (vpc lane)
-  const hubProducts = state.products.filter(p => p.cat === 'vpc');
-
-  let html = `<div class="grid-layout" style="--lane-count:${laneCount}">`;
-
-  // ── Column headers ──
-  // Hub column header
-  const hubCat   = cats.find(c => c.id === 'vpc');
-  const hubPlay  = hubCat ? state.plays.plays[hubCat.playId] : null;
-  const hubColor = hubPlay ? laneColor(hubPlay.id) : 'var(--accent)';
-  const hubMuted = hubPlay ? laneMuted(hubPlay.id) : 'var(--play-0-muted)';
-  html += `<div class="lane-header" style="--lane-color:${hubColor}; --lane-color-muted:${hubMuted}">${hubCat?.label ?? 'Core'}</div>`;
-
-  for (const catId of intCats) {
-    const cat   = cats.find(c => c.id === catId);
-    const play  = cat ? state.plays.plays[cat.playId] : null;
-    const color = play ? laneColor(play.id) : 'var(--border)';
-    const muted = play ? laneMuted(play.id) : 'transparent';
-    html += `<div class="lane-header" style="--lane-color:${color}; --lane-color-muted:${muted}">${cat?.label ?? catId}</div>`;
-  }
-
-  // ── Hub column ──
-  html += `<div class="os-hub-column">`;
-  for (const p of hubProducts) {
-    html += cardHtml(p);
-  }
-  html += `</div>`;
-
-  // ── Integration columns ──
-  for (const catId of intCats) {
+  const lanes = intCats.map(catId => {
+    const cat  = cats.find(c => c.id === catId);
     const products = state.products.filter(p => p.cat === catId);
-    html += `<div class="lane-column">`;
-    for (const p of products) {
-      html += cardHtml(p);
-    }
-    html += `</div>`;
-  }
-
-  html += `</div>`;
-  return html;
-}
-
-// ── Matrix view ───────────────────────────────────────────────────────────────
-const MATRIX_OS = [
-  { id: 'linux',      label: 'Linux'   },
-  { id: 'windows',    label: 'Windows' },
-  { id: 'all',        label: 'All Services' },
-];
-
-function renderMatrix() {
-  // OS Image Catalogue — rows per OS family, version chips per row
-  const images = state.images?.images ?? [];
-
-  if (!images.length) {
-    return `<div class="loading-state"><p>No image data — run <code>mise run fetch-profiles</code> with <code>IBMCLOUD_API_KEY</code> set.</p></div>`;
-  }
-
-  // Group images by family, then by version within each family
-  const byFamily = new Map();
-  for (const img of images) {
-    const family = img.os_family || 'Other';
-    if (!byFamily.has(family)) byFamily.set(family, new Map());
-    const ver = img.os_version || img.os_name || img.name || '—';
-    if (!byFamily.get(family).has(ver)) byFamily.get(family).set(ver, []);
-    byFamily.get(family).get(ver).push(img);
-  }
-  // Sort families: Windows last, rest alphabetical
-  const families = [...byFamily.keys()].sort((a, b) => {
-    if (/windows/i.test(a)) return 1;
-    if (/windows/i.test(b)) return -1;
-    return a.localeCompare(b);
-  });
-
-  const fetchedStr = state.images?.fetched_at
-    ? new Date(state.images.fetched_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
-    : null;
-
-  let html = `<div class="os-catalogue-wrap">`;
-  if (fetchedStr) {
-    html += `<div class="profiles-meta"><span>Catalogue fetched: <strong>${fetchedStr}</strong></span>
-      <span>· ${images.length} public x86-64 images · ${families.length} OS families</span>
-      <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-about-images" target="_blank" rel="noopener" class="profiles-docs-link">IBM Docs ↗</a>
-    </div>`;
-  }
-
-  html += `<table class="os-catalogue-table">
-    <thead><tr>
-      <th class="os-family-col">OS Family</th>
-      <th>Available Versions</th>
-      <th class="os-count-col">Images</th>
-    </tr></thead>
-    <tbody>`;
-
-  for (const family of families) {
-    const versionMap = byFamily.get(family);
-    const versions   = [...versionMap.keys()].sort();
-    const totalImgs  = [...versionMap.values()].reduce((s, a) => s + a.length, 0);
-
-    // Decide accent colour: windows = purple, rhel/rocky/suse = red, ubuntu = orange, else teal
-    let accentVar = '--play-2'; // teal (networking) as default
-    if (/windows/i.test(family))                         accentVar = '--play-4'; // purple (security)
-    else if (/red hat|rhel/i.test(family))               accentVar = '--play-3'; // red (storage)
-    else if (/rocky|centos|suse/i.test(family))          accentVar = '--play-3';
-    else if (/ubuntu/i.test(family))                     accentVar = '--play-5'; // amber (connectivity)
-    else if (/debian/i.test(family))                     accentVar = '--play-1'; // compute blue
-
-    html += `<tr class="os-family-row">
-      <td class="os-family-name" style="border-left:3px solid var(${accentVar})">${family}</td>
-      <td class="os-versions-cell">${
-        versions.map(ver => {
-          const imgs = versionMap.get(ver);
-          const names = imgs.map(i => i.name).join('\n');
-          return `<span class="os-version-chip" title="${names}" style="--chip-color:var(${accentVar})">${ver}</span>`;
-        }).join('')
-      }</td>
-      <td class="os-count-cell">${totalImgs}</td>
-    </tr>`;
-  }
-
-  html += `</tbody></table></div>`;
-  return html;
-}
-
-// ── Profiles view ─────────────────────────────────────────────────────────────
-function renderProfiles() {
-  if (!state.profiles) {
-    return `<div class="loading-state">
-      <p>No profiles data — run <code>mise run fetch-profiles</code> with <code>IBMCLOUD_API_KEY</code> set.</p>
-    </div>`;
-  }
-
-  const { vsi_profiles, fetched_at } = state.profiles;
-  const fetchedStr = fetched_at
-    ? new Date(fetched_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
-    : 'unknown';
-
-  let html = `<div class="profiles-wrap">`;
-  html += renderVsiProfiles(vsi_profiles ?? []);
-  html += `<div class="profiles-footer">
-    <span>Data fetched: <strong>${fetchedStr}</strong></span>
-    <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-profiles" target="_blank" rel="noopener" class="profiles-docs-link">
-      <span>IBM Docs</span>
-      <svg width="12" height="12" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" style="vertical-align: -1px; margin-left: 2px;">
-        <path d="M26 26H6V6h10V4H6c-1.1 0-2 .9-2 2v20c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V16h-2v10z"/><path d="M20 4v2h4.6L14.3 16.3l1.4 1.4L26 7.4V12h2V4h-8z"/>
-      </svg>
-    </a>
-  </div>`;
-  html += `</div>`;
-  return html;
-}
-
-function getGpuDescription(p) {
-  if (!p.gpu_count) return '—';
-  // Check profile name or family for GPU model
-  const name = p.name || '';
-  if (name.includes('gaudi3')) return `${p.gpu_count}x Gaudi 3`;
-  if (name.includes('h100')) return `${p.gpu_count}x H100`;
-  if (name.includes('l40s')) return `${p.gpu_count}x L40S`;
-  if (name.includes('l4')) return `${p.gpu_count}x L4`;
-  if (name.includes('v100')) return `${p.gpu_count}x V100`;
-  if (name.includes('a100')) return `${p.gpu_count}x A100`;
-  return `${p.gpu_count}x GPU`;
-}
-
-function getNormalizedVsiFamily(family) {
-  if (!family) return '—';
-  if (family.startsWith('gpu-') || family === 'gpu') return 'gpu';
-  return family;
-}
-
-// Extract generation token from a VSI profile name.
-// Returns 'flex', '2', '3', '4', or null.
-function getVsiGen(name) {
-  const m = (name || '').match(/^[a-z]+(\d+|f)[a-z]*-/);
-  if (!m) return null;
-  return m[1] === 'f' ? 'flex' : m[1];
-}
-
-function renderVsiProfiles(profiles) {
-  // Normalized families for the filter dropdown (gpu-* merged → 'gpu')
-  const rawFamilies = [...new Set(profiles.map(p => getNormalizedVsiFamily(p.family)).filter(Boolean))];
-
-  // Display names for each normalized family
-  const FAMILY_LABELS = {
-    'balanced':        'Balanced',
-    'compute':         'Compute',
-    'memory':          'Memory',
-    'gpu':             'GPU',
-    'high-frequency':  'High Frequency',
-    'high-memory':     'High Memory',
-    'very-high-memory':'Very High Memory',
-    'storage-optimized':'Storage Optimized',
-    'nano':            'Nano',
-  };
-  const familyLabel = f => FAMILY_LABELS[f] ?? f;
-
-  // Preferred display order for families
-  const FAMILY_ORDER = [
-    'balanced','compute','memory','gpu',
-    'high-frequency','high-memory','very-high-memory','storage-optimized','nano',
-  ];
-
-  const activeFamily  = state.profileFamily;
-  const activeGen     = state.vsiGenFilter;
-  const activeProfile = state.vsiProfileFilter;
-
-  // Derive available generations from the full profile list
-  const allGens = [...new Set(profiles.map(p => getVsiGen(p.name)).filter(Boolean))].sort();
-
-  // Profiles eligible for the profile dropdown given the current family selection
-  const familyFiltered = activeFamily === 'all'
-    ? profiles
-    : profiles.filter(p => getNormalizedVsiFamily(p.family) === activeFamily);
-
-  // Apply generation filter, then specific profile filter
-  const genFiltered = activeGen === 'all'
-    ? familyFiltered
-    : familyFiltered.filter(p => getVsiGen(p.name) === activeGen);
-
-  const filtered = activeProfile === 'all'
-    ? genFiltered
-    : genFiltered.filter(p => p.name === activeProfile);
-
-  const preFiltered = genFiltered; // alias used for profile dropdown count
-
-  // Does any visible profile have region data (gen4 select-availability)?
-  const hasRegions = filtered.some(p => Array.isArray(p.regions));
-  // Only show GPU column when at least one visible profile has GPU data
-  const hasGpu = filtered.some(p => p.gpu_count);
-
-  // Generation display labels
-  const GEN_LABELS = { '2': 'Gen 2', '3': 'Gen 3', '4': 'Gen 4', 'flex': 'Flex' };
-  const genLabel = g => GEN_LABELS[g] ?? `Gen ${g}`;
-  const genCounts = {};
-  for (const p of familyFiltered) {
-    const g = getVsiGen(p.name);
-    if (g) genCounts[g] = (genCounts[g] || 0) + 1;
-  }
-
-  // ── Header bar ───────────────────────────────────────────────────────────────
-  const anyFilterActive = activeFamily !== 'all' || activeGen !== 'all' || activeProfile !== 'all';
-  let html = `<div class="avail-header">
-    <div class="avail-title">
-      <strong>${rawFamilies.length} families</strong> &nbsp;·&nbsp;
-      <strong>${profiles.length} total profiles</strong> &nbsp;·&nbsp;
-      <strong>${filtered.length} shown</strong>
-    </div>
-    <div class="avail-filter-controls">
-      <div class="avail-select-group">
-        <label for="vsiFamilySelect" class="avail-select-label">Family</label>
-        <select id="vsiFamilySelect" class="avail-select" data-vsi-family-select>
-          <option value="all" ${activeFamily === 'all' ? 'selected' : ''}>All Families (${rawFamilies.length})</option>`;
-  for (const f of rawFamilies) {
-    html += `<option value="${f}" ${activeFamily === f ? 'selected' : ''}>${familyLabel(f)}</option>`;
-  }
-  html += `
-        </select>
-      </div>
-      <div class="avail-select-group">
-        <label for="vsiGenSelect" class="avail-select-label">Generation</label>
-        <select id="vsiGenSelect" class="avail-select" data-vsi-gen-select>
-          <option value="all" ${activeGen === 'all' ? 'selected' : ''}>All Generations (${allGens.length})</option>`;
-  for (const g of allGens) {
-    const cnt = genCounts[g] || 0;
-    html += `<option value="${g}" ${activeGen === g ? 'selected' : ''}>${genLabel(g)} (${cnt})</option>`;
-  }
-  html += `
-        </select>
-      </div>
-      <div class="avail-select-group">
-        <label for="vsiProfileSelect" class="avail-select-label">Profile</label>
-        <select id="vsiProfileSelect" class="avail-select" data-vsi-profile-select>
-          <option value="all" ${activeProfile === 'all' ? 'selected' : ''}>All Profiles (${preFiltered.length})</option>`;
-  for (const p of preFiltered) {
-    const vcpu = p.vcpu ? `${p.vcpu}vCPU` : '';
-    const mem  = p.memory_gb ? `${p.memory_gb}G` : '';
-    const extra = [vcpu, mem].filter(Boolean).join(' / ');
-    const desc = extra ? ` (${extra})` : '';
-    html += `<option value="${p.name}" ${activeProfile === p.name ? 'selected' : ''}>${p.name}${desc}</option>`;
-  }
-  html += `
-        </select>
-      </div>
-      ${anyFilterActive ? `
-        <button type="button" class="avail-reset-btn" id="vsiResetBtn">Reset filters</button>
-      ` : ''}
-    </div>
-  </div>`;
-
-  // ── Table grouped by family ──────────────────────────────────────────────────
-  // Group filtered profiles by normalized family
-  const byFamily = {};
-  for (const p of filtered) {
-    const f = getNormalizedVsiFamily(p.family);
-    (byFamily[f] = byFamily[f] || []).push(p);
-  }
-
-  // Bandwidth cap helper
-  const getBwCap = p => {
-    if (p.bandwidth_gbps != null) return p.bandwidth_gbps;
-    if (p.bandwidth != null) return +(p.bandwidth / 1000).toFixed(1);
-    return null;
-  };
-  const hasBw = filtered.some(p => getBwCap(p) != null);
-
-  // Accordion: auto-expand when a filter is active
-  const isFamilyExpanded = fam => {
-    if (anyFilterActive) return true;
-    return state.expandedVsiGens.has(fam);   // reuse same Set, keyed by family now
-  };
-
-  const colCount = 3 + (hasBw ? 1 : 0) + (hasGpu ? 1 : 0) + (hasRegions ? 1 : 0);
-
-  html += `<div class="profile-table-wrap"><table class="profile-table">
-    <thead><tr>
-      <th>Name</th>
-      <th>vCPU</th>
-      <th>Memory (GiB)</th>
-      ${hasBw ? '<th>Max BW (Gbps)</th>' : ''}
-      ${hasGpu ? '<th>GPU</th>' : ''}
-      ${hasRegions ? '<th>Regions</th>' : ''}
-    </tr></thead>
-    <tbody>`;
-
-  const orderedFamilies = [
-    ...FAMILY_ORDER.filter(f => byFamily[f]),
-    ...Object.keys(byFamily).filter(f => !FAMILY_ORDER.includes(f)),
-  ];
-
-  for (const fam of orderedFamilies) {
-    const group = byFamily[fam];
-    if (!group || group.length === 0) continue;
-
-    const expanded = isFamilyExpanded(fam);
-    const label = familyLabel(fam);
-
-    html += `<tr class="gen-separator-row ${expanded ? 'is-expanded' : 'is-collapsed'}"
-        data-toggle-vsi-gen="${fam}" role="button" tabindex="0" aria-expanded="${expanded}">
-      <td colspan="${colCount}" class="gen-separator-cell">
-        <svg class="gen-expand-icon" width="14" height="14" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-          <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"/>
-        </svg>
-        <span class="gen-separator-label">${label}</span>
-        <span class="gen-separator-count">${group.length} profile${group.length !== 1 ? 's' : ''}</span>
-      </td>
-    </tr>`;
-
-    for (const p of group) {
-      const gpuDesc = getGpuDescription(p);
-      const gen = getVsiGen(p.name);
-      const isFlex = gen === 'flex';
-      const isGen4 = gen === '4';
-      const isSelectAvail = isGen4 && Array.isArray(p.regions) && p.regions.length > 0
-                            && p.regions.length < 13; // not all 13 regions
-      const bwCap = getBwCap(p);
-
-      // Gen badge shown inline on name (replaces the Family column)
-      const genBadge = isFlex
-        ? ' <span class="vsi-flex-badge">flex</span>'
-        : isSelectAvail
-          ? ' <span class="vsi-gen-badge vsi-gen-badge--select">gen4 · select</span>'
-          : gen
-            ? ` <span class="vsi-gen-badge">gen${gen}</span>`
-            : '';
-
-      // Region chips — only shown for gen4 select-availability profiles
-      let regionsCell = '';
-      if (hasRegions) {
-        if (isGen4 && Array.isArray(p.regions)) {
-          const chips = p.regions.length > 0
-            ? p.regions.map(r => `<span class="vsi-region-chip">${r}</span>`).join('')
-            : `<span class="vsi-region-chip vsi-region-chip--none">—</span>`;
-          regionsCell = `<td class="vsi-regions-cell">${chips}</td>`;
-        } else {
-          regionsCell = `<td class="vsi-regions-cell vsi-regions-all" title="Available in all regions">All regions</td>`;
-        }
-      }
-
-      html += `<tr class="vsi-body-row ${isFlex ? 'vsi-flex-row' : ''} ${expanded ? '' : 'vsi-row-hidden'}">
-        <td class="profile-name">${p.name}${genBadge}</td>
-        <td>${p.vcpu ?? '—'}</td>
-        <td>${p.memory_gb ?? '—'}</td>
-        ${hasBw ? `<td>${bwCap != null ? bwCap + ' Gbps' : '—'}</td>` : ''}
-        ${hasGpu ? `<td>${gpuDesc}</td>` : ''}
-        ${regionsCell}
-      </tr>`;
-    }
-  }
-
-  html += `</tbody></table></div>`;
-  return html;
-}
-
-function renderBmsProfiles(profiles, regions) {
-  const activeRegion = state.bmsRegion;
-  const activeFamily = state.profileFamily;
-
-  // ── Region filter bar ──────────────────────────────────────────────────────
-  // Only show if we have multi-region capacity data
-  const hasCapacity = profiles.some(p => p.capacity_by_region && Object.keys(p.capacity_by_region).length > 0);
-  const capRegions  = hasCapacity
-    ? [...new Set(profiles.flatMap(p => Object.keys(p.capacity_by_region ?? {})))].sort()
-    : [];
-
-  let html = '';
-  if (capRegions.length > 0) {
-    html += `<div class="profile-region-bar">`;
-    for (const r of ['all', ...capRegions]) {
-      const label = r === 'all' ? 'All Regions' : r;
-      html += `<button class="profile-region-chip ${activeRegion === r ? 'is-active' : ''}" data-region="${r}">${label}</button>`;
-    }
-    html += `</div>`;
-  }
-
-  // ── Family filter bar ──────────────────────────────────────────────────────
-  const families = ['all', ...new Set(profiles.map(p => p.family).filter(Boolean))];
-  html += `<div class="profile-family-bar">`;
-  for (const f of families) {
-    const label = f === 'all' ? 'All Families' : f.charAt(0).toUpperCase() + f.slice(1);
-    html += `<button class="profile-family-chip ${activeFamily === f ? 'is-active' : ''}" data-family="${f}">${label}</button>`;
-  }
-  html += `</div>`;
-
-  // ── Filter profiles by family ──────────────────────────────────────────────
-  const filtered = activeFamily === 'all' ? profiles : profiles.filter(p => p.family === activeFamily);
-  html += `<div class="profile-count">${filtered.length} profile${filtered.length !== 1 ? 's' : ''}</div>`;
-
-  // ── Determine visible zones ────────────────────────────────────────────────
-  // When a region is selected: keep only zones that belong to that region
-  // (zone names are prefixed by region, e.g. "us-east-1" for region "us-east").
-  // When "All Regions": show all offered zones across all profiles.
-  const allZones = [];
-  for (const p of filtered) {
-    for (const z of p.zones ?? []) {
-      if (!allZones.includes(z)) allZones.push(z);
-    }
-  }
-  allZones.sort();
-  const visibleZones = (activeRegion === 'all')
-    ? allZones
-    : allZones.filter(z => z.startsWith(activeRegion + '-'));
-
-  // ── Legend ─────────────────────────────────────────────────────────────────
-  const legendHtml = hasCapacity
-    ? `<div class="bms-legend">
-        <span class="cap-available">✓</span> Capacity available &nbsp;
-        <span class="cap-zero">✗</span> No capacity &nbsp;
-        <span class="cap-unknown">—</span> Not offered in this zone
-       </div>`
-    : `<div class="bms-legend">
-        <span class="cap-available">✓</span> Offered in this zone &nbsp;
-        <span class="cap-unknown">—</span> Not offered
-       </div>`;
-
-  html += legendHtml;
-
-  // ── Table ──────────────────────────────────────────────────────────────────
-  html += `<div class="profile-table-wrap"><table class="profile-table">
-    <thead><tr>
-      <th>Name</th>
-      <th>Family</th>
-      <th>Sockets</th>
-      <th>Cores</th>
-      <th>Memory (GiB)</th>
-      <th>Bandwidth</th>
-      ${visibleZones.map(z => `<th class="zone-col">${z.toUpperCase()}</th>`).join('')}
-    </tr></thead>
-    <tbody>`;
-
-  for (const p of filtered) {
-    const bw = p.network_bandwidth ? (p.network_bandwidth / 1000).toFixed(0) + ' Gbps' : '—';
-    const offeredSet = new Set(p.zones ?? []);
-
-    // Build zone → availability for this profile
-    // When a region is selected: use that region's capacity entries
-    // When "All Regions": any region having availability counts as available
-    let capAvail = null;
-    if (hasCapacity && p.capacity_by_region) {
-      capAvail = new Set();
-      const regionsToCheck = activeRegion === 'all'
-        ? Object.values(p.capacity_by_region)
-        : [p.capacity_by_region[activeRegion] ?? []];
-      for (const entries of regionsToCheck) {
-        for (const e of entries) {
-          if (e.available === true) capAvail.add(e.zone);
-        }
-      }
-    }
-
-    html += `<tr>
-      <td class="profile-name">${p.name}</td>
-      <td><span class="profile-family-tag">${p.family ?? '—'}</span></td>
-      <td>${p.cpu_socket_count ?? '—'}</td>
-      <td>${p.cpu_core_count ?? '—'}</td>
-      <td>${p.memory_gb ?? '—'}</td>
-      <td>${bw}</td>
-      ${visibleZones.map(z => {
-        if (!offeredSet.has(z)) return `<td class="cap-cell cap-unknown">—</td>`;
-        if (capAvail === null)  return `<td class="cap-cell cap-available" title="Offered in this zone">✓</td>`;
-        return capAvail.has(z)
-          ? `<td class="cap-cell cap-available" title="Capacity available">✓</td>`
-          : `<td class="cap-cell cap-zero" title="No capacity right now">✗</td>`;
-      }).join('')}
-    </tr>`;
-  }
-
-  html += `</tbody></table></div>`;
-  return html;
-}
-
-// ── BM Availability View (Regional & Zonal Box Layout) ──────────────────────────
-const REGION_GEO_MAP = {
-  'us-east': { geo: 'North America', name: 'Washington DC', code: 'us-east', zones: ['us-east-1', 'us-east-2', 'us-east-3'] },
-  'us-south': { geo: 'North America', name: 'Dallas', code: 'us-south', zones: ['us-south-1', 'us-south-2', 'us-south-3'] },
-  'ca-tor': { geo: 'North America', name: 'Toronto', code: 'ca-tor', zones: ['ca-tor-1', 'ca-tor-2', 'ca-tor-3'] },
-  'ca-mon': { geo: 'North America', name: 'Montreal', code: 'ca-mon', zones: ['ca-mon-1', 'ca-mon-2', 'ca-mon-3'] },
-  'br-sao': { geo: 'Latin America', name: 'São Paulo', code: 'br-sao', zones: ['br-sao-1', 'br-sao-2', 'br-sao-3'] },
-  'eu-de': { geo: 'Europe', name: 'Frankfurt', code: 'eu-de', zones: ['eu-de-1', 'eu-de-2', 'eu-de-3'] },
-  'eu-es': { geo: 'Europe', name: 'Madrid', code: 'eu-es', zones: ['eu-es-1', 'eu-es-2', 'eu-es-3'] },
-  'eu-gb': { geo: 'Europe', name: 'London', code: 'eu-gb', zones: ['eu-gb-1', 'eu-gb-2', 'eu-gb-3'] },
-  'in-che': { geo: 'Asia Pacific', name: 'Chennai', code: 'in-che', zones: ['in-che-1', 'in-che-2', 'in-che-3'] },
-  'in-mum': { geo: 'Asia Pacific', name: 'Mumbai', code: 'in-mum', zones: ['in-mum-1', 'in-mum-2', 'in-mum-3'] },
-  'jp-osa': { geo: 'Asia Pacific', name: 'Osaka', code: 'jp-osa', zones: ['jp-osa-1', 'jp-osa-2', 'jp-osa-3'] },
-  'jp-tok': { geo: 'Asia Pacific', name: 'Tokyo', code: 'jp-tok', zones: ['jp-tok-1', 'jp-tok-2', 'jp-tok-3'] },
-  'au-syd': { geo: 'Asia Pacific', name: 'Sydney', code: 'au-syd', zones: ['au-syd-1', 'au-syd-2', 'au-syd-3'] },
-};
-
-function renderAvailability() {
-  if (!state.profiles) {
-    return `<div class="loading-state">
-      <p>No profiles data — run <code>mise run fetch-profiles</code> with <code>IBMCLOUD_API_KEY</code> set.</p>
-    </div>`;
-  }
-
-  const { bms_profiles, regions, fetched_at } = state.profiles;
-  const fetchedStr = fetched_at
-    ? new Date(fetched_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
-    : 'unknown';
-
-  const bmsList = bms_profiles ?? [];
-
-  // Group available profiles per region and per zone:
-  // regionZones[r][z] = [ profileObjects ... ]
-  const regionZones = {};
-  const allAvailableProfiles = new Map(); // profileName -> { name, family, cpu_core_count, memory_gb }
-  let totalAvailableCount = 0;
-
-  for (const p of bmsList) {
-    if (!p.capacity_by_region) continue;
-    for (const [r, entries] of Object.entries(p.capacity_by_region)) {
-      for (const e of entries) {
-        if (e.available === true) {
-          if (!regionZones[r]) regionZones[r] = {};
-          if (!regionZones[r][e.zone]) regionZones[r][e.zone] = [];
-          regionZones[r][e.zone].push(p);
-          if (!allAvailableProfiles.has(p.name)) {
-            allAvailableProfiles.set(p.name, p);
-          }
-          totalAvailableCount++;
-        }
-      }
-    }
-  }
-
-  // List of unique profile names that have availability anywhere
-  const availableProfileNames = Array.from(allAvailableProfiles.keys()).sort();
-
-  // Active filters & search query
-  const activeProfile = state.availProfileFilter;
-  const activeRegion = state.availRegionFilter;
-  const q = (state.query || '').toLowerCase().trim();
-
-  // Filter available profile list by search query if any
-  const filteredProfileNames = availableProfileNames.filter(name => {
-    if (!q) return true;
-    return name.toLowerCase().includes(q) || (allAvailableProfiles.get(name)?.family || '').toLowerCase().includes(q);
-  });
-
-  // Let's compute unique available profile counts per region
-  // (how many distinct profiles have capacity in at least one zone of that region)
-  const allRegionKeys = regions?.length ? regions : Object.keys(REGION_GEO_MAP);
-  const regionProfileCounts = {};
-  for (const r of allRegionKeys) {
-    const rZones = regionZones[r] || {};
-    const uniqueProfs = new Set();
-    for (const zk of Object.keys(rZones)) {
-      for (const p of rZones[zk]) {
-        uniqueProfs.add(p.name);
-      }
-    }
-    regionProfileCounts[r] = uniqueProfs.size;
-  }
-
-  // Sorted regions by profile count descending
-  const sortedRegionEntries = allRegionKeys.map(r => {
-    const meta = REGION_GEO_MAP[r] || { geo: 'Other', name: r, code: r };
     return {
-      id: r,
-      displayName: meta.name,
-      code: meta.code || r,
-      count: regionProfileCounts[r] || 0
+      catId,
+      label: cat?.label ?? catId,
+      playId: cat?.playId ?? 0,
+      color: laneColor(cat?.playId ?? 0),
+      products,
     };
-  }).sort((a, b) => b.count - a.count || a.displayName.localeCompare(b.displayName));
-
-  const maxRegionCount = Math.max(1, ...sortedRegionEntries.map(e => e.count));
-
-  // Let's build the Geo groups
-  const geoOrder = ['North America', 'Latin America', 'Europe', 'Asia Pacific'];
-
-  // Group regions by Geo (maintaining ordered regional order within geo)
-  const geoGroups = {};
-  for (const g of geoOrder) geoGroups[g] = [];
-
-  // Use Object.keys(REGION_GEO_MAP) order to preserve nice regional presentation
-  const orderedRegionKeys = Object.keys(REGION_GEO_MAP).filter(r => allRegionKeys.includes(r));
-  for (const r of allRegionKeys) {
-    if (!orderedRegionKeys.includes(r)) orderedRegionKeys.push(r);
-  }
-
-  for (const r of orderedRegionKeys) {
-    const meta = REGION_GEO_MAP[r] || { geo: 'Other', name: r, code: r };
-    const geo = meta.geo || 'Other';
-    if (!geoGroups[geo]) geoGroups[geo] = [];
-    geoGroups[geo].push({
-      id: r,
-      displayName: meta.name,
-      code: meta.code || r,
-      zones: regionZones[r] || {}
-    });
-  }
-
-  // Count total active zones with profiles
-  let totalActiveZones = 0;
-  for (const r of Object.keys(regionZones)) {
-    totalActiveZones += Object.keys(regionZones[r]).length;
-  }
-
-  // Collect available families from all available profiles
-  const availableFamiliesSet = new Set();
-  for (const p of allAvailableProfiles.values()) {
-    if (p.family) availableFamiliesSet.add(p.family);
-  }
-  const availableFamilies = Array.from(availableFamiliesSet).sort();
-
-  // Profiles matching selected family
-  const activeFamily = state.availFamilyFilter;
-  const eligibleProfilesForDropdown = availableProfileNames.filter(pname => {
-    if (activeFamily === 'all') return true;
-    const p = allAvailableProfiles.get(pname);
-    return p?.family === activeFamily;
   });
 
-  let html = `<div class="avail-area">`;
-
-  // Regions sorted by available profile count (desc) for the region dropdown
-  const regionsByCount = [...allRegionKeys].sort(
-    (a, b) => (regionProfileCounts[b] || 0) - (regionProfileCounts[a] || 0)
-  );
-
-  // Header bar with total stats and Family / Region / Profile Select Dropdowns
-  html += `
-    <div class="avail-header">
-      <div class="avail-title">
-        <strong>${allRegionKeys.length} regions</strong> &nbsp;·&nbsp;
-        <strong>${totalActiveZones} active zones</strong> &nbsp;·&nbsp;
-        <strong>${availableProfileNames.length} available profiles</strong> &nbsp;·&nbsp;
-        <span class="avail-gen-date">Refreshed ${fetchedStr}</span>
-      </div>
-      <div class="avail-filter-controls">
-        <div class="avail-select-group">
-          <label for="availFamilySelect" class="avail-select-label">Family</label>
-          <select id="availFamilySelect" class="avail-select" data-avail-family-select>
-            <option value="all" ${activeFamily === 'all' ? 'selected' : ''}>All Families (${availableFamilies.length})</option>`;
-  for (const fam of availableFamilies) {
-    const formattedFam = fam.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-    html += `<option value="${fam}" ${activeFamily === fam ? 'selected' : ''}>${formattedFam}</option>`;
+  const allItems = [];
+  for (const lane of lanes) {
+    for (const p of lane.products) allItems.push({ p, lane });
   }
-  html += `
-          </select>
-        </div>
-        <div class="avail-select-group">
-          <label for="availRegionSelect" class="avail-select-label">Region</label>
-          <select id="availRegionSelect" class="avail-select" data-avail-region-select>
-            <option value="all" ${activeRegion === 'all' ? 'selected' : ''}>All Regions (${allRegionKeys.length})</option>`;
-  for (const r of regionsByCount) {
-    const meta = REGION_GEO_MAP[r] || {};
-    const cnt = regionProfileCounts[r] || 0;
-    const label = meta.name ? `${meta.name} (${r}) — ${cnt}` : `${r} — ${cnt}`;
-    html += `<option value="${r}" ${activeRegion === r ? 'selected' : ''}>${label}</option>`;
+  const total = allItems.length || 1;
+
+  // Canvas geometry — single hub filling the stage
+  const CX = 500, CY = 500;
+  const R_HUB = 92;
+  const ITEM_R = 218;
+  const SPOKE_START = R_HUB + 8;
+  const LABEL_BAND_IN  = 308;
+  const LABEL_BAND_OUT = 358;
+  const LABEL_R1 = LABEL_BAND_IN + 16;
+  const LABEL_R2 = LABEL_BAND_IN + 38;
+  const VIEW = 1000;
+  const PAD  = 28;
+
+  const angStep = (2 * Math.PI) / total;
+  const startAngle = -Math.PI / 2;
+
+  let itemIdx = 0;
+  for (const lane of lanes) {
+    lane._startIdx = itemIdx;
+    lane._endIdx   = itemIdx + lane.products.length - 1;
+    itemIdx += lane.products.length;
   }
-  html += `
-          </select>
-        </div>
-        <div class="avail-select-group">
-          <label for="availProfileSelect" class="avail-select-label">Profile</label>
-          <select id="availProfileSelect" class="avail-select" data-avail-profile-select>
-            <option value="all" ${activeProfile === 'all' ? 'selected' : ''}>All Profiles (${eligibleProfilesForDropdown.length})</option>`;
-  for (const pname of eligibleProfilesForDropdown) {
-    const p = allAvailableProfiles.get(pname);
-    const cores = p?.cpu_core_count ? `${p.cpu_core_count}c` : '';
-    const mem = p?.memory_gb ? `${p.memory_gb}G` : '';
-    const extra = [cores, mem].filter(Boolean).join(' / ');
-    const desc = extra ? ` (${extra})` : '';
-    html += `<option value="${pname}" ${activeProfile === pname ? 'selected' : ''}>${pname}${desc}</option>`;
+  allItems.forEach((obj, idx) => {
+    obj.angle = startAngle + idx * angStep;
+  });
+
+  function wedgeD(ri, ro, a0, a1, laf) {
+    const x00 = CX + ri * Math.cos(a0), y00 = CY + ri * Math.sin(a0);
+    const x01 = CX + ri * Math.cos(a1), y01 = CY + ri * Math.sin(a1);
+    const x10 = CX + ro * Math.cos(a0), y10 = CY + ro * Math.sin(a0);
+    const x11 = CX + ro * Math.cos(a1), y11 = CY + ro * Math.sin(a1);
+    return `M ${x00} ${y00} A ${ri} ${ri} 0 ${laf} 1 ${x01} ${y01} L ${x11} ${y11} A ${ro} ${ro} 0 ${laf} 0 ${x10} ${y10} Z`;
   }
-  html += `
-          </select>
-        </div>
-        ${(activeFamily !== 'all' || activeRegion !== 'all' || activeProfile !== 'all') ? `
-          <button type="button" class="avail-reset-btn" id="availResetBtn">Reset filters</button>
-        ` : ''}
-      </div>
-    </div>`;
 
-  // Main content layout: Stage containing the main Geo/Zonal grid + Side Regional Count panel
-  html += `
-    <div class="avail-stage">
-      <div class="avail-main-content">
-        <div class="avail-grid">`;
+  function arcPathAt(r, a0, a1, laf, onBottom) {
+    if (onBottom) {
+      const tx0 = CX + r * Math.cos(a1), ty0 = CY + r * Math.sin(a1);
+      const tx1 = CX + r * Math.cos(a0), ty1 = CY + r * Math.sin(a0);
+      return `M ${tx0} ${ty0} A ${r} ${r} 0 ${laf} 0 ${tx1} ${ty1}`;
+    }
+    const tx0 = CX + r * Math.cos(a0), ty0 = CY + r * Math.sin(a0);
+    const tx1 = CX + r * Math.cos(a1), ty1 = CY + r * Math.sin(a1);
+    return `M ${tx0} ${ty0} A ${r} ${r} 0 ${laf} 1 ${tx1} ${ty1}`;
+  }
 
-  for (const geo of Object.keys(geoGroups)) {
-    const regList = geoGroups[geo];
-    if (!regList.length) continue;
+  let defs = '';
+  let wedges = '';
+  let bands = '';
+  let spokes = '';
+  let items = '';
 
-    // Check if geo has any matching regions
-    let geoHasMatch = false;
+  lanes.forEach((lane, gi) => {
+    if (!lane.products.length) return;
+    const ia0 = allItems[lane._startIdx].angle;
+    const ia1 = allItems[lane._endIdx].angle;
+    const arcPad = angStep * 0.45;
+    const a0 = ia0 - arcPad;
+    const a1 = ia1 + arcPad;
+    const da = a1 - a0;
+    const laf = da > Math.PI ? 1 : 0;
+    const fillOpacity = gi % 2 === 0 ? 0.16 : 0.09;
+    const bandOpacity = gi % 2 === 0 ? '1' : '0.7';
 
-    let geoHtml = `
-      <div class="avail-geo-group">
-        <div class="avail-geo-label">${geo}</div>
-        <div class="avail-regions-row">`;
+    wedges += `<g class="garc" style="--gc:${lane.color}">
+      <path d="${wedgeD(R_HUB + 6, LABEL_BAND_OUT, a0, a1, laf)}"
+            fill="${lane.color}" opacity="${fillOpacity}" />
+    </g>`;
 
-    for (const reg of regList) {
-      const meta = REGION_GEO_MAP[reg.id] || {};
-      const configuredZones = meta.zones || [`${reg.id}-1`, `${reg.id}-2`, `${reg.id}-3`];
-      const activeZoneKeys = Object.keys(reg.zones);
-      const hasAnyInRegion = activeZoneKeys.length > 0;
+    const pid = `ap-${lane.catId}`;
+    const arcMid = (a0 + a1) / 2;
+    const onBottom = Math.sin(arcMid) > 0;
+    const labelMidR = (LABEL_R1 + LABEL_R2) / 2;
+    const words = lane.label.split(' ');
+    // Prefer a single arc line when the lane name is short enough to fit
+    const useTwoLines = lane.label.length > 22;
 
-      // Check if this region matches the active family filter, profile filter, region filter, or search query
-      const isFilterActive = activeFamily !== 'all' || activeProfile !== 'all';
-      let regionHasMatchingProfiles = false;
-      for (const zk of activeZoneKeys) {
-        const matching = (reg.zones[zk] || []).filter(p => {
-          if (activeFamily !== 'all' && p.family !== activeFamily) return false;
-          if (activeProfile !== 'all' && p.name !== activeProfile) return false;
-          if (activeRegion !== 'all' && reg.id !== activeRegion) return false;
-          if (q && !p.name.toLowerCase().includes(q) && !(p.family || '').toLowerCase().includes(q) && !reg.displayName.toLowerCase().includes(q) && !reg.code.toLowerCase().includes(q) && !zk.toLowerCase().includes(q)) return false;
-          return true;
-        });
-        if (matching.length > 0) regionHasMatchingProfiles = true;
-      }
-
-      if (hasAnyInRegion && (!isFilterActive || regionHasMatchingProfiles)) {
-        geoHasMatch = true;
-      }
-
-      const isRegionSelected = activeRegion === reg.id;
-      const isRegionHighlighted = isRegionSelected || (isFilterActive && regionHasMatchingProfiles);
-      const isRegionDimmed = (activeRegion !== 'all' && !isRegionSelected) || (isFilterActive && !regionHasMatchingProfiles);
-      // Automatically expand if a specific profile/family/region filter is active or search query is present, or if explicitly expanded by user
-      const isExplicitlyExpanded = state.expandedRegions.has(reg.id);
-      const isAutoExpanded = isFilterActive || activeRegion !== 'all' || Boolean(q);
-      const isExpanded = isExplicitlyExpanded || isAutoExpanded;
-
-      const profileCountInRegion = regionProfileCounts[reg.id] || 0;
-
-      geoHtml += `
-        <div class="avail-region-card ${!hasAnyInRegion ? 'is-empty-region' : ''} ${isRegionHighlighted ? 'is-highlighted' : ''} ${isRegionDimmed ? 'is-dimmed' : ''} ${isExpanded ? 'is-expanded' : 'is-collapsed'}" data-region-card-id="${reg.id}">
-          <div class="avail-region-header" data-toggle-region="${reg.id}" role="button" tabindex="0" aria-expanded="${isExpanded}">
-            <div class="avail-region-title-wrap">
-              <svg class="avail-expand-icon" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
-                <path d="M16 22L6 12l1.4-1.4 8.6 8.6 8.6-8.6L26 12z"/>
-              </svg>
-              <span class="avail-region-title">${reg.displayName}</span>
-              <span class="avail-region-code">${reg.code}</span>
-            </div>
-            <div class="avail-region-meta">
-              <span class="avail-profile-badge ${profileCountInRegion > 0 ? 'is-profile-badge' : 'is-zero-badge'}">
-                ${profileCountInRegion} Profile${profileCountInRegion !== 1 ? 's' : ''}
-              </span>
-              <span class="avail-region-badge ${hasAnyInRegion ? 'is-active-badge' : 'is-none-badge'}">
-                ${hasAnyInRegion ? `${activeZoneKeys.length} active zone${activeZoneKeys.length !== 1 ? 's' : ''}` : 'No capacity'}
-              </span>
-            </div>
-          </div>
-          <div class="avail-zones-grid ${!isExpanded ? 'is-collapsed-body' : ''}">`;
-
-      for (const zk of configuredZones) {
-        const profilesInZone = reg.zones[zk] || [];
-        const hasProfiles = profilesInZone.length > 0;
-        const hasMatchingZoneProfiles = profilesInZone.some(p => {
-          if (activeFamily !== 'all' && p.family !== activeFamily) return false;
-          if (activeProfile !== 'all' && p.name !== activeProfile) return false;
-          return true;
-        });
-
-        const isZoneDimmed = isFilterActive ? !hasMatchingZoneProfiles : !hasProfiles;
-
-        geoHtml += `
-          <div class="avail-zone-box ${!hasProfiles ? 'is-zone-empty' : ''} ${isZoneDimmed ? 'is-dimmed' : ''}" data-zone="${zk}">
-            <div class="avail-zone-header">
-              <span class="avail-zone-title">${zk}</span>
-              <span class="avail-zone-count ${!hasProfiles ? 'is-zero-count' : ''}">${profilesInZone.length}</span>
-            </div>
-            <div class="avail-zone-profiles">`;
-
-        if (!hasProfiles) {
-          geoHtml += `<div class="avail-zone-none-text">None available</div>`;
-        } else {
-          for (const p of profilesInZone) {
-            const matchesFamily = activeFamily === 'all' || p.family === activeFamily;
-            const matchesProfile = activeProfile === 'all' || p.name === activeProfile;
-            const isMatch = matchesFamily && matchesProfile;
-
-            const isRowFocused = isMatch && (activeProfile === p.name || activeFamily === p.family);
-            const isRowDimmed = isFilterActive && !isMatch;
-            const fam = p.family || 'general';
-
-            geoHtml += `
-              <div class="avail-profile-item ${isRowFocused ? 'is-focused' : ''} ${isRowDimmed ? 'is-dimmed' : ''}" data-profile="${p.name}">
-                <span class="avail-profile-name avail-fam-text--${fam}">${p.name}</span>
-              </div>`;
-          }
-        }
-
-        geoHtml += `
-            </div>
-          </div>`;
-      }
-
-      geoHtml += `
-          </div>
-        </div>`;
+    if (useTwoLines) {
+      defs += `<path id="${pid}a" d="${arcPathAt(LABEL_R1, a0, a1, laf, onBottom)}" fill="none"/>`;
+      defs += `<path id="${pid}b" d="${arcPathAt(LABEL_R2, a0, a1, laf, onBottom)}" fill="none"/>`;
+    } else {
+      defs += `<path id="${pid}a" d="${arcPathAt(labelMidR, a0, a1, laf, onBottom)}" fill="none"/>`;
     }
 
-    geoHtml += `
-        </div>
-      </div>`;
-
-    html += geoHtml;
-  }
-
-  html += `</div></div>`; // close avail-grid and avail-main-content
-
-  // ── Regional Count View (Side Card Panel) ──────────────────────────────────
-  html += `
-    <aside class="avail-sidebar-legend">
-      <div class="avail-legend-header">
-        <h2 class="avail-legend-title">Regions</h2>
-        <p class="avail-legend-desc">Sorted by available profile count. Click a region to filter.</p>
-      </div>
-      <div class="avail-legend-list">`;
-
-  for (const rEntry of sortedRegionEntries) {
-    const isSelected = activeRegion === rEntry.id;
-    const isZero = rEntry.count === 0;
-
-    // 12-segment meter bar relative to max region count
-    const totalSegments = 12;
-    const activeSegments = isZero ? 0 : Math.max(1, Math.round((rEntry.count / maxRegionCount) * totalSegments));
-    let meterBarsHtml = '';
-    for (let i = 0; i < totalSegments; i++) {
-      meterBarsHtml += `<i class="${i < activeSegments ? 'on' : ''}"></i>`;
+    let lineA = '';
+    let lineB = '';
+    if (useTwoLines) {
+      let mid = Math.ceil(words.length / 2);
+      if (words[mid - 1] === '&') mid += 1;
+      else if (words[mid] === '&') mid += 1;
+      lineA = words.slice(0, mid).join(' ').toUpperCase();
+      lineB = words.slice(mid).join(' ').toUpperCase();
+      if (onBottom) { const tmp = lineA; lineA = lineB; lineB = tmp; }
+    } else {
+      lineA = lane.label.toUpperCase();
     }
 
-    html += `
-      <button type="button" class="avail-legend-row ${isSelected ? 'is-selected' : ''} ${isZero ? 'is-zero' : ''}" data-region-filter="${rEntry.id}">
-        <div class="avail-legend-info">
-          <div class="avail-legend-names">
-            <span class="avail-legend-code">${rEntry.code}</span>
-            <span class="avail-legend-city">${rEntry.displayName}</span>
-          </div>
-          <div class="avail-swatch" aria-hidden="true">
-            ${meterBarsHtml}
-          </div>
-        </div>
-        <span class="avail-legend-count">${rEntry.count}</span>
-      </button>`;
+    bands += `<g class="arc-lbl" style="--gc:${lane.color}">
+      <path d="${wedgeD(LABEL_BAND_IN, LABEL_BAND_OUT, a0, a1, laf)}"
+            fill="${lane.color}" opacity="${bandOpacity}" />
+      <text class="arc-lbl-text"><textPath href="#${pid}a" startOffset="50%" text-anchor="middle">${escHtml(lineA)}</textPath></text>
+      ${lineB ? `<text class="arc-lbl-text"><textPath href="#${pid}b" startOffset="50%" text-anchor="middle">${escHtml(lineB)}</textPath></text>` : ''}
+      <title>${escHtml(lane.label)} (${lane.products.length})</title>
+    </g>`;
+  });
+
+  for (const obj of allItems) {
+    const { p, lane, angle } = obj;
+    const ix = CX + ITEM_R * Math.cos(angle);
+    const iy = CY + ITEM_R * Math.sin(angle);
+    const rotDeg = angle * 180 / Math.PI;
+    const textFlip = Math.cos(angle) < -0.08;
+    const maxChars = 28;
+    const label = p.label.length > maxChars ? p.label.slice(0, maxChars - 1) + '…' : p.label;
+    const cls = inodeClasses(p);
+
+    spokes += `<line class="spoke ${cls.includes('is-dimmed') ? 'is-dimmed' : ''} ${cls.includes('is-active') || cls.includes('is-highlighted') || cls.includes('is-query-hit') ? 'is-lit' : ''}"
+      x1="${CX + SPOKE_START * Math.cos(angle)}"
+      y1="${CY + SPOKE_START * Math.sin(angle)}"
+      x2="${ix - 14 * Math.cos(angle)}"
+      y2="${iy - 14 * Math.sin(angle)}"
+      stroke="${lane.color}" />`;
+
+    items += `<g class="${cls}" data-id="${escHtml(p.id)}" style="--ic:${lane.color}"
+      transform="translate(${ix},${iy}) rotate(${textFlip ? rotDeg + 180 : rotDeg})"
+      role="button" tabindex="0" aria-label="${escHtml(p.label)}">
+      <rect x="-110" y="-12" width="220" height="24" fill="transparent" />
+      <text class="fg" y="4">${escHtml(label)}</text>
+      <title>${escHtml(p.label)}${p.status && p.status !== 'ga' ? ` · ${p.status}` : ''}</title>
+    </g>`;
   }
 
-  html += `
-      </div>
-    </aside>
-  </div></div>`; // close avail-sidebar-legend and avail-stage and avail-area
+  const hubCls = hub ? inodeClasses(hub).replace('inode', 'hub') : 'hub';
+  const productCount = allItems.length;
+  const laneCount = lanes.filter(l => l.products.length).length;
 
-  return html;
+  const hubNode = hub ? `
+    <g class="${hubCls}" data-id="${escHtml(hub.id)}" style="--hc:${hubColor}"
+       transform="translate(${CX},${CY})" role="button" tabindex="0"
+       aria-label="${escHtml(hub.label)}">
+      <circle class="hc" r="${R_HUB}" />
+      <text class="hub-ibm" y="-28">IBM Cloud</text>
+      <text class="hub-nm" y="8">VPC</text>
+      <text class="hub-st" y="36">${laneCount} lanes · ${productCount} services</text>
+      <title>${escHtml(hub.label)}</title>
+    </g>` : '';
+
+  return `<div class="map-stage">
+    <svg class="synergy-map" viewBox="${-PAD} ${-PAD} ${VIEW + PAD * 2} ${VIEW + PAD * 2}"
+         role="img" aria-label="IBM Cloud VPC Synergies Map — radial service map">
+      <defs>${defs}</defs>
+      <g class="g-wedges">${wedges}</g>
+      <g class="g-spokes">${spokes}</g>
+      <g class="g-items">${items}</g>
+      <g class="g-bands">${bands}</g>
+      <g class="g-hubs">${hubNode}</g>
+    </svg>
+  </div>`;
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -1601,29 +1346,48 @@ function render() {
   const loading = document.getElementById('loadingState');
   if (loading) loading.remove();
 
-  const isProfiles    = state.viewMode === 'profiles';
-  const isAvail       = state.viewMode === 'availability';
   const isNetwork     = state.viewMode === 'network';
+  const isArch        = state.viewMode === 'architecture';
+
+  main.classList.toggle('is-map', state.viewMode === 'grid');
 
   if (state.viewMode === 'grid') {
     main.innerHTML = renderGrid();
+  } else if (state.viewMode === 'architecture') {
+    main.innerHTML = renderArchitecture();
   } else if (state.viewMode === 'network') {
     main.innerHTML = renderNetwork();
-  } else if (state.viewMode === 'matrix') {
-    main.innerHTML = renderMatrix();
-  } else if (state.viewMode === 'profiles') {
-    main.innerHTML = renderProfiles();
   } else {
-    main.innerHTML = renderAvailability();
+    main.innerHTML = renderGrid();
   }
 
-  // Sidebar — hidden in profiles, availability, and network views
+  // Sidebar — shown in map, architecture, and network views
   const sidebar        = document.getElementById('sidebar');
   const sidebarContent = document.getElementById('sidebarContent');
-  if (isProfiles || isAvail || isNetwork) {
-    sidebar.classList.remove('is-open');
-    main.classList.remove('sidebar-open');
-    sidebarContent.innerHTML = '';
+  if (isNetwork) {
+    // Network handles sidebar on node click
+    if (!state.netSelected) {
+      sidebar.classList.remove('is-open');
+      main.classList.remove('sidebar-open');
+      sidebarContent.innerHTML = '';
+    }
+  } else if (isArch) {
+    if (state.archSelected) {
+      const p = (state.products ?? []).find(x => x.id === state.archSelected);
+      if (p) {
+        sidebarContent.innerHTML = renderSidebar(state.archSelected);
+        sidebar.classList.add('is-open');
+        main.classList.add('sidebar-open');
+      } else {
+        sidebar.classList.remove('is-open');
+        main.classList.remove('sidebar-open');
+        sidebarContent.innerHTML = '';
+      }
+    } else {
+      sidebar.classList.remove('is-open');
+      main.classList.remove('sidebar-open');
+      sidebarContent.innerHTML = '';
+    }
   } else {
     sidebarContent.innerHTML = renderSidebar(state.activeId);
     if (state.activeId) {
@@ -1663,14 +1427,40 @@ function render() {
     });
   }
 
-  // ── Card click handlers (grid / matrix) ──
-  if (!isNetwork) {
+  // ── Architecture card click handlers ──
+  if (isArch) {
+    main.querySelectorAll('.arch-node[data-id]').forEach(el => {
+      const handleSelect = (e) => {
+        e.stopPropagation();
+        const id = el.dataset.id;
+        state.archSelected = state.archSelected === id ? null : id;
+        render();
+      };
+      el.addEventListener('click', handleSelect);
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleSelect(e);
+        }
+      });
+    });
+  }
+
+  // ── Card / map node click handlers ──
+  if (!isNetwork && !isArch) {
     main.querySelectorAll('[data-id]').forEach(el => {
-      el.addEventListener('click', e => {
+      const select = e => {
         e.stopPropagation();
         const id = el.dataset.id;
         state.activeId = state.activeId === id ? null : id;
         render();
+      };
+      el.addEventListener('click', select);
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          select(e);
+        }
       });
     });
   }
@@ -1682,189 +1472,6 @@ function render() {
       const p = btn.dataset.pillar;
       state.integrationFilter = state.integrationFilter === p ? null : p;
       render();
-    });
-  });
-
-  // Matrix OS chips
-  main.querySelectorAll('[data-os]').forEach(el => {
-    el.addEventListener('click', () => {
-      state.osFilter = el.dataset.os;
-      render();
-    });
-  });
-
-  // Connection card clicks in sidebar navigate to that product
-  sidebarContent.querySelectorAll('.conn-card[data-id]').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', () => {
-      if (isNetwork) {
-        // In network view: update selection + highlights without full re-render
-        state.netSelected = el.dataset.id;
-        applyNetworkHighlights();
-        sidebarContent.innerHTML = renderSidebar(state.netSelected);
-        // Re-bind conn cards in the freshly rendered sidebar
-        sidebarContent.querySelectorAll('.conn-card[data-id]').forEach(inner => {
-          inner.style.cursor = 'pointer';
-          inner.addEventListener('click', () => {
-            state.netSelected = inner.dataset.id;
-            applyNetworkHighlights();
-            sidebarContent.innerHTML = renderSidebar(state.netSelected);
-          });
-        });
-      } else {
-        state.activeId = el.dataset.id;
-        render();
-      }
-    });
-  });
-
-  // ── VSI gen accordion toggles ──
-  main.querySelectorAll('[data-toggle-vsi-gen]').forEach(row => {
-    const toggle = () => {
-      const gen = row.dataset.toggleVsiGen;
-      if (state.expandedVsiGens.has(gen)) {
-        state.expandedVsiGens.delete(gen);
-      } else {
-        state.expandedVsiGens.add(gen);
-      }
-      render();
-    };
-    row.addEventListener('click', e => { e.stopPropagation(); toggle(); });
-    row.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); toggle(); }
-    });
-  });
-
-  // ── VSI Profile Dropdown Selects ──
-  const vsiFamilySelect = main.querySelector('[data-vsi-family-select]');
-  if (vsiFamilySelect) {
-    vsiFamilySelect.addEventListener('change', e => {
-      state.profileFamily = e.target.value;
-      state.vsiGenFilter = 'all';   // reset gen on family change
-      state.vsiProfileFilter = 'all';
-      render();
-    });
-  }
-
-  const vsiGenSelect = main.querySelector('[data-vsi-gen-select]');
-  if (vsiGenSelect) {
-    vsiGenSelect.addEventListener('change', e => {
-      state.vsiGenFilter = e.target.value;
-      state.vsiProfileFilter = 'all'; // reset specific profile on gen change
-      render();
-    });
-  }
-
-  const vsiProfileSelect = main.querySelector('[data-vsi-profile-select]');
-  if (vsiProfileSelect) {
-    vsiProfileSelect.addEventListener('change', e => {
-      state.vsiProfileFilter = e.target.value;
-      render();
-    });
-  }
-
-  const vsiResetBtn = main.querySelector('#vsiResetBtn');
-  if (vsiResetBtn) {
-    vsiResetBtn.addEventListener('click', () => {
-      state.profileFamily = 'all';
-      state.vsiGenFilter = 'all';
-      state.vsiProfileFilter = 'all';
-      render();
-    });
-  }
-
-  // ── Profiles sub-tab, region chips, and family chips ──
-  main.querySelectorAll('[data-ptab]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.profilesTab      = btn.dataset.ptab;
-      state.profileFamily    = 'all';
-      state.vsiGenFilter     = 'all';
-      state.vsiProfileFilter = 'all';
-      state.expandedVsiGens  = new Set();
-      state.bmsRegion        = 'all';
-      render();
-    });
-  });
-  main.querySelectorAll('[data-region]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.bmsRegion = btn.dataset.region;
-      render();
-    });
-  });
-  main.querySelectorAll('[data-family]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.profileFamily = btn.dataset.family;
-      render();
-    });
-  });
-
-  // ── BM Availability Dropdown Selects & Region Legend clicks ──
-  const familySelect = main.querySelector('[data-avail-family-select]');
-  if (familySelect) {
-    familySelect.addEventListener('change', e => {
-      state.availFamilyFilter = e.target.value;
-      state.availProfileFilter = 'all'; // reset specific profile on family change
-      render();
-    });
-  }
-
-  const profileSelect = main.querySelector('[data-avail-profile-select]');
-  if (profileSelect) {
-    profileSelect.addEventListener('change', e => {
-      state.availProfileFilter = e.target.value;
-      render();
-    });
-  }
-
-  const resetBtn = main.querySelector('#availResetBtn');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      state.availFamilyFilter = 'all';
-      state.availRegionFilter = 'all';
-      state.availProfileFilter = 'all';
-      render();
-    });
-  }
-
-  const availRegionSelect = main.querySelector('[data-avail-region-select]');
-  if (availRegionSelect) {
-    availRegionSelect.addEventListener('change', e => {
-      state.availRegionFilter = e.target.value;
-      render();
-    });
-  }
-
-  main.querySelectorAll('[data-region-filter]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const r = btn.dataset.regionFilter;
-      state.availRegionFilter = state.availRegionFilter === r ? 'all' : r;
-      render();
-    });
-  });
-
-  // Accordion toggle click & keydown for region cards in availability view
-  main.querySelectorAll('[data-toggle-region]').forEach(hdr => {
-    const toggle = () => {
-      const regId = hdr.dataset.toggleRegion;
-      if (state.expandedRegions.has(regId)) {
-        state.expandedRegions.delete(regId);
-      } else {
-        state.expandedRegions.add(regId);
-      }
-      render();
-    };
-
-    hdr.addEventListener('click', e => {
-      e.stopPropagation();
-      toggle();
-    });
-
-    hdr.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        e.stopPropagation();
-        toggle();
-      }
     });
   });
 
@@ -1932,10 +1539,12 @@ function bindHeader() {
 // ── URL hash on load ──────────────────────────────────────────────────────────
 function readHash() {
   const hash = window.location.hash.replace('#', '');
+  if (hash === 'architecture') state.viewMode = 'architecture';
   if (hash === 'network')      state.viewMode = 'network';
-  if (hash === 'matrix')       state.viewMode = 'matrix';
-  if (hash === 'profiles')     state.viewMode = 'profiles';
-  if (hash === 'availability') state.viewMode = 'availability';
+  // Legacy hashes for removed tabs fall back to map
+  if (hash === 'matrix' || hash === 'profiles' || hash === 'availability') {
+    state.viewMode = 'grid';
+  }
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
