@@ -5,10 +5,11 @@ Serves the project root at http://localhost:4173 with
 Cache-Control: no-store on every response so browsers
 always fetch fresh JSON and JS without a hard reload.
 """
+
 import http.server
 import os
 
-PORT = 4173
+PORT = 4177
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 
 
